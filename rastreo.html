@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rastreo • Apacargo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html"><img src="images/logo.png" alt="Apacargo" class="brand-logo"><div><div class="brand-name">Apacargo</div><div class="brand-sub">Rastreo</div></div></a>
+      <nav class="nav" id="nav"><a href="index.html">Inicio</a><a href="tienda-carros.html">Tienda • Autos</a><a href="quienes-somos.html">Quiénes Somos</a><a href="admin.html" class="btn-outline">Admin</a></nav>
+      <button id="menuToggle" class="menu-toggle">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h2>Rastreo de envío</h2>
+        <p>Introduce tu número de seguimiento (ej.: AP-2025-000123)</p>
+        <div class="tracker">
+          <input id="trackId" placeholder="Ej: AP-2025-000123" />
+          <button class="btn btn-primary" onclick="trackLookup()">Rastrear</button>
+        </div>
+
+        <div id="trackResult" class="track-result"></div>
+
+        <div id="mapContainer" class="map-wrap hidden"></div>
+
+        <div class="note small">Si eres administrador usa <a href="admin.html">el panel admin</a> para actualizar ubicaciones y estados.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><div><strong>Apacargo</strong></div><div class="socials"><a href="index.html">Volver</a></div></div></footer>
+  <script src="script.js"></script>
+</body>
+</html>
