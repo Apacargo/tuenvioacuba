@@ -1,6 +1,6 @@
 // ---------------- CONFIG ----------------
-// Cambia estas constantes según prefieras
-const ADMIN_PASSWORD = 'admin123';        // contraseña admin (cámbiala)
+// Contraseña admin (la has pedido): 'jms980320'
+const ADMIN_PASSWORD = 'jms980320';        // contraseña admin (cámbiala si quieres)
 const STORAGE_KEY = 'apacargo_site_v2';   // clave localStorage
 let WHATS_NUMBER = '';                    // deja vacío; pega tu número con código país luego, ej: '13053957996'
 
