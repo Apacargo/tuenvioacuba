@@ -226,3 +226,70 @@ function importPrompt(){
   if(!adminPanel || !loginBox) return;
   if(sessionStorage.getItem('apacargo_admin')){ loginBox.classList.add('hidden'); adminPanel.classList.remove('hidden'); renderSavedList(); }
 })();
+// ==== Importar / Exportar JSON ====
+
+// Botones
+const importBtn = document.getElementById("importJsonBtn");
+const exportBtn = document.getElementById("exportJsonBtn");
+const fileInput = document.getElementById("jsonFileInput");
+const textInput = document.getElementById("jsonTextInput");
+const textLoadBtn = document.getElementById("jsonTextLoadBtn");
+
+// Importar desde archivo .json
+if (importBtn && fileInput) {
+  importBtn.addEventListener("click", () => {
+    const opcion = prompt("Escribe 1 para importar desde archivo, 2 para pegar texto JSON manualmente:");
+    if (opcion === "1") {
+      fileInput.click();
+    } else if (opcion === "2") {
+      textInput.style.display = "block";
+      textLoadBtn.style.display = "inline-block";
+    }
+  });
+
+  fileInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const data = JSON.parse(event.target.result);
+        localStorage.setItem("rastreos", JSON.stringify(data));
+        alert("✅ Rastreos importados correctamente");
+        location.reload();
+      } catch (err) {
+        alert("❌ Error al importar JSON: " + err.message);
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  textLoadBtn.addEventListener("click", () => {
+    try {
+      const data = JSON.parse(textInput.value);
+      localStorage.setItem("rastreos", JSON.stringify(data));
+      alert("✅ Rastreos cargados correctamente desde texto");
+      location.reload();
+    } catch (err) {
+      alert("❌ Error: JSON inválido");
+    }
+  });
+}
+
+// Exportar JSON (descargar los rastreos)
+if (exportBtn) {
+  exportBtn.addEventListener("click", () => {
+    const data = localStorage.getItem("rastreos");
+    if (!data) {
+      alert("No hay rastreos guardados para exportar.");
+      return;
+    }
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "rastreos-apacargo.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+}
