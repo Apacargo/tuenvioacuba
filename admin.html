@@ -21,6 +21,17 @@
         <h2>Panel Admin (local)</h2>
         <p>Protegido por contraseña. Cambia la contraseña en <code>script.js</code> (const ADMIN_PASSWORD)</p>
 
+        <!-- ======= Importar / Exportar JSON ======= -->
+<div class="import-export" style="margin:20px 0; padding:10px; border:1px solid #ccc; border-radius:8px;">
+  <h3>Importar / Exportar rastreos</h3>
+  <button id="importJsonBtn" class="btn-gold">Importar JSON</button>
+  <button id="exportJsonBtn" class="btn-gold">Exportar JSON</button>
+  <input type="file" id="jsonFileInput" accept=".json" style="display:none;">
+  <textarea id="jsonTextInput" placeholder="Pega aquí el contenido JSON..." style="width:100%; height:120px; display:none; margin-top:10px;"></textarea>
+  <button id="jsonTextLoadBtn" style="display:none; margin-top:5px;" class="btn-gold">Cargar desde texto</button>
+</div>
+<!-- ======= Fin Importar / Exportar ======= -->
+
         <div id="loginBox" class="card">
           <label>Contraseña admin<input type="password" id="adminPass"></label>
           <div style="margin-top:.6rem"><button class="btn btn-primary" onclick="adminLogin()">Entrar</button></div>
