@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin • Apacargo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html"><img src="images/logo.png" alt="Apacargo" class="brand-logo"><div><div class="brand-name">Apacargo</div><div class="brand-sub">Admin</div></div></a>
+      <nav class="nav" id="nav"><a href="index.html">Inicio</a><a href="rastreo.html">Rastreo</a></nav>
+      <button id="menuToggle" class="menu-toggle">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h2>Panel Admin (local)</h2>
+        <p>Protegido por contraseña. Cambia la contraseña en <code>script.js</code> (const ADMIN_PASSWORD)</p>
+
+        <div id="loginBox" class="card">
+          <label>Contraseña admin<input type="password" id="adminPass"></label>
+          <div style="margin-top:.6rem"><button class="btn btn-primary" onclick="adminLogin()">Entrar</button></div>
+        </div>
+
+        <div id="adminPanel" class="hidden">
+          <h3>Crear / editar rastreo</h3>
+          <div class="card small">
+            <label>ID seguimiento<input id="a_trackId" placeholder="AP-2025-000123"></label>
+            <label>Descripción<input id="a_desc" placeholder="Nombre cliente / vehículo"></label>
+            <label>Estado
+              <select id="a_status">
+                <option value="recibido">Recibido</option>
+                <option value="en_transito">En tránsito</option>
+                <option value="en_aduana">En aduana</option>
+                <option value="entregado">Entregado</option>
+              </select>
+            </label>
+
+            <div class="form-row">
+              <input id="a_lat" placeholder="Lat (opcional) ej: 23.1136">
+              <input id="a_lng" placeholder="Lng (opcional) ej: -82.3666">
+              <input id="a_stepText" placeholder="Texto del paso (ej: Llegó a Miami)">
+              <button class="btn btn-secondary" onclick="addStep()">Agregar paso</button>
+            </div>
+
+            <div class="small">Puntos temporales:</div>
+            <ul id="stepsList" class="small"></ul>
+
+            <div style="margin-top:.6rem">
+              <button class="btn btn-primary" onclick="saveTracking()">Guardar rastreo</button>
+              <button class="btn btn-ghost" onclick="clearForm()">Limpiar</button>
+              <button class="btn btn-outline" onclick="exportAll()">Exportar JSON</button>
+              <button class="btn btn-outline" onclick="importPrompt()">Importar JSON</button>
+            </div>
+          </div>
+
+          <h3 style="margin-top:1rem">Rastreos guardados</h3>
+          <div id="savedList" class="card small"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><div><strong>Admin</strong></div><div class="socials"><a href="index.html">Volver</a></div></div></footer>
+  <script src="script.js"></script>
+</body>
+</html>
