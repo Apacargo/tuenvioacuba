@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tienda • Autos • Apacargo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html"><img src="images/logo.png" alt="Apacargo" class="brand-logo"><div><div class="brand-name">Apacargo</div><div class="brand-sub">Tienda • Autos</div></div></a>
+      <nav class="nav" id="nav"><a href="index.html">Inicio</a><a href="rastreo.html">Rastreo</a><a href="admin.html" class="btn-outline">Admin</a></nav>
+      <button id="menuToggle" class="menu-toggle">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h2>Autos • Eléctricos y Combustión</h2>
+        <p>Haz clic en cualquier vehículo para ver sus características. Botón Comprar abre WhatsApp.</p>
+
+        <div id="carsGrid" class="car-grid">
+          <!-- Ejemplos iniciales; administra desde admin o edita HTML -->
+          <div class="car-card">
+            <img src="images/sample-car-1.jpg" alt="Nissan Leaf">
+            <div class="car-body">
+              <h4>Nissan Leaf — Eléctrico</h4>
+              <p class="small">Batería 40 kWh • Autonomía ~240 km • Año 2019</p>
+              <div class="car-actions">
+                <button class="btn btn-gold" onclick="openWhats('Nissan Leaf')">Comprar</button>
+                <a class="small-link" href="#">Ficha técnica</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="car-card">
+            <img src="images/sample-car-2.jpg" alt="Toyota Corolla">
+            <div class="car-body">
+              <h4>Toyota Corolla — Gasolina</h4>
+              <p class="small">Motor 1.8L • Económico • Año 2018</p>
+              <div class="car-actions">
+                <button class="btn btn-gold" onclick="openWhats('Toyota Corolla')">Comprar</button>
+                <a class="small-link" href="#">Ficha técnica</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="car-card">
+            <img src="images/sample-car-3.jpg" alt="Tesla Model Y">
+            <div class="car-body">
+              <h4>Tesla Model Y — Eléctrico</h4>
+              <p class="small">Autonomía 480 km • Año 2021 • Entrega según permiso</p>
+              <div class="car-actions">
+                <button class="btn btn-gold" onclick="openWhats('Tesla Model Y')">Comprar</button>
+                <a class="small-link" href="#">Ficha técnica</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><div><strong>Apacargo</strong></div><div class="socials"><a href="index.html">Volver</a></div></div></footer>
+  <script src="script.js"></script>
+</body>
+</html>
