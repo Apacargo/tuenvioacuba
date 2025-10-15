@@ -154,3 +154,35 @@ body {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.quienes-somos {
+  background: #f9f9f9;
+  padding: 60px 20px;
+  text-align: center;
+  color: #222;
+}
+
+.quienes-somos .container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.quienes-somos h1 {
+  color: #d4af37; /* dorado */
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.quienes-somos p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.quienes-somos .destacado {
+  color: #004aad; /* azul intenso */
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
