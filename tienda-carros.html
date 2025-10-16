@@ -1,70 +1,209 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tienda • Autos • Apacargo</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda de Carros | Apacargo Tu Envío a Cuba</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: #f2f6fa;
+      font-family: 'Poppins', sans-serif;
+      color: #222;
+      margin: 0;
+    }
+
+    header {
+      background: linear-gradient(90deg, #004aad, #d4af37);
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 25px;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .producto {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .producto:hover {
+      transform: translateY(-6px);
+    }
+
+    .producto img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .info {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .info h3 {
+      color: #004aad;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .info p {
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      min-height: 60px;
+    }
+
+    .precio {
+      font-size: 1.3rem;
+      color: #d4af37;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .btn-comprar {
+      display: inline-block;
+      background: #d4af37;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn-comprar:hover {
+      background: #b9932f;
+    }
+
+    footer {
+      background: #004aad;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+      margin-top: 50px;
+    }
+  </style>
 </head>
+
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html"><img src="images/logo.png" alt="Apacargo" class="brand-logo"><div><div class="brand-name">Apacargo</div><div class="brand-sub">Tienda • Autos</div></div></a>
-      <nav class="nav" id="nav"><a href="index.html">Inicio</a><a href="rastreo.html">Rastreo</a><a href="admin.html" class="btn-outline">Admin</a></nav>
-      <button id="menuToggle" class="menu-toggle">☰</button>
-    </div>
-  </header>
+  <header>🚘 Tienda de Carros – Apacargo Tu Envío a Cuba</header>
 
-  <main>
-    <section class="section">
-      <div class="container">
-        <h2>Autos • Eléctricos y Combustión</h2>
-        <p>Haz clic en cualquier vehículo para ver sus características. Botón Comprar abre WhatsApp.</p>
-
-        <div id="carsGrid" class="car-grid">
-          <!-- Ejemplos iniciales; administra desde admin o edita HTML -->
-          <div class="car-card">
-            <img src="images/sample-car-1.jpg" alt="Nissan Leaf">
-            <div class="car-body">
-              <h4>Nissan Leaf — Eléctrico</h4>
-              <p class="small">Batería 40 kWh • Autonomía ~240 km • Año 2019</p>
-              <div class="car-actions">
-                <button class="btn btn-gold" onclick="openWhats('Nissan Leaf')">Comprar</button>
-                <a class="small-link" href="#">Ficha técnica</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="car-card">
-            <img src="images/sample-car-2.jpg" alt="Toyota Corolla">
-            <div class="car-body">
-              <h4>Toyota Corolla — Gasolina</h4>
-              <p class="small">Motor 1.8L • Económico • Año 2018</p>
-              <div class="car-actions">
-                <button class="btn btn-gold" onclick="openWhats('Toyota Corolla')">Comprar</button>
-                <a class="small-link" href="#">Ficha técnica</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="car-card">
-            <img src="images/sample-car-3.jpg" alt="Tesla Model Y">
-            <div class="car-body">
-              <h4>Tesla Model Y — Eléctrico</h4>
-              <p class="small">Autonomía 480 km • Año 2021 • Entrega según permiso</p>
-              <div class="car-actions">
-                <button class="btn btn-gold" onclick="openWhats('Tesla Model Y')">Comprar</button>
-                <a class="small-link" href="#">Ficha técnica</a>
-              </div>
-            </div>
-          </div>
-
-        </div>
+  <section class="productos">
+    <!-- Carro 1 -->
+    <div class="producto">
+      <img src="images/car01.jpg" alt="BYD Dolphin EV">
+      <div class="info">
+        <h3>BYD Dolphin EV</h3>
+        <p>Auto 100% eléctrico con autonomía de 405 km y carga rápida.</p>
+        <div class="precio">$18,500 USD</div>
+        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
       </div>
-    </section>
-  </main>
+    </div>
 
-  <footer class="site-footer"><div class="container footer-inner"><div><strong>Apacargo</strong></div><div class="socials"><a href="index.html">Volver</a></div></div></footer>
-  <script src="script.js"></script>
+    <!-- Carro 2 -->
+    <div class="producto">
+      <img src="images/car02.jpg" alt="Geely Coolray">
+      <div class="info">
+        <h3>Geely Coolray</h3>
+        <p>SUV moderna con motor turbo y sistema de infoentretenimiento inteligente.</p>
+        <div class="precio">$22,900 USD</div>
+        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
+      </div>
+    </div>
+
+    <!-- Carro 3 -->
+    <div class="producto">
+      <img src="images/car03.jpg" alt="Chevrolet Onix 2024">
+      <div class="info">
+        <h3>Chevrolet Onix 2024</h3>
+        <p>Vehículo de combustión eficiente, ideal para uso familiar o personal.</p>
+        <div class="precio">$15,800 USD</div>
+        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
+      </div>
+    </div>
+
+    <!-- Carro 4 -->
+    <div class="producto">
+      <img src="images/car04.jpg" alt="Tesla Model 3">
+      <div class="info">
+        <h3>Tesla Model 3</h3>
+        <p>Eléctrico premium con rendimiento deportivo y autonomía de hasta 500 km.</p>
+        <div class="precio">$39,500 USD</div>
+        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
+      </div>
+    </div>
+
+    <!-- Carro 5 -->
+    <div class="producto">
+      <img src="images/car05.jpg" alt="Toyota Corolla 2023">
+      <div class="info">
+        <h3>Toyota Corolla 2023</h3>
+        <p>Sedán confiable, motor híbrido gasolina-eléctrico y bajo consumo.</p>
+        <div class="precio">$21,200 USD</div>
+        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
+      </div>
+    </div>
+
+    <!-- Carro 6 -->
+    <div class="producto">
+      <img src="images/car06.jpg" alt="Kia Picanto 2024">
+      <div class="info">
+        <h3>Kia Picanto 2024</h3>
+        <p>Compacto urbano, bajo consumo y diseño moderno ideal para ciudad.</p>
+        <div class="precio">$13,900 USD</div>
+        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
+      </div>
+    </div>
+
+    <!-- Carro 7 -->
+    <div class="producto">
+      <img src="images/car07.jpg" alt="MG ZS EV">
+      <div class="info">
+        <h3>MG ZS EV</h3>
+        <p>SUV eléctrica de diseño británico, autonomía de 320 km y cero emisiones.</p>
+        <div class="precio">$27,400 USD</div>
+        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
+      </div>
+    </div>
+
+    <!-- Carro 8 -->
+    <div class="producto">
+      <img src="images/car08.jpg" alt="Hyundai Accent 2024">
+      <div class="info">
+        <h3>Hyundai Accent 2024</h3>
+        <p>Sedán cómodo y eficiente, motor 1.6L y transmisión automática.</p>
+        <div class="precio">$18,900 USD</div>
+        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
+      </div>
+    </div>
+
+    <!-- Carro 9 -->
+    <div class="producto">
+      <img src="images/car09.jpg" alt="Changan Benni EV">
+      <div class="info">
+        <h3>Changan Benni EV</h3>
+        <p>Pequeño eléctrico económico con 200 km de autonomía. Ideal para ciudad.</p>
+        <div class="precio">$12,300 USD</div>
+        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2025 Apacargo Tu Envío a Cuba — Todos los derechos reservados.</footer>
 </body>
 </html>
