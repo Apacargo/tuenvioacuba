@@ -1,36 +1,237 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tienda • Triciclos • Apacargo</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda de Triciclos | Apacargo</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #001f4d;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+
+    .triciclo-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .triciclo-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .triciclo-card:hover {
+      transform: scale(1.03);
+    }
+
+    .triciclo-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display:block;
+    }
+
+    .triciclo-card .body {
+      padding: 16px;
+    }
+
+    .triciclo-card h3 {
+      margin: 10px 0 6px;
+      font-size: 20px;
+      color: #001f4d;
+    }
+
+    .triciclo-card p.desc {
+      color: #444;
+      font-size: 15px;
+      margin: 0 0 12px;
+      min-height: 44px;
+    }
+
+    .triciclo-card .price {
+      font-weight: bold;
+      color: #d4af37;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .buy-btn {
+      background-color: #d4af37;
+      color: #001f4d;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-weight: bold;
+      text-decoration: none;
+      display:inline-block;
+    }
+
+    .buy-btn:hover {
+      background-color: #b6912c;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #001f4d;
+      color: white;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 480px) {
+      header { font-size: 18px; padding: 12px; }
+      .triciclo-card img { height: 160px; }
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html"><img src="images/logo.png" alt="Apacargo" class="brand-logo"><div><div class="brand-name">Apacargo</div><div class="brand-sub">Tienda • Triciclos</div></div></a>
+  <header>
+    <img src="images/logo.png" alt="Apacargo Logo" style="height:72px; display:block; margin:0 auto 8px;">
+    <div style="font-weight:700; color:#d4af37; font-size:18px;">Triciclos Eléctricos y de Combustión</div>
   </header>
 
-  <main>
-    <section class="section">
-      <div class="container">
-        <h2>Triciclos • Eléctricos y de combustión</h2>
-        <div class="car-grid">
-          <div class="car-card">
-            <img src="images/sample-tri-1.jpg" alt="Triciclo eléctrico">
-            <div class="car-body"><h4>Triciclo Eléctrico — 3 plazas</h4><p class="small">Ideal para transporte ligero</p><div class="car-actions"><button class="btn btn-gold" onclick="openWhats('Triciclo Eléctrico')">Comprar</button></div></div>
-          </div>
-          <div class="car-card">
-            <img src="images/sample-tri-2.jpg" alt="Triciclo gasolina">
-            <div class="car-body"><h4>Triciclo Gasolina — 2 plazas</h4><p class="small">Motor 200cc</p><div class="car-actions"><button class="btn btn-gold" onclick="openWhats('Triciclo Gasolina')">Comprar</button></div></div>
-          </div>
-        </div>
+  <main class="triciclo-container">
+    <!-- ====== TRICICLO 1 ====== -->
+    <div class="triciclo-card">
+      <img src="images/triciclo1.jpg" alt="Triciclo Eléctrico Cargo X">
+      <div class="body">
+        <h3>Triciclo Eléctrico Cargo X</h3>
+        <p class="desc">Motor eléctrico 1000W • Capacidad 300 kg • Autonomía 70 km</p>
+        <div class="price">$2,500 USD</div>
+        <a class="buy-btn" href="#" data-name="Triciclo Eléctrico Cargo X" onclick="openWhats(event)">Comprar</a>
       </div>
-    </section>
+    </div>
+
+    <!-- ====== TRICICLO 2 ====== -->
+    <div class="triciclo-card">
+      <img src="images/triciclo2.jpg" alt="Triciclo Combustión 150cc">
+      <div class="body">
+        <h3>Triciclo Combustión 150cc</h3>
+        <p class="desc">Motor 150cc • Transmisión manual • Ideal para transporte urbano</p>
+        <div class="price">$2,800 USD</div>
+        <a class="buy-btn" href="#" data-name="Triciclo Combustión 150cc" onclick="openWhats(event)">Comprar</a>
+      </div>
+    </div>
+
+    <!-- ====== TRICICLO 3 ====== -->
+    <div class="triciclo-card">
+      <img src="images/triciclo3.jpg" alt="Triciclo de Pasajeros E-Pro">
+      <div class="body">
+        <h3>Triciclo de Pasajeros E-Pro</h3>
+        <p class="desc">3 asientos • 800 W • Silencioso y sin emisiones</p>
+        <div class="price">$2,300 USD</div>
+        <a class="buy-btn" href="#" data-name="Triciclo de Pasajeros E-Pro" onclick="openWhats(event)">Comprar</a>
+      </div>
+    </div>
+
+    <!-- ====== TRICICLO 4 ====== -->
+    <div class="triciclo-card">
+      <img src="images/triciclo4.jpg" alt="Triciclo Industrial Power">
+      <div class="body">
+        <h3>Triciclo Industrial Power</h3>
+        <p class="desc">Batería 48 V • Motor 1200 W • Chasis reforzado</p>
+        <div class="price">$3,000 USD</div>
+        <a class="buy-btn" href="#" data-name="Triciclo Industrial Power" onclick="openWhats(event)">Comprar</a>
+      </div>
+    </div>
+
+    <!-- ====== TRICICLO 5 ====== -->
+    <div class="triciclo-card">
+      <img src="images/triciclo5.jpg" alt="Triciclo EconoRide 800">
+      <div class="body">
+        <h3>Triciclo EconoRide 800</h3>
+        <p class="desc">Ligero • Ahorra energía • Fácil mantenimiento</p>
+        <div class="price">$1,900 USD</div>
+        <a class="buy-btn" href="#" data-name="Triciclo EconoRide 800" onclick="openWhats(event)">Comprar</a>
+      </div>
+    </div>
+
+    <!-- ====== TRICICLO 6 ====== -->
+    <div class="triciclo-card">
+      <img src="images/triciclo6.jpg" alt="Triciclo Gasoline Max 200">
+      <div class="body">
+        <h3>Triciclo Gasoline Max 200</h3>
+        <p class="desc">Motor 200cc • Alta potencia • Ideal para carga</p>
+        <div class="price">$3,200 USD</div>
+        <a class="buy-btn" href="#" data-name="Triciclo Gasoline Max 200" onclick="openWhats(event)">Comprar</a>
+      </div>
+    </div>
+
+    <!-- ====== TRICICLO 7 ====== -->
+    <div class="triciclo-card">
+      <img src="images/triciclo7.jpg" alt="Triciclo Family E">
+      <div class="body">
+        <h3>Triciclo Family E</h3>
+        <p class="desc">Espacioso • Ideal para uso familiar • Con techo protector</p>
+        <div class="price">$2,650 USD</div>
+        <a class="buy-btn" href="#" data-name="Triciclo Family E" onclick="openWhats(event)">Comprar</a>
+      </div>
+    </div>
+
+    <!-- ====== TRICICLO 8 ====== -->
+    <div class="triciclo-card">
+      <img src="images/triciclo8.jpg" alt="Triciclo WorkPro 180cc">
+      <div class="body">
+        <h3>Triciclo WorkPro 180cc</h3>
+        <p class="desc">Diseñado para trabajo pesado • Carga 400 kg</p>
+        <div class="price">$2,950 USD</div>
+        <a class="buy-btn" href="#" data-name="Triciclo WorkPro 180cc" onclick="openWhats(event)">Comprar</a>
+      </div>
+    </div>
+
+    <!-- ====== TRICICLO 9 ====== -->
+    <div class="triciclo-card">
+      <img src="images/triciclo9.jpg" alt="Triciclo Urbano Mini E">
+      <div class="body">
+        <h3>Triciclo Urbano Mini E</h3>
+        <p class="desc">Compacto • Eléctrico • Perfecto para pequeños trayectos</p>
+        <div class="price">$1,700 USD</div>
+        <a class="buy-btn" href="#" data-name="Triciclo Urbano Mini E" onclick="openWhats(event)">Comprar</a>
+      </div>
+    </div>
   </main>
 
-  <footer class="site-footer"><div class="container footer-inner"><div><strong>Apacargo</strong></div><div class="socials"><a href="index.html">Volver</a></div></div></footer>
-  <script src="script.js"></script>
+  <footer>
+    <p>© 2025 Apacargo – Todos los derechos reservados</p>
+  </footer>
+
+  <!-- ====== SCRIPT: abrir WhatsApp con mensaje predefinido ====== -->
+  <script>
+    const WHATS_NUMBER = '5350896082'; // Tu número de WhatsApp
+
+    function openWhats(e) {
+      e.preventDefault();
+      const el = e.currentTarget;
+      const name = el.getAttribute('data-name') || 'interés en un producto';
+      const text = encodeURIComponent(`Hola, estoy interesado en el ${name}. ¿Podría darme más información sobre precio y envío?`);
+      const url = `https://wa.me/${WHATS_NUMBER}?text=${text}`;
+      window.open(url, '_blank');
+    }
+  </script>
 </body>
 </html>
