@@ -2,86 +2,93 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tienda de Motos • Apacargo</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda de Motos | Apacargo</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
-      font-family: "Poppins", sans-serif;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
       margin: 0;
-      background: linear-gradient(to bottom, #ffffff, #e6ecff);
-      color: #001f4d;
+      padding: 0;
     }
 
     header {
       background: #001f4d;
-      color: white;
-      padding: 10px 0;
+      color: #fff;
+      padding: 15px;
       text-align: center;
+      font-size: 24px;
+      letter-spacing: 1px;
     }
 
-    header img {
-      width: 100px;
-    }
-
-    h1 {
-      color: #d4af37;
-      margin-top: 10px;
-    }
-
-    .container {
+    .moto-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
-      padding: 40px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
     }
 
-    .card {
+    .moto-card {
       background: white;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       overflow: hidden;
       text-align: center;
-      transition: transform 0.3s ease;
+      transition: transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
+    .moto-card:hover {
+      transform: scale(1.03);
     }
 
-    .card img {
+    .moto-card img {
       width: 100%;
       height: 200px;
       object-fit: cover;
+      display:block;
     }
 
-    .card h3 {
-      color: #001f4d;
+    .moto-card .body {
+      padding: 16px;
+    }
+
+    .moto-card h3 {
+      margin: 10px 0 6px;
       font-size: 20px;
-      margin: 10px 0 5px;
+      color: #001f4d;
     }
 
-    .card p {
+    .moto-card p.desc {
+      color: #444;
       font-size: 15px;
-      margin: 0 10px 15px;
+      margin: 0 0 12px;
+      min-height: 44px;
     }
 
-    .price {
+    .moto-card .price {
       font-weight: bold;
       color: #d4af37;
       font-size: 18px;
+      margin-bottom: 12px;
     }
 
     .buy-btn {
       background-color: #d4af37;
       color: #001f4d;
-      padding: 10px 20px;
-      margin-bottom: 20px;
+      padding: 10px 18px;
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.2s;
       font-weight: bold;
+      text-decoration: none;
+      display:inline-block;
     }
 
     .buy-btn:hover {
@@ -90,111 +97,141 @@
 
     footer {
       text-align: center;
-      padding: 20px;
+      padding: 15px;
       background: #001f4d;
       color: white;
-      margin-top: 40px;
+      margin-top: 20px;
     }
 
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 22px;
-      }
+    @media (max-width: 480px) {
+      header { font-size: 18px; padding: 12px; }
+      .moto-card img { height: 160px; }
     }
   </style>
 </head>
-
 <body>
   <header>
-    <img src="images/logo.png" alt="Apacargo Logo">
-    <h1>Motos Eléctricas y de Combustión</h1>
+    <img src="images/logo.png" alt="Apacargo Logo" style="height:72px; display:block; margin:0 auto 8px;">
+    <div style="font-weight:700; color:#d4af37; font-size:18px;">Motos Eléctricas y de Combustión</div>
   </header>
 
-  <main class="container">
-    <!-- Moto 1 -->
-    <div class="card">
-      <img src="images/moto1.jpg" alt="Moto 1">
-      <h3>Moto Eléctrica Modelo A</h3>
-      <p>Autonomía: 80 km • Velocidad: 60 km/h</p>
-      <p class="price">$2,300 USD</p>
-      <button class="buy-btn" onclick="window.open('https://wa.me/5350000000','_blank')">Comprar</button>
+  <main class="moto-container">
+    <!-- ====== MOTO 1 ====== -->
+    <div class="moto-card">
+      <img src="images/moto1.jpg" alt="Moto Eléctrica X1">
+      <div class="body">
+        <h3>Moto Eléctrica X1</h3>
+        <p class="desc">Autonomía 80 km • Velocidad máxima 60 km/h • Batería extraíble</p>
+        <div class="price">$1,200 USD</div>
+        <a class="buy-btn" href="#" data-name="Moto Eléctrica X1" onclick="openWhats(event)">Comprar</a>
+      </div>
     </div>
 
-    <!-- Moto 2 -->
-    <div class="card">
-      <img src="images/moto2.jpg" alt="Moto 2">
-      <h3>Moto Eléctrica Modelo B</h3>
-      <p>Autonomía: 100 km • Batería: 2000W</p>
-      <p class="price">$2,700 USD</p>
-      <button class="buy-btn" onclick="window.open('https://wa.me/5350000000','_blank')">Comprar</button>
+    <!-- ====== MOTO 2 ====== -->
+    <div class="moto-card">
+      <img src="images/moto2.jpg" alt="Super Moped 150cc">
+      <div class="body">
+        <h3>Super Moped 150cc</h3>
+        <p class="desc">Motor 150cc • Consumo eficiente • Ideal ciudad y carretera</p>
+        <div class="price">$1,800 USD</div>
+        <a class="buy-btn" href="#" data-name="Super Moped 150cc" onclick="openWhats(event)">Comprar</a>
+      </div>
     </div>
 
-    <!-- Moto 3 -->
-    <div class="card">
-      <img src="images/moto3.jpg" alt="Moto 3">
-      <h3>Moto Gasolina Modelo C</h3>
-      <p>Motor 125cc • Año 2021</p>
-      <p class="price">$1,900 USD</p>
-      <button class="buy-btn" onclick="window.open('https://wa.me/5350000000','_blank')">Comprar</button>
+    <!-- ====== MOTO 3 ====== -->
+    <div class="moto-card">
+      <img src="images/moto3.jpg" alt="Honda Wave 110">
+      <div class="body">
+        <h3>Honda Wave 110</h3>
+        <p class="desc">Motor 110cc • Reconocida durabilidad • Bajo mantenimiento</p>
+        <div class="price">$2,000 USD</div>
+        <a class="buy-btn" href="#" data-name="Honda Wave 110" onclick="openWhats(event)">Comprar</a>
+      </div>
     </div>
 
-    <!-- Moto 4 -->
-    <div class="card">
-      <img src="images/moto4.jpg" alt="Moto 4">
-      <h3>Moto Eléctrica Modelo D</h3>
-      <p>Autonomía: 120 km • Batería de litio</p>
-      <p class="price">$3,000 USD</p>
-      <button class="buy-btn" onclick="window.open('https://wa.me/5350000000','_blank')">Comprar</button>
+    <!-- ====== MOTO 4 ====== -->
+    <div class="moto-card">
+      <img src="images/moto4.jpg" alt="Suzuki AX4">
+      <div class="body">
+        <h3>Suzuki AX4</h3>
+        <p class="desc">Motor 125cc • Apta para uso diario • Diseño deportivo</p>
+        <div class="price">$2,300 USD</div>
+        <a class="buy-btn" href="#" data-name="Suzuki AX4" onclick="openWhats(event)">Comprar</a>
+      </div>
     </div>
 
-    <!-- Moto 5 -->
-    <div class="card">
-      <img src="images/moto5.jpg" alt="Moto 5">
-      <h3>Moto Gasolina Modelo E</h3>
-      <p>Motor 150cc • Año 2020</p>
-      <p class="price">$2,200 USD</p>
-      <button class="buy-btn" onclick="window.open('https://wa.me/5350000000','_blank')">Comprar</button>
+    <!-- ====== MOTO 5 ====== -->
+    <div class="moto-card">
+      <img src="images/moto5.jpg" alt="Dayun 125cc">
+      <div class="body">
+        <h3>Dayun 125cc</h3>
+        <p class="desc">Económica, fácil de reparar y con buena disponibilidad de repuestos</p>
+        <div class="price">$1,650 USD</div>
+        <a class="buy-btn" href="#" data-name="Dayun 125cc" onclick="openWhats(event)">Comprar</a>
+      </div>
     </div>
 
-    <!-- Moto 6 -->
-    <div class="card">
-      <img src="images/moto6.jpg" alt="Moto 6">
-      <h3>Moto Eléctrica Modelo F</h3>
-      <p>Autonomía: 90 km • Carga rápida</p>
-      <p class="price">$2,600 USD</p>
-      <button class="buy-btn" onclick="window.open('https://wa.me/5350000000','_blank')">Comprar</button>
+    <!-- ====== MOTO 6 ====== -->
+    <div class="moto-card">
+      <img src="images/moto6.jpg" alt="Electric Scooter E5">
+      <div class="body">
+        <h3>Electric Scooter E5</h3>
+        <p class="desc">Scooter urbano, ligera y maniobrable • Ideal para recorridos cortos</p>
+        <div class="price">$1,400 USD</div>
+        <a class="buy-btn" href="#" data-name="Electric Scooter E5" onclick="openWhats(event)">Comprar</a>
+      </div>
     </div>
 
-    <!-- Moto 7 -->
-    <div class="card">
-      <img src="images/moto7.jpg" alt="Moto 7">
-      <h3>Moto Gasolina Modelo G</h3>
-      <p>Motor 110cc • Año 2019</p>
-      <p class="price">$1,800 USD</p>
-      <button class="buy-btn" onclick="window.open('https://wa.me/5350000000','_blank')">Comprar</button>
+    <!-- ====== MOTO 7 ====== -->
+    <div class="moto-card">
+      <img src="images/moto7.jpg" alt="Yamaha Crypton">
+      <div class="body">
+        <h3>Yamaha Crypton</h3>
+        <p class="desc">Fiabilidad Yamaha • Motor 125cc • Excelente performance</p>
+        <div class="price">$2,150 USD</div>
+        <a class="buy-btn" href="#" data-name="Yamaha Crypton" onclick="openWhats(event)">Comprar</a>
+      </div>
     </div>
 
-    <!-- Moto 8 -->
-    <div class="card">
-      <img src="images/moto8.jpg" alt="Moto 8">
-      <h3>Moto Eléctrica Modelo H</h3>
-      <p>Autonomía: 150 km • Velocidad 80 km/h</p>
-      <p class="price">$3,400 USD</p>
-      <button class="buy-btn" onclick="window.open('https://wa.me/5350000000','_blank')">Comprar</button>
+    <!-- ====== MOTO 8 ====== -->
+    <div class="moto-card">
+      <img src="images/moto8.jpg" alt="Ranger Sport 200">
+      <div class="body">
+        <h3>Ranger Sport 200</h3>
+        <p class="desc">200cc • Potencia deportiva • Ideal para trayectos largos</p>
+        <div class="price">$2,450 USD</div>
+        <a class="buy-btn" href="#" data-name="Ranger Sport 200" onclick="openWhats(event)">Comprar</a>
+      </div>
     </div>
 
-    <!-- Moto 9 -->
-    <div class="card">
-      <img src="images/moto9.jpg" alt="Moto 9">
-      <h3>Moto Gasolina Modelo I</h3>
-      <p>Motor 200cc • Año 2022</p>
-      <p class="price">$2,900 USD</p>
-      <button class="buy-btn" onclick="window.open('https://wa.me/5350000000','_blank')">Comprar</button>
+    <!-- ====== MOTO 9 ====== -->
+    <div class="moto-card">
+      <img src="images/moto9.jpg" alt="Keller 150 Eco">
+      <div class="body">
+        <h3>Keller 150 Eco</h3>
+        <p class="desc">150cc • Buen balance entre precio y prestaciones</p>
+        <div class="price">$1,750 USD</div>
+        <a class="buy-btn" href="#" data-name="Keller 150 Eco" onclick="openWhats(event)">Comprar</a>
+      </div>
     </div>
   </main>
 
   <footer>
-    <p>© 2025 Apacargo Express — Todos los derechos reservados.</p>
+    <p>© 2025 Apacargo - Todos los derechos reservados</p>
   </footer>
+
+  <!-- ====== SCRIPT: abre WhatsApp con mensaje predefinido ====== -->
+  <script>
+    const WHATS_NUMBER = '5350896082'; // Tu número de WhatsApp
+
+    function openWhats(e) {
+      e.preventDefault();
+      const el = e.currentTarget;
+      const name = el.getAttribute('data-name') || 'interés en un producto';
+      const text = encodeURIComponent(`Hola, estoy interesado en la ${name}. Quisiera más información / precio / disponibilidad.`);
+      const url = `https://wa.me/${WHATS_NUMBER}?text=${text}`;
+      window.open(url, '_blank');
+    }
+  </script>
 </body>
 </html>
