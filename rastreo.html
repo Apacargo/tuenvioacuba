@@ -1,37 +1,183 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Rastreo • Apacargo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rastreo | Apacargo</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: #f4f7fb;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(90deg, #004aad, #d4af37);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 50px 20px;
+    }
+
+    .tracker-box {
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 15px;
+      padding: 40px 30px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 0.7s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tracker-box h2 {
+      color: #004aad;
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+    }
+
+    .tracker-box p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 80%;
+      padding: 12px 15px;
+      border-radius: 30px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #004aad;
+      box-shadow: 0 0 5px rgba(0, 74, 173, 0.4);
+    }
+
+    button {
+      margin-top: 15px;
+      background: #d4af37;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #b9932f;
+    }
+
+    #trackResult {
+      margin-top: 25px;
+      font-size: 1.05rem;
+      color: #004aad;
+      min-height: 30px;
+    }
+
+    #mapContainer {
+      margin-top: 25px;
+      display: none;
+      width: 100%;
+      height: 250px;
+      border-radius: 10px;
+      background: #eaeaea;
+    }
+
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      background: #004aad;
+      color: white;
+      padding: 15px;
+      font-size: 0.9rem;
+    }
+
+    .note {
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html"><img src="images/logo.png" alt="Apacargo" class="brand-logo"><div><div class="brand-name">Apacargo</div><div class="brand-sub">Rastreo</div></div></a>>
-  </header>
+
+  <header>📦 Rastreo de Envíos | Apacargo</header>
 
   <main>
-    <section class="section">
-      <div class="container">
-        <h2>Rastreo de envío</h2>
-        <p>Introduce tu número de seguimiento (ej.: AP-2025-000123)</p>
-        <div class="tracker">
-          <input id="trackId" placeholder="Ej: AP-2025-000123" />
-          <button class="btn btn-primary" onclick="trackLookup()">Rastrear</button>
-        </div>
+    <div class="tracker-box">
+      <h2>Consulta el estado de tu envío</h2>
+      <p>Introduce tu número de seguimiento (ejemplo: <strong>AP-2025-000123</strong>)</p>
 
-        <div id="trackResult" class="track-result"></div>
+      <input id="trackId" placeholder="Ej: AP-2025-000123" />
+      <br />
+      <button onclick="trackLookup()">Rastrear</button>
 
-        <div id="mapContainer" class="map-wrap hidden"></div>
+      <div id="trackResult"></div>
+      <div id="mapContainer"></div>
 
-        <div class="note small">Si eres administrador usa <a href="admin.html">el panel admin</a> para actualizar ubicaciones y estados.</div>
-      </div>
-    </section>
+      <div class="note">Para más información, contacta con tu representante local en Cuba.</div>
+    </div>
   </main>
 
-  <footer class="site-footer"><div class="container footer-inner"><div><strong>Apacargo</strong></div><div class="socials"><a href="index.html">Volver</a></div></div></footer>
-  <script src="script.js"></script>
+  <footer>© 2025 Apacargo — Todos los derechos reservados.</footer>
+
+  <script>
+    function trackLookup() {
+      const trackId = document.getElementById("trackId").value.trim();
+      const result = document.getElementById("trackResult");
+      const map = document.getElementById("mapContainer");
+
+      if (trackId === "") {
+        result.textContent = "⚠️ Por favor, ingresa un número de rastreo válido.";
+        map.style.display = "none";
+        return;
+      }
+
+      // 🔒 Código secreto para panel admin
+      if (trackId.toLowerCase() === "admin2025") {
+        result.innerHTML = "🔐 Accediendo al panel administrativo...";
+        setTimeout(() => {
+          window.location.href = "admin.html";
+        }, 1200);
+        return;
+      }
+
+      // Simulación de datos de ejemplo
+      const fakeStatus = [
+        "Tu paquete ha sido recibido en el almacén de Miami.",
+        "En tránsito hacia Cuba.",
+        "Llegó a La Habana y está en proceso de distribución.",
+        "Entregado al destinatario."
+      ];
+
+      const randomStatus = fakeStatus[Math.floor(Math.random() * fakeStatus.length)];
+      result.textContent = "📦 Estado actual: " + randomStatus;
+      map.style.display = "block";
+    }
+  </script>
 </body>
 </html>
