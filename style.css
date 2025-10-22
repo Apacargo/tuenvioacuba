@@ -77,7 +77,7 @@ body {
 
 /* ===== SECCIÓN HERO ===== */
 .hero {
-  background: url('images/fondo_principal.jpg') center/cover no-repeat;
+  background: url('images/fondo_principal.png') center/cover no-repeat;
   min-height: 90vh;
   display: flex;
   align-items: center;
