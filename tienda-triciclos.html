@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tienda de Triciclos | Apacargo</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: #f2f2f2;
       margin: 0;
       padding: 0;
@@ -20,6 +20,29 @@
       text-align: center;
       font-size: 24px;
       letter-spacing: 1px;
+    }
+
+    .search-box {
+      text-align: center;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .search-box input {
+      width: 90%;
+      max-width: 500px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .search-box input:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 6px rgba(212,175,55,0.6);
     }
 
     .triciclo-container {
@@ -115,204 +138,112 @@
     <div style="font-weight:700; color:#d4af37; font-size:18px;">Triciclos Eléctricos y de Combustión</div>
   </header>
 
-  <main class="triciclo-container">
-    <!-- ====== TRICICLO 1 ====== -->
+  <!-- ====== BUSCADOR ====== -->
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Buscar triciclo por nombre o descripción...">
+  </div>
+
+  <main class="triciclo-container" id="tricicloContainer">
+    <!-- ====== TRICICLOS ====== -->
+
     <div class="triciclo-card">
       <img src="images/triciclo1.jpg" alt="DAYANG BEIYI T5">
       <div class="body">
         <h3>DAYANG BEIYI T5</h3>
-        <p class="desc">Poder	& gt; 800W
-Voltaje	12v
-Desplazamiento	201 - 250 cc
-Tamaño	3.5m*1.4m*1.35m
-Motor	250cc, refrigeración por agua
-Capacidad de carga	1000 kg-2000 kg
-Tamaño de la caja de carga	2m*1.4m
-máxima velocidad	65km / h
-Hojas de resorte trasero	5+2
-Freno	Hidráulico
-Combustible</p>
-        <div class="price">$3500USD</div>
+        <p class="desc">Motor 250cc, refrigeración por agua. Carga hasta 2000 kg. Velocidad máxima 65km/h.</p>
+        <div class="price">$3500 USD</div>
         <a class="buy-btn" href="#" data-name="DAYANG BEIYI T5" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
-    <!-- ====== TRICICLO 2 ====== -->
     <div class="triciclo-card">
       <img src="images/triciclo2.jpg" alt="Motorizado 200cc Triciclo de Carga Motocicleta">
       <div class="body">
         <h3>Motorizado 200cc Triciclo de Carga Motocicleta</h3>
-        <p class="desc">Motor	200cc, refrigeración por agua
-Chasis	50*100
-Eje trasero	Tambor de refuerzo intergral, Φ220
-Cabaña	Semi cabina, material de hierro
-Amortiguador delantero	Muelle tipo 09
-Hojas de resorte trasero	5+2
-Freno trasero	Hidráulico
-Tipo de ruedas	Tres
-Neumático delantero/trasero	4.5-12/4.5-12</p>
-        <div class="price">$3000USD</div>
+        <p class="desc">200cc refrigeración por agua. Semi cabina, freno hidráulico, 3 ruedas reforzadas.</p>
+        <div class="price">$3000 USD</div>
         <a class="buy-btn" href="#" data-name="Motorizado 200cc Triciclo de Carga Motocicleta" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
-    <!-- ====== TRICICLO 3 ====== -->
     <div class="triciclo-card">
       <img src="images/triciclo3.jpg" alt="Triciclo de motor de camión DY-P2">
       <div class="body">
         <h3>Triciclo de motor de camión DY-P2</h3>
-        <p class="desc">Poder	> 800W
-Voltaje	12V
-Desplazamiento	> 250cc
-Tamaño	3.7M * 1.5 * 1.4m
-Nombre del producto	Triciclo de carga
-Motor	1000cc, refrigeración por agua
-quilla	50*100
-Eje trasero	Tambor de refuerzo Intergral, 250
-modelo de opearating	Asa (volante opcional del coche)
-Resorte foliar	6+3
-Tamaño de la caja de carga	2.4*1.5
-Neumático	5.50-13
-Cabaña	cerrado completo
-Caja de carga	2.4*1.5</p>
-        <div class="price">$3800USD</div>
+        <p class="desc">Motor 1000cc, caja de carga 2.4x1.5m, freno hidráulico, cabina cerrada completa.</p>
+        <div class="price">$3800 USD</div>
         <a class="buy-btn" href="#" data-name="Triciclo de motor de camión DY-P2" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
-    <!-- ====== TRICICLO 4 ====== -->
     <div class="triciclo-card">
       <img src="images/triciclo4.jpg" alt="Triciclo 150CC">
       <div class="body">
         <h3>Triciclo 150CC</h3>
-        <p class="desc">Tipo de motor: 150cc 4 tiempos, monocilíndrico, refrigerado por aire
-Desplazamiento (ml):	151
-Relación de compresión:	9:1
-Velocidad máxima de rotación de potencia:	10,6 kw/9000 r/min±300 r/min
-Velocidad de rotación nominal .power:	9.5kw/9000r/min±300r/min
-Velocidad máxima de rotación del par:	13.5.0N.m/7500r/min±225r/min
-Velocidad de ralentí:	1420 rpm
-Dimensión (L*W*H):	3000*1250*1360
-peso neto (kg):	260
-Carga máxima (kg): 500kg
-Freno (F/R):	Tambor/Tambor
-Sistema de arranque:	Tirón eléctrico/manual
-Tamaño del neumático (F/R):	4.5-12
-chasis:	40 * 80 mm</p>
-        <div class="price">$29000 USD</div>
+        <p class="desc">Motor 150cc 4 tiempos. Carga máxima 500kg. Freno delantero y trasero de tambor.</p>
+        <div class="price">$2900 USD</div>
         <a class="buy-btn" href="#" data-name="Triciclo 150CC" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
-    <!-- ====== TRICICLO 5 ====== -->
     <div class="triciclo-card">
       <img src="images/triciclo5.jpg" alt="Triciclo de cabina cerrada para carga">
       <div class="body">
         <h3>Triciclo de cabina cerrada para carga</h3>
-        <p class="desc">Poder	& gt; 800W
-Voltaje	12V
-Desplazamiento	& gt; 250cc
-Tamaño	3.7m*1.4m*1.4m
-Motor	Enfriado hidráulicamente
-Tipo de motor	250cc
-Freno	Freno de tambor
-Neumático	5.00-12 / 5.5-13 opcional
-Capacidad de carga	1000 kg-2000 kg
-Tamaño de la caja de carga	2.4*1.4m
-chasis	40*100</p>
-        <div class="price">$3800USD</div>
+        <p class="desc">Motor 250cc enfriado hidráulicamente. Carga hasta 2000 kg. Freno de tambor.</p>
+        <div class="price">$3800 USD</div>
         <a class="buy-btn" href="#" data-name="Triciclo de cabina cerrada para carga" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
-    <!-- ====== TRICICLO 6 ====== -->
     <div class="triciclo-card">
       <img src="images/triciclo6.jpg" alt="TRICICLO ELECTRICO 3 RUEDAS MISHOZUKI">
       <div class="body">
         <h3>TRICICLO ELECTRICO 3 RUEDAS MISHOZUKI</h3>
-        <p class="desc">Potencia del motor: 1,200w
-Voltaje del motor: 72v
-Tipo de batería: batería de plomo-acido
-Capacidad de batería: 72 v 60 Ah
-Autonomía máxima:50 kg/2 persona (500kg)
-Tiempo de carga de la batería: 6-8 horas
-Dimensiones del producto: (mm) 2690 x 1080 x 1350
-Sistema de arranque: Eléctrico.
-Peso Neto: 390(kg)
-Carga máxima: 500 (kg)
-Velocidad máxima: 40(km/h)
-Tamaño del neumático: 3.50-12 , 3.75-12 (delantero/trasero)
-Distancia entre ejes: 1980 (mm</p>
-        <div class="price">$2400USD</div>
+        <p class="desc">Motor 1200w 72v. Carga 500kg. Autonomía 50km. Batería plomo-ácido 72v 60Ah.</p>
+        <div class="price">$2400 USD</div>
         <a class="buy-btn" href="#" data-name="TRICICLO ELECTRICO 3 RUEDAS MISHOZUKI" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
-    <!-- ====== TRICICLO 7 ====== -->
     <div class="triciclo-card">
       <img src="images/triciclo7.jpg" alt="ONEBOT Triciclo eléctrico T414 (X1)">
       <div class="body">
         <h3>ONEBOT Triciclo eléctrico T414 (X1)</h3>
-        <p class="desc">Controlador 	Voltaje de VOTOL EM-70: 60/72V Potencia: 1200W-1500W
-Motor 	60V 1000W sin escobillas
-Batería de batería 	Ácido de plomo 60V/52AH
-Tiempo de carga 	8-11 horas
-Velocidad máxima (km/h) 	40 km/h
-Rango 	≥65km
-Freno 	Freno de disco delantero/freno de disco trasero
-La distancia entre ejes 	1690 mm
-Capacidad de carga 	300 kg</p>
-        <div class="price">$2300USD</div>
+        <p class="desc">Motor 1000W, 72V. Velocidad máx. 40km/h. Carga 300kg. Freno de disco.</p>
+        <div class="price">$2300 USD</div>
         <a class="buy-btn" href="#" data-name="ONEBOT Triciclo eléctrico T414 (X1)" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
-    <!-- ====== TRICICLO 8 ====== -->
     <div class="triciclo-card">
       <img src="images/triciclo8.jpg" alt="Triciclo eléctrico de ONEBOT MS172A">
       <div class="body">
         <h3>Triciclo eléctrico de ONEBOT MS172A</h3>
-        <p class="desc">Controlador 	Voltaje de VOTOL EM-70: 60/72V Potencia: 1200W
-Motor 	72V 1200W sin escobillas
-Batería de batería 	72V/58Ah Ácido de plomo
-Velocidad máxima	39km/h
-Rango 	113km
-Amortiguador delantero 	Φ37 con muelle exterior
-Peso de la barra sin batería 	195 kgs
-Capacidad de carga 	400kg</p>
+        <p class="desc">Motor 1200W, 72V. Rango 113km. Carga 400kg. Suspensión avanzada y freno hidráulico.</p>
         <div class="price">$2500 USD</div>
         <a class="buy-btn" href="#" data-name="Triciclo eléctrico de ONEBOT MS172A" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
-    <!-- ====== TRICICLO 9 ====== -->
     <div class="triciclo-card">
       <img src="images/triciclo9.jpg" alt="Triciclo Changli">
       <div class="body">
         <h3>Triciclo Changli</h3>
-        <p class="desc">Potencia 1000W Voltaje 60V
-Velocidad máxima 30-50Km/h
-Tiempo de carga 6-9h
-Sistema de frenos Tambor delantero + tambor trasero
-Capacidad de Carga ≥400kg
-Tamaño 1300*1000(mm)
-Velocidad máxima 30km/h
-Tiempo de carga 7-10h
-Capacidad de carga 500kg
-Peso neto 317 Kg</p>
-        <div class="price">$2600USD</div>
+        <p class="desc">Motor 1000W 60V. Velocidad 30–50km/h. Carga 500kg. Peso neto 317kg.</p>
+        <div class="price">$2600 USD</div>
         <a class="buy-btn" href="#" data-name="Triciclo Changli" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
+
   </main>
 
   <footer>
     <p>© 2025 Apacargo – Todos los derechos reservados</p>
   </footer>
 
-  <!-- ====== SCRIPT: abrir WhatsApp con mensaje predefinido ====== -->
   <script>
-    const WHATS_NUMBER = '5350896082'; // Tu número de WhatsApp
+    const WHATS_NUMBER = '5350896082';
 
     function openWhats(e) {
       e.preventDefault();
@@ -322,6 +253,20 @@ Peso neto 317 Kg</p>
       const url = `https://wa.me/${WHATS_NUMBER}?text=${text}`;
       window.open(url, '_blank');
     }
+
+    // ===== BUSCADOR =====
+    const searchInput = document.getElementById('searchInput');
+    const container = document.getElementById('tricicloContainer');
+
+    searchInput.addEventListener('keyup', function() {
+      const term = this.value.toLowerCase();
+      const cards = container.getElementsByClassName('triciclo-card');
+      for (let card of cards) {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const desc = card.querySelector('.desc').textContent.toLowerCase();
+        card.style.display = (name.includes(term) || desc.includes(term)) ? 'flex' : 'none';
+      }
+    });
   </script>
 </body>
 </html>
