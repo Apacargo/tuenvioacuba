@@ -4,24 +4,62 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tienda de Motos | Apacargo</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
+      font-family: 'Poppins', sans-serif;
+      background: #f2f6fa;
       margin: 0;
-      padding: 0;
+      color: #222;
     }
 
     header {
-      background: #001f4d;
+      background: linear-gradient(90deg, #001f4d, #d4af37);
       color: #fff;
       padding: 15px;
       text-align: center;
-      font-size: 24px;
+      font-size: 1.6rem;
       letter-spacing: 1px;
+      font-weight: 600;
     }
 
+    header img {
+      height: 72px;
+      display: block;
+      margin: 0 auto 8px;
+    }
+
+    header .subtitulo {
+      font-weight: 700;
+      color: #d4af37;
+      font-size: 18px;
+    }
+
+    /* === Buscador === */
+    .buscador {
+      text-align: center;
+      margin: 25px 0;
+    }
+
+    .buscador input {
+      width: 85%;
+      max-width: 450px;
+      padding: 12px 20px;
+      border: 2px solid #001f4d;
+      border-radius: 25px;
+      outline: none;
+      font-size: 1rem;
+      transition: 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .buscador input:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 6px rgba(212, 175, 55, 0.4);
+    }
+
+    /* === Motos === */
     .moto-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -33,25 +71,25 @@
 
     .moto-card {
       background: white;
-      border-radius: 10px;
+      border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       overflow: hidden;
       text-align: center;
-      transition: transform 0.2s;
+      transition: transform 0.3s;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
     .moto-card:hover {
-      transform: scale(1.03);
+      transform: translateY(-6px);
     }
 
     .moto-card img {
       width: 100%;
       height: 200px;
       object-fit: cover;
-      display:block;
+      display: block;
     }
 
     .moto-card .body {
@@ -60,35 +98,33 @@
 
     .moto-card h3 {
       margin: 10px 0 6px;
-      font-size: 20px;
+      font-size: 1.2rem;
       color: #001f4d;
     }
 
     .moto-card p.desc {
-      color: #444;
-      font-size: 15px;
+      color: #555;
+      font-size: 0.95rem;
       margin: 0 0 12px;
-      min-height: 44px;
+      min-height: 60px;
+      text-align: left;
     }
 
     .moto-card .price {
       font-weight: bold;
       color: #d4af37;
-      font-size: 18px;
+      font-size: 1.1rem;
       margin-bottom: 12px;
     }
 
     .buy-btn {
       background-color: #d4af37;
-      color: #001f4d;
+      color: white;
       padding: 10px 18px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.2s;
-      font-weight: bold;
+      border-radius: 25px;
       text-decoration: none;
-      display:inline-block;
+      font-weight: bold;
+      transition: 0.3s;
     }
 
     .buy-btn:hover {
@@ -100,213 +136,154 @@
       padding: 15px;
       background: #001f4d;
       color: white;
-      margin-top: 20px;
+      margin-top: 40px;
+      font-size: 0.9rem;
     }
 
     @media (max-width: 480px) {
-      header { font-size: 18px; padding: 12px; }
+      header { font-size: 1.3rem; padding: 12px; }
       .moto-card img { height: 160px; }
+      .buscador input { width: 90%; }
     }
   </style>
 </head>
+
 <body>
   <header>
-    <img src="images/logo.png" alt="Apacargo Logo" style="height:72px; display:block; margin:0 auto 8px;">
-    <div style="font-weight:700; color:#d4af37; font-size:18px;">Motos Eléctricas y de Combustión</div>
+    <img src="images/logo.png" alt="Apacargo Logo">
+    <div class="subtitulo">Motos Eléctricas y de Combustión</div>
   </header>
 
-  <main class="moto-container">
+  <!-- === Buscador === -->
+  <div class="buscador">
+    <input type="text" id="buscar" placeholder="Buscar una moto...">
+  </div>
+
+  <main class="moto-container" id="lista-motos">
     <!-- ====== MOTO 1 ====== -->
-    <div class="moto-card">
+    <div class="moto-card" data-nombre="Kawasaki Eliminator 250">
       <img src="images/moto1.jpg" alt="Kawasaki Eliminator 250">
       <div class="body">
         <h3>Kawasaki Eliminator 250</h3>
-        <p class="desc">Tipo:	Enfriado líquido, cuatro tiempos, cilindro doble paralelo, DOHC, 4 válvulas por cilindro
-Desplazamiento:	249 cm3
-Carretilla de perforación X:	2.44x1.62 en OR 62 mm
-Relación de compresión:	12.4:1
-Caballos de fuerza:	29 KW @ 12500 RPM
-40 HP @ 12500 RPM
-Torque:	17 lb-ft @ 10000 RPM
-23 Nm @ 10000 RPM
-Sistema de combustible:	Carburador
-Caja de cambios:	6 velocidades </p>
+        <p class="desc">Enfriado líquido, 4 tiempos, 2 cilindros. 249 cc, 40 HP, 6 velocidades.</p>
         <div class="price">$4200 USD</div>
         <a class="buy-btn" href="#" data-name="Kawasaki Eliminator 250" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
     <!-- ====== MOTO 2 ====== -->
-    <div class="moto-card">
+    <div class="moto-card" data-nombre="Honda Rebel 250">
       <img src="images/moto2.jpg" alt="Honda Rebel 250">
       <div class="body">
         <h3>Honda Rebel 250</h3>
-        <p class="desc">Motor: Bicilíndrico en paralelo refrigerado por aire de 234 cc.
-Potencia: Aproximadamente 19 hp @ 8,250 rpm.
-Transmisión: Manual de 5 velocidades.
-Frenos: Disco delantero y tambor trasero.
-Altura del asiento: 26.6 pulgada</p>
+        <p class="desc">Bicilíndrica 234cc, 5 velocidades, 19 HP, frenos de disco delantero.</p>
         <div class="price">$5200 USD</div>
         <a class="buy-btn" href="#" data-name="Honda Rebel 250" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
     <!-- ====== MOTO 3 ====== -->
-    <div class="moto-card">
+    <div class="moto-card" data-nombre="Suzuki GSX250R">
       <img src="images/moto3.jpg" alt="Suzuki GSX250R">
       <div class="body">
         <h3>Suzuki GSX250R</h3>
-        <p class="desc">Motor: 	SOHC, bicilíndrico en paralelo, refrigeración líquida; 4 válvulas/cilindro.
-Desplazamiento: 	248 cc
-Transmisión/Transmisión final: 	6 velocidades/cadena
-Sistema de combustible: 	Inyección electrónica de combustible
-Embrague: 	Húmedo, multiplaca; funcionamiento por cable
-Suspensión delantera: 	Horquilla telescópica, no ajustable; recorrido de 4,5 pulgadas
-Suspensión trasera: 	Tipo enlace, precarga ajustable; recorrido de 4,9 pulg.
-Freno delantero: 	Pinza de 2 pistones, disco de 290 mm con ABS
-Freno trasero: 	Pinza de 1 pistón, disco de 240 mm con ABS</p>
-        <div class="price">$3800USD</div>
+        <p class="desc">Motor bicilíndrico 248cc, 6 velocidades, ABS, suspensión avanzada.</p>
+        <div class="price">$3800 USD</div>
         <a class="buy-btn" href="#" data-name="Suzuki GSX250R" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
     <!-- ====== MOTO 4 ====== -->
-    <div class="moto-card">
+    <div class="moto-card" data-nombre="Suzuki AX4">
       <img src="images/moto4.jpg" alt="Suzuki AX4">
       <div class="body">
         <h3>Suzuki AX4</h3>
-        <p class="desc">Motor: 113 cc, 4 tiempos, 1 cilindro, enfriado por aire, SOHC.
-Potencia: 8.03 HP @ 8000 RPM.
-Torque: 0.78 Nm @ 5500 RPM.
-Transmisión: 4 velocidades de engranaje constante.
-Sistema de combustible: Carburador MIKUNI BS22.
-Frenos: De tambor en ambas ruedas.
-Sistema de arranque: Pedal y electrico
-Tanque de combustible: 9.2 litros.
-Rendimiento: hasta 58 km/litro (aproximadamente).</p>
-        <div class="price">$300USD</div>
+        <p class="desc">Motor 113cc, 4 velocidades, arranque eléctrico y pedal, 58 km/l.</p>
+        <div class="price">$300 USD</div>
         <a class="buy-btn" href="#" data-name="Suzuki AX4" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
     <!-- ====== MOTO 5 ====== -->
-    <div class="moto-card">
+    <div class="moto-card" data-nombre="Mishozuki Racing 45AH">
       <img src="images/moto5.jpg" alt="Mishozuki Racing 45AH">
       <div class="body">
         <h3>Mishozuki Racing 45AH</h3>
-        <p class="desc">
-    Motor power 1000W
-    Motor voltaje 72V
-    Controlador: 50A
-    Tipo de batería lithium ION
-    Capacidad de batería: 1 batería Lithium 72V 45AH
-    4 Velocidades/Reversa
-    Doble freno de disco delantero
-    Recorrido por carga de 130km
-    Sistema de frenos delantero de disco y trasero de disco
-    Accesorios: Alarma, Usb, Full luces Led, Mp3, Bluetooth, Radio
-    Peso: 146 kg
-</p>
-        <div class="price">$1500USD</div>
+        <p class="desc">Motor 1000W, batería 72V 45AH, 130km por carga, Bluetooth y MP3.</p>
+        <div class="price">$1500 USD</div>
         <a class="buy-btn" href="#" data-name="Mishozuki Racing 45AH" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
     <!-- ====== MOTO 6 ====== -->
-    <div class="moto-card">
+    <div class="moto-card" data-nombre="Suzuki GN 125 F">
       <img src="images/moto6.jpg" alt="Suzuki GN 125 F">
       <div class="body">
-        <h3>Suzuki GN 125 F </h3>
-        <p class="desc">Tipo de motor: Monocilíndrico, 4 tiempos, SOHC, refrigerado por aire.
-Cilindrada: 124 cc.
-Potencia máxima: 12.5 HP @ 9000 rpm.
-Torque máximo: 8.6 Nm @ 7000 rpm.
-Sistema de alimentación: Carburador.
-Arranque: Eléctrico.
-Transmisión: 5 velocidades.
-Embrague: Disco múltiple en baño de aceite.
-Encendido: Electrónico transistorizado
-Freno delantero: Disco
-Freno trasero: Tambor</p>
+        <h3>Suzuki GN 125 F</h3>
+        <p class="desc">124cc, 12.5 HP, 5 velocidades, freno delantero de disco.</p>
         <div class="price">$2100 USD</div>
         <a class="buy-btn" href="#" data-name="Suzuki GN 125 F" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
     <!-- ====== MOTO 7 ====== -->
-    <div class="moto-card">
+    <div class="moto-card" data-nombre="SCOOTER ELÉCTRICO MISHOZUKI NEW BIG SHARK-2">
       <img src="images/moto7.jpg" alt="SCOOTER ELÉCTRICO MISHOZUKI NEW BIG SHARK-2">
       <div class="body">
         <h3>SCOOTER ELÉCTRICO MISHOZUKI NEW BIG SHARK-2</h3>
-        <p class="desc">Motor power 1000W
-Motor voltaje 72V
-Controlador 45A
-Tipo de batería lithium ION
-Capacidad de batería – 1 batería / 72V 45AH
-5 velocidades
-Amortiguadores de gas
-Recorrido por carga de 120km-150km
-Sistema de frenos delantero de disco y trasero de disco
-Accesorios: Alarma, Usb, Full Luces Led, Bluetooth, Mp3, Radio</p>
-        <div class="price">$1300USD</div>
+        <p class="desc">1000W, batería 72V 45AH, autonomía 120-150km, luces LED y MP3.</p>
+        <div class="price">$1300 USD</div>
         <a class="buy-btn" href="#" data-name="SCOOTER ELÉCTRICO MISHOZUKI NEW BIG SHARK-2" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
     <!-- ====== MOTO 8 ====== -->
-    <div class="moto-card">
+    <div class="moto-card" data-nombre="Mishozuki PO4 BUHO TRANSFORMER">
       <img src="images/moto8.jpg" alt="Mishozuki PO4 BUHO TRANSFORMER">
       <div class="body">
         <h3>Mishozuki PO4 BUHO TRANSFORMER</h3>
-        <p class="desc">Motor voltaje 72V
-Controlador VOTOL
-Tipo de batería lithium ION
-Capacidad de batería – 1 batería / 72V 70AH
-5 velocidades
-Muffler MP3, SD, USB
-Amortiguadores de gas
-Recorrido por carga de 180km por carga
-Tiempo de carga de batería 4 horas
-Sistema de frenos delantero de disco y trasero de disco</p>
+        <p class="desc">72V 70AH, 180km por carga, frenos de disco, sonido y luces LED.</p>
         <div class="price">$1800 USD</div>
         <a class="buy-btn" href="#" data-name="Mishozuki PO4 BUHO TRANSFORMER" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
 
     <!-- ====== MOTO 9 ====== -->
-    <div class="moto-card">
+    <div class="moto-card" data-nombre="ZITMUV Z-ODÍN PRO 125e">
       <img src="images/moto9.jpg" alt="ZITMUV Z-ODÍN PRO 125e">
       <div class="body">
         <h3>ZITMUV Z-ODÍN PRO 125e</h3>
-        <p class="desc">Motor: 10.000W de potencia.
-Velocidad máxima: 125 km/h.
-Autonomía: Hasta 230 km con 1 persona (en condiciones óptimas).
-Batería: Litio de 72V/120Ah
-Frenos: Doble disco (delantero y trasero).
-Suspensión: Amortiguadores hidráulicos.
-Neumáticos: Tubeless</p>
-        <div class="price">$4900USD</div>
+        <p class="desc">Motor 10.000W, 230km autonomía, batería litio 72V 120Ah, 125 km/h.</p>
+        <div class="price">$4900 USD</div>
         <a class="buy-btn" href="#" data-name="ZITMUV Z-ODÍN PRO 125e" onclick="openWhats(event)">Comprar</a>
       </div>
     </div>
   </main>
 
   <footer>
-    <p>© 2025 Apacargo - Todos los derechos reservados</p>
+    © 2025 Apacargo - Todos los derechos reservados
   </footer>
 
-  <!-- ====== SCRIPT: abre WhatsApp con mensaje predefinido ====== -->
   <script>
-    const WHATS_NUMBER = '5350896082'; // Tu número de WhatsApp
-
+    const WHATS_NUMBER = '5350896082';
     function openWhats(e) {
       e.preventDefault();
-      const el = e.currentTarget;
-      const name = el.getAttribute('data-name') || 'interés en un producto';
-      const text = encodeURIComponent(`Hola, estoy interesado en la ${name}. Quisiera más información / precio / disponibilidad.`);
-      const url = `https://wa.me/${WHATS_NUMBER}?text=${text}`;
-      window.open(url, '_blank');
+      const name = e.currentTarget.getAttribute('data-name');
+      const text = encodeURIComponent(`Hola, estoy interesado en la ${name}. Quisiera más información o disponibilidad.`);
+      window.open(`https://wa.me/${WHATS_NUMBER}?text=${text}`, '_blank');
     }
+
+    // === Buscador dinámico ===
+    const buscador = document.getElementById('buscar');
+    const motos = document.querySelectorAll('.moto-card');
+
+    buscador.addEventListener('input', () => {
+      const texto = buscador.value.toLowerCase();
+      motos.forEach(moto => {
+        const nombre = moto.dataset.nombre.toLowerCase();
+        moto.style.display = nombre.includes(texto) ? 'flex' : 'none';
+      });
+    });
   </script>
 </body>
 </html>
