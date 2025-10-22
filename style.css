@@ -193,7 +193,7 @@ body {
 }
 
 /* ===== IMÁGENES GENERALES ===== */
-img {
+images{
   width: 100%;
   height: auto;
   object-fit: contain; /* muestra la imagen entera sin recorte */
