@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Equipos y Productos | Apacargo</title>
+  <title>Equipos y Productos | APA Cargo</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,7 +23,27 @@
     h1 {
       color: gold;
       font-size: 28px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      margin-top: 0;
+      color: #ccc;
+      font-size: 16px;
+    }
+
+    .search-box {
+      text-align: center;
+      margin: 20px auto;
+    }
+
+    .search-box input {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
     }
 
     .product-grid {
@@ -95,15 +115,26 @@
       font-size: 14px;
       margin-top: 40px;
     }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 22px; }
+      .buy-button { padding: 8px 12px; font-size: 14px; }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Equipos y Productos APA Cargo</h1>
-    <p>Paneles solares, bicicletas eléctricas, electrodomésticos y más</p>
+    <p class="subtitle">Paneles solares, bicicletas eléctricas, electrodomésticos y más</p>
   </header>
 
-  <section class="product-grid">
+  <!-- 🔍 Buscador -->
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Buscar producto..." onkeyup="buscarProducto()" />
+  </div>
+
+  <!-- 🛒 Cuadrícula de productos -->
+  <section class="product-grid" id="productGrid">
     <div class="product">
       <img src="img/panel1.jpg" alt="Panel solar">
       <h2>Panel Solar 500W</h2>
@@ -169,7 +200,7 @@
     </div>
 
     <div class="product">
-      <img src="img/bateria.jpg" alt="Batería de respaldo">
+      <img src="img/bateria.jpg" alt="Batería solar de respaldo">
       <h2>Batería Solar de Respaldo</h2>
       <p>Para sistemas fotovoltaicos domésticos.</p>
       <p class="price">$320 USD</p>
@@ -180,5 +211,17 @@
   <footer>
     <p>© 2025 APA Cargo - Todos los derechos reservados.</p>
   </footer>
+
+  <script>
+    function buscarProducto() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const productos = document.getElementsByClassName("product");
+
+      for (let producto of productos) {
+        const texto = producto.innerText.toLowerCase();
+        producto.style.display = texto.includes(input) ? "block" : "none";
+      }
+    }
+  </script>
 </body>
 </html>
