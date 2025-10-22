@@ -1,88 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rastreo | Apacargo</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rastreo • Apacargo</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      font-family: "Poppins", sans-serif;
       margin: 0;
+      font-family: 'Poppins', sans-serif;
       background: #f4f7fb;
-      color: #333;
+      color: #222;
     }
 
     header {
       background: linear-gradient(90deg, #004aad, #d4af37);
-      color: #fff;
+      padding: 15px;
       text-align: center;
-      padding: 20px;
-      font-size: 1.8rem;
+      color: white;
+      font-size: 1.6rem;
       font-weight: 600;
-      letter-spacing: 1px;
     }
 
     main {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 50px 20px;
-    }
-
-    .tracker-box {
-      background: #fff;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      max-width: 650px;
+      margin: 40px auto;
+      background: white;
       border-radius: 15px;
-      padding: 40px 30px;
-      max-width: 500px;
-      width: 100%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+
+    h2 {
       text-align: center;
-      animation: fadeIn 0.7s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .tracker-box h2 {
       color: #004aad;
-      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      padding: 12px;
       margin-bottom: 15px;
-    }
-
-    .tracker-box p {
-      font-size: 1rem;
-      color: #555;
-      margin-bottom: 25px;
-    }
-
-    input {
-      width: 80%;
-      padding: 12px 15px;
-      border-radius: 30px;
       border: 1px solid #ccc;
-      outline: none;
+      border-radius: 8px;
+      font-family: inherit;
       font-size: 1rem;
-      transition: 0.3s;
-    }
-
-    input:focus {
-      border-color: #004aad;
-      box-shadow: 0 0 5px rgba(0, 74, 173, 0.4);
     }
 
     button {
-      margin-top: 15px;
       background: #d4af37;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 30px;
       color: white;
       font-weight: bold;
-      font-size: 1rem;
+      border: none;
       cursor: pointer;
       transition: 0.3s;
     }
@@ -91,93 +60,231 @@
       background: #b9932f;
     }
 
-    #trackResult {
-      margin-top: 25px;
-      font-size: 1.05rem;
-      color: #004aad;
-      min-height: 30px;
+    .hidden { display: none; }
+
+    .envio-item {
+      border-left: 4px solid #004aad;
+      background: #f8f9fd;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      position: relative;
     }
 
-    #mapContainer {
-      margin-top: 25px;
-      display: none;
-      width: 100%;
-      height: 250px;
-      border-radius: 10px;
-      background: #eaeaea;
+    .envio-id {
+      font-weight: bold;
+      color: #004aad;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #d93636;
     }
 
     footer {
-      margin-top: 60px;
       text-align: center;
+      margin-top: 40px;
+      padding: 15px;
       background: #004aad;
       color: white;
-      padding: 15px;
       font-size: 0.9rem;
     }
 
     .note {
       font-size: 0.85rem;
-      color: #777;
-      margin-top: 20px;
+      text-align: center;
+      color: #555;
     }
   </style>
 </head>
-<body>
 
-  <header>📦 Rastreo de Envíos | Apacargo</header>
+<body>
+  <header>📦 Rastreo de Envíos – Apacargo</header>
 
   <main>
-    <div class="tracker-box">
-      <h2>Consulta el estado de tu envío</h2>
-      <p>Introduce tu número de seguimiento (ejemplo: <strong>AP-2025-000123</strong>)</p>
-
-      <input id="trackId" placeholder="Ej: AP-2025-000123" />
-      <br />
-      <button onclick="trackLookup()">Rastrear</button>
-
+    <section id="rastreo">
+      <h2>Rastreo de envío</h2>
+      <p>Introduce tu número de seguimiento (ej.: <strong>AP-2025-000123</strong>)</p>
+      <div class="tracker">
+        <input id="trackInput" placeholder="Ej: AP-2025-000123" />
+        <button onclick="trackLookup()">Rastrear</button>
+      </div>
       <div id="trackResult"></div>
-      <div id="mapContainer"></div>
 
-      <div class="note">Para más información, contacta con tu representante local en Cuba.</div>
-    </div>
+      <div class="note">Si eres administrador, accede con usuario y contraseña.</div>
+    </section>
+
+    <!-- Login oculto -->
+    <section id="login" class="hidden">
+      <h2>Panel Administrativo</h2>
+      <input type="text" id="user" placeholder="Usuario">
+      <input type="password" id="pass" placeholder="Contraseña">
+      <button onclick="login()">Entrar</button>
+      <p id="loginMsg" style="color:red;text-align:center;"></p>
+    </section>
+
+    <!-- Panel del admin -->
+    <section id="panel" class="hidden">
+      <h2>Actualizar Estado de Envío</h2>
+      <button style="background:#004aad;margin-bottom:15px;" onclick="logout()">Cerrar Sesión</button>
+      <form id="updateForm" onsubmit="updateShipment(event)">
+        <input type="text" id="trackId" placeholder="Número de seguimiento" required>
+        <select id="status" required>
+          <option value="">Seleccionar estado</option>
+          <option value="En preparación">En preparación</option>
+          <option value="En tránsito">En tránsito</option>
+          <option value="En aduana">En aduana</option>
+          <option value="Listo para entrega">Listo para entrega</option>
+          <option value="Entregado">Entregado</option>
+        </select>
+        <input type="text" id="location" placeholder="Ubicación actual" required>
+        <textarea id="notes" placeholder="Notas (opcional)"></textarea>
+        <button type="submit">Actualizar Envío</button>
+      </form>
+
+      <p id="updateMessage" style="text-align:center;color:green;"></p>
+
+      <h3>Últimos envíos actualizados</h3>
+      <div id="enviosList"></div>
+    </section>
   </main>
 
   <footer>© 2025 Apacargo — Todos los derechos reservados.</footer>
 
   <script>
-    function trackLookup() {
-      const trackId = document.getElementById("trackId").value.trim();
-      const result = document.getElementById("trackResult");
-      const map = document.getElementById("mapContainer");
+    const ADMIN_USER = "admin";
+    const ADMIN_PASS = "Apacargo2025"; // 🔒 cambia esta contraseña
 
-      if (trackId === "") {
-        result.textContent = "⚠️ Por favor, ingresa un número de rastreo válido.";
-        map.style.display = "none";
-        return;
-      }
+    let envios = JSON.parse(localStorage.getItem("envios") || "[]");
 
-      // 🔒 Código secreto para panel admin
-      if (trackId.toLowerCase() === "admin2025") {
-        result.innerHTML = "🔐 Accediendo al panel administrativo...";
-        setTimeout(() => {
-          window.location.href = "admin.html";
-        }, 1200);
-        return;
-      }
-
-      // Simulación de datos de ejemplo
-      const fakeStatus = [
-        "Tu paquete ha sido recibido en el almacén de Miami.",
-        "En tránsito hacia Cuba.",
-        "Llegó a La Habana y está en proceso de distribución.",
-        "Entregado al destinatario."
-      ];
-
-      const randomStatus = fakeStatus[Math.floor(Math.random() * fakeStatus.length)];
-      result.textContent = "📦 Estado actual: " + randomStatus;
-      map.style.display = "block";
+    function renderEnvios() {
+      const list = document.getElementById("enviosList");
+      list.innerHTML = "";
+      envios.forEach((e, index) => {
+        const div = document.createElement("div");
+        div.classList.add("envio-item");
+        div.innerHTML = `
+          <button class="delete-btn" onclick="deleteEnvio(${index})">×</button>
+          <div class="envio-id">${e.id}</div>
+          <div>Estado: ${e.status}</div>
+          <div>Ubicación: ${e.location}</div>
+          ${e.notes ? `<div>Notas: ${e.notes}</div>` : ""}
+        `;
+        list.prepend(div);
+      });
     }
+
+    function trackLookup() {
+      const id = document.getElementById("trackInput").value.trim();
+      const result = document.getElementById("trackResult");
+      if (!id) {
+        result.innerHTML = "<p style='color:red;'>⚠️ Ingresa un número de seguimiento válido.</p>";
+        return;
+      }
+
+      const envio = envios.find(e => e.id === id);
+      if (envio) {
+        result.innerHTML = `
+          <div class="envio-item">
+            <div class="envio-id">${envio.id}</div>
+            <div>Estado: ${envio.status}</div>
+            <div>Ubicación: ${envio.location}</div>
+            ${envio.notes ? `<div>Notas: ${envio.notes}</div>` : ""}
+          </div>
+        `;
+      } else {
+        result.innerHTML = `<p style='color:red;'>❌ No se encontró ningún envío con ese número.</p>`;
+      }
+    }
+
+    function login() {
+      const u = document.getElementById("user").value.trim();
+      const p = document.getElementById("pass").value.trim();
+      const msg = document.getElementById("loginMsg");
+
+      if (u === ADMIN_USER && p === ADMIN_PASS) {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("panel").classList.remove("hidden");
+        msg.textContent = "";
+        localStorage.setItem("adminLogged", "true");
+        renderEnvios();
+      } else {
+        msg.textContent = "❌ Usuario o contraseña incorrectos.";
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("adminLogged");
+      document.getElementById("panel").classList.add("hidden");
+      document.getElementById("login").classList.remove("hidden");
+      document.getElementById("user").value = "";
+      document.getElementById("pass").value = "";
+    }
+
+    function updateShipment(e) {
+      e.preventDefault();
+      const id = document.getElementById("trackId").value.trim();
+      const status = document.getElementById("status").value;
+      const location = document.getElementById("location").value.trim();
+      const notes = document.getElementById("notes").value.trim();
+      const msg = document.getElementById("updateMessage");
+
+      if (!id || !status || !location) {
+        msg.textContent = "⚠️ Completa todos los campos obligatorios.";
+        return false;
+      }
+
+      const existing = envios.findIndex(e => e.id === id);
+      if (existing >= 0) {
+        envios[existing] = { id, status, location, notes };
+      } else {
+        envios.push({ id, status, location, notes });
+      }
+
+      localStorage.setItem("envios", JSON.stringify(envios));
+      msg.textContent = "✅ Envío actualizado correctamente.";
+      renderEnvios();
+      document.getElementById("updateForm").reset();
+    }
+
+    function deleteEnvio(index) {
+      if (confirm("¿Eliminar este envío del sistema?")) {
+        envios.splice(index, 1);
+        localStorage.setItem("envios", JSON.stringify(envios));
+        renderEnvios();
+      }
+    }
+
+    window.onload = () => {
+      if (localStorage.getItem("adminLogged") === "true") {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("panel").classList.remove("hidden");
+        renderEnvios();
+      } else {
+        // acceso secreto: escribir "admin" en el campo de rastreo
+        document.getElementById("trackInput").addEventListener("input", (e) => {
+          if (e.target.value.toLowerCase() === "admin") {
+            document.getElementById("rastreo").classList.add("hidden");
+            document.getElementById("login").classList.remove("hidden");
+            e.target.value = "";
+          }
+        });
+      }
+    };
   </script>
 </body>
 </html>
