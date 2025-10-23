@@ -27,8 +27,6 @@ body {
 
 .navbar .logo img {
   height: 60px;
-  width: auto;
-  object-fit: contain; /* asegura que el logo se vea completo */
 }
 
 .navbar nav {
@@ -79,8 +77,7 @@ body {
 
 /* ===== SECCIÓN HERO ===== */
 .hero {
-  background: url('images/fondo_principal.png') center/contain no-repeat; /* antes: cover → ahora contain */
-  background-color: #002b7f; /* color de fondo detrás si la imagen no cubre todo */
+  background: url('images/fondo.jpg') center/cover no-repeat;
   min-height: 90vh;
   display: flex;
   align-items: center;
@@ -89,7 +86,6 @@ body {
   color: white;
   position: relative;
   animation: fadeIn 1s ease-in-out;
-  background-size: contain; /* asegura que se vea entera */
 }
 
 .hero::before {
@@ -157,45 +153,4 @@ body {
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== QUIÉNES SOMOS ===== */
-.quienes-somos {
-  background: #f9f9f9;
-  padding: 60px 20px;
-  text-align: center;
-  color: #222;
-}
-
-.quienes-somos .container {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.quienes-somos h1 {
-  color: #d4af37;
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.quienes-somos p {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  margin-bottom: 20px;
-}
-
-.quienes-somos .destacado {
-  color: #004aad;
-  font-weight: bold;
-  font-size: 1.3rem;
-}
-
-/* ===== IMÁGENES GENERALES ===== */
-images{
-  width: 100%;
-  height: auto;
-  object-fit: contain; /* muestra la imagen entera sin recorte */
-  display: block;
 }
