@@ -1,7 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const SUPABASE_URL = "https://TU-PROJECT-URL.supabase.co";
-const SUPABASE_KEY = "TU-ANON-PUBLIC-KEY";
+const SUPABASE_URL = "https://nqzpmhlxknbtkthifzqt.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xenBtaGx4a25idGt0aGlmenF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyNTE4ODgsImV4cCI6MjA3NjgyNzg4OH0.1JQTXbdTslRUz9VTeXB5rq6I-aKhdQ-lDC51QMpMGqU";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Panel admin oculto
