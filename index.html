@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Apacargo | Tu envío a Cuba</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -24,7 +23,7 @@
       <a href="quienes-somos.html">Quiénes Somos</a>
       <a href="politicas.html">Políticas</a>
       <a href="productos.html">Equipos y Productos</a>
- </nav>
+    </nav>
   </header>
 
   <!-- ==== SECCIÓN PRINCIPAL ==== -->
@@ -40,6 +39,18 @@
   <footer class="footer">
     <p>© 2025 Apacargo. Todos los derechos reservados.</p>
   </footer>
+
+  <!-- ==== SCRIPT MENÚ MÓVIL ==== -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const toggle = document.getElementById("menuToggle");
+      const navMenu = document.getElementById("navMenu");
+
+      toggle.addEventListener("click", () => {
+        navMenu.classList.toggle("show");
+      });
+    });
+  </script>
 
 </body>
 </html>
