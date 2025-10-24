@@ -1,120 +1,211 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rastreo • Apacargo</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rastreo de Envíos | Apacargo</title>
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f2f6fa;
+    * {
       margin: 0;
-      color: #222;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #333;
+      overflow-x: hidden;
     }
 
     header {
       background: linear-gradient(90deg, #004aad, #d4af37);
-      color: white;
+      color: #fff;
       text-align: center;
-      padding: 15px;
-      font-size: 1.5rem;
-      font-weight: bold;
+      padding: 20px;
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
     }
 
     main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 40px 20px;
       max-width: 600px;
-      margin: 50px auto;
-      background: white;
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: 0 auto;
+    }
+
+    .box {
+      background: #fff;
+      border-radius: 15px;
+      padding: 30px 40px;
+      width: 100%;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.7s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h2 {
-      text-align: center;
       color: #004aad;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 500;
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
+      padding: 12px 15px;
       border: 1px solid #ccc;
+      border-radius: 10px;
       font-size: 1rem;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #004aad;
+      box-shadow: 0 0 5px rgba(0, 74, 173, 0.3);
     }
 
     button {
-      width: 100%;
-      padding: 12px;
-      background: #004aad;
-      color: white;
+      background: #d4af37;
       border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      padding: 12px 25px;
+      border-radius: 30px;
+      color: white;
       font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 15px;
+      width: 100%;
     }
 
     button:hover {
-      background: #00347a;
+      background: #b9932f;
     }
 
-    .hidden {
-      display: none;
-    }
-
-    .admin-panel {
-      margin-top: 30px;
+    .resultado {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       padding: 20px;
-      border: 2px solid #004aad;
-      border-radius: 12px;
+      margin-top: 30px;
+      width: 100%;
     }
 
-    .envio {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
+    .campo {
+      margin: 10px 0;
+      font-size: 1rem;
+      line-height: 1.5;
     }
 
-    .delete-btn {
-      background: #c0392b;
-      padding: 6px 10px;
+    .campo strong {
+      color: #004aad;
+    }
+
+    .note {
       font-size: 0.9rem;
-      border-radius: 6px;
-      border: none;
-      color: white;
-      cursor: pointer;
+      color: #777;
+      text-align: center;
+      margin-top: 10px;
     }
 
-    .delete-btn:hover {
-      background: #a93226;
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      background: #004aad;
+      color: white;
+      padding: 15px;
+      font-size: 0.9rem;
+    }
+
+    .hidden { display: none; }
+
+    /* 📱 Adaptación móvil */
+    @media (max-width: 600px) {
+      main { padding: 25px 15px; }
+      .box { padding: 25px; }
+      header { font-size: 1.5rem; padding: 15px; }
     }
   </style>
 </head>
 <body>
-  <header>📦 Rastreo de Envíos — Apacargo</header>
+
+  <header>🚚 Rastreo de Envíos | Apacargo</header>
 
   <main>
-    <h2>Consulta tu envío</h2>
-    <input id="trackId" placeholder="Ej: AP-2025-000123" />
-    <button onclick="trackLookup()">Rastrear</button>
-
-    <div id="trackResult"></div>
-
-    <!-- PANEL ADMIN SECRETO -->
-    <div id="adminPanel" class="admin-panel hidden">
-      <h2>Panel Administrativo</h2>
-
-      <input id="codigo" placeholder="Código del envío" />
-      <input id="cliente" placeholder="Nombre del cliente" />
-      <input id="estado" placeholder="Estado del envío (Ej: En tránsito, Entregado...)" />
-      <button onclick="addShipment()">Agregar envío</button>
-
-      <h3>📋 Envíos registrados</h3>
-      <div id="enviosList"></div>
+    <div class="box">
+      <h2>Consulta tu Envío</h2>
+      <label for="codigo">Número de Rastreo</label>
+      <input id="codigo" placeholder="Ej: AP-2025-000123" />
+      <button onclick="consultarEnvio()">Consultar</button>
+      <div id="mensaje" class="note"></div>
     </div>
+
+    <div id="resultado" class="resultado hidden"></div>
   </main>
 
-  <script type="module" src="script.js"></script>
+  <footer>© 2025 Apacargo — Seguimiento de Envíos</footer>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    // === CONFIGURACIÓN SUPABASE ===
+    const SUPABASE_URL = "https://nqzpmhlxknbtkthifzqt.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xenBtaGx4a25idGt0aGlmenF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyNTE4ODgsImV4cCI6MjA3NjgyNzg4OH0.1JQTXbdTslRUz9VTeXB5rq6I-aKhdQ-lDC51QMpMGqU";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    window.consultarEnvio = async function () {
+      const codigo = document.getElementById("codigo").value.trim();
+      const mensaje = document.getElementById("mensaje");
+      const resultado = document.getElementById("resultado");
+
+      mensaje.textContent = "";
+      resultado.classList.add("hidden");
+      resultado.innerHTML = "";
+
+      if (!codigo) {
+        mensaje.textContent = "⚠️ Introduce un número de rastreo válido.";
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("rastreo")
+        .select("*")
+        .eq("codigo", codigo)
+        .single();
+
+      if (error || !data) {
+        mensaje.textContent = "❌ No se encontró ningún envío con ese número.";
+        return;
+      }
+
+      resultado.classList.remove("hidden");
+      resultado.innerHTML = `
+        <div class="campo"><strong>Código:</strong> ${data.codigo}</div>
+        <div class="campo"><strong>Cliente:</strong> ${data.cliente || "—"}</div>
+        <div class="campo"><strong>Estado:</strong> ${data.estado}</div>
+        <div class="campo"><strong>Ubicación actual:</strong> ${data.ubicacion || "—"}</div>
+        <div class="campo"><strong>Última actualización:</strong> ${
+          data.fecha_actualizacion
+            ? new Date(data.fecha_actualizacion).toLocaleString()
+            : "—"
+        }</div>
+      `;
+    };
+  </script>
 </body>
 </html>
