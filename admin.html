@@ -170,7 +170,7 @@
     <div class="box">
       <h2>Actualizar Estado de Envío</h2>
       <form id="updateForm" onsubmit="return updateShipment(event)">
-        <label for="trackId">Número de Rastreo</label>
+        <label for="trackId">Código del Envío</label>
         <input id="trackId" placeholder="Ej: AP-2025-000123" required />
 
         <label for="status">Estado del Envío</label>
@@ -234,7 +234,10 @@
 
     async function loadShipments() {
       const list = document.getElementById("enviosList");
-      const { data, error } = await supabase.from("rastreo").select("*").order("fecha_actualizacion", { ascending: false });
+      const { data, error } = await supabase
+        .from("rastreo")
+        .select("*")
+        .order("fecha_actualizacion", { ascending: false });
 
       if (error) {
         list.innerHTML = `<p>Error al cargar: ${error.message}</p>`;
@@ -251,9 +254,10 @@
           (envio) => `
           <div class="envio-item">
             <div class="envio-id">${envio.codigo}</div>
+            <div>Cliente: ${envio.cliente}</div>
             <div>Estado: ${envio.estado}</div>
             <div>Ubicación: ${envio.ubicacion || "—"}</div>
-            <div>Notas: ${envio.notas || "—"}</div>
+            <div>Última actualización: ${new Date(envio.fecha_actualizacion).toLocaleString()}</div>
           </div>
         `
         )
