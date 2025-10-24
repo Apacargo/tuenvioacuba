@@ -2,229 +2,119 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rastreo de Envíos | Apacargo</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rastreo • Apacargo</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      font-family: "Segoe UI", sans-serif;
-      background: #f3f6fa;
+      font-family: 'Poppins', sans-serif;
+      background: #f2f6fa;
       margin: 0;
-      color: #002b7f;
+      color: #222;
     }
+
     header {
-      background: linear-gradient(90deg, #002b7f, #d4af37);
+      background: linear-gradient(90deg, #004aad, #d4af37);
       color: white;
       text-align: center;
-      padding: 1rem;
-      font-size: 1.4rem;
+      padding: 15px;
+      font-size: 1.5rem;
       font-weight: bold;
-      letter-spacing: 1px;
     }
+
     main {
       max-width: 600px;
-      margin: 2rem auto;
+      margin: 50px auto;
       background: white;
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
-    h2 { text-align: center; color: #001f4d; }
-    .tracker {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin: 1rem 0;
-    }
-    input {
-      flex: 1;
-      padding: 12px;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-    button {
-      background: #d4af37;
-      color: #001f4d;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 18px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover { background: #b38f2a; }
-    #trackResult {
-      background: #eef1f8;
-      padding: 1rem;
-      border-radius: 10px;
-      margin-top: 1rem;
-      display: none;
-    }
-    footer {
-      background: #001f4d;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      font-size: 14px;
-      margin-top: 2rem;
-    }
-    .hidden { display: none; }
 
-    /* Admin panel */
-    #adminPanel {
-      display: none;
-      margin-top: 2rem;
-      background: #f8f9fb;
-      border: 2px solid #d4af37;
-      border-radius: 10px;
-      padding: 1.5rem;
+    h2 {
+      text-align: center;
+      color: #004aad;
     }
-    #adminPanel input, #adminPanel textarea {
+
+    input {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
+      padding: 12px;
+      margin: 10px 0;
       border-radius: 8px;
       border: 1px solid #ccc;
+      font-size: 1rem;
     }
-    .delete-btn {
-      background: #e74c3c;
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #004aad;
       color: white;
       border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #00347a;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .admin-panel {
+      margin-top: 30px;
+      padding: 20px;
+      border: 2px solid #004aad;
+      border-radius: 12px;
+    }
+
+    .envio {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+
+    .delete-btn {
+      background: #c0392b;
       padding: 6px 10px;
+      font-size: 0.9rem;
       border-radius: 6px;
+      border: none;
+      color: white;
       cursor: pointer;
     }
-    .delete-btn:hover { background: #c0392b; }
+
+    .delete-btn:hover {
+      background: #a93226;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <img src="images/logo.png" alt="Apacargo" style="height:60px; vertical-align:middle;">
-    <div>Rastreo de Envíos</div>
-  </header>
+  <header>📦 Rastreo de Envíos — Apacargo</header>
 
   <main>
-    <h2>Consulta tu Envío</h2>
-    <p>Introduce tu número de seguimiento (ejemplo: AP-2025-000123)</p>
-    <div class="tracker">
-      <input id="trackId" placeholder="Ej: AP-2025-000123" />
-      <button onclick="trackLookup()">Rastrear</button>
-    </div>
+    <h2>Consulta tu envío</h2>
+    <input id="trackId" placeholder="Ej: AP-2025-000123 o clave secreta" />
+    <button onclick="trackLookup()">Rastrear</button>
 
     <div id="trackResult"></div>
 
-    <div id="adminPanel">
-      <h3>Panel Administrativo</h3>
-      <input id="codigo" placeholder="Código de envío (AP-XXXX-XXXX)" />
-      <input id="cliente" placeholder="Nombre del cliente" />
-      <textarea id="estado" placeholder="Estado del envío"></textarea>
-      <button onclick="agregarEnvio()">Agregar / Actualizar Envío</button>
+    <!-- PANEL ADMIN SECRETO -->
+    <div id="adminPanel" class="admin-panel hidden">
+      <h2>Panel Administrativo</h2>
 
-      <h4>Lista de Envíos</h4>
-      <div id="enviosLista"></div>
+      <input id="codigo" placeholder="Código del envío" />
+      <input id="cliente" placeholder="Nombre del cliente" />
+      <input id="estado" placeholder="Estado del envío (Ej: En tránsito, Entregado...)" />
+      <button onclick="addShipment()">Agregar envío</button>
+
+      <h3>📋 Envíos registrados</h3>
+      <div id="enviosList"></div>
     </div>
   </main>
 
-  <footer>© 2025 Apacargo – Todos los derechos reservados</footer>
-
-  <!-- SCRIPT SUPABASE -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    // 🔧 Configura tus credenciales de Supabase
-    const SUPABASE_URL = "https://nqzpmhlxknbtkthifzqt.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xenBtaGx4a25idGt0aGlmenF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyNTE4ODgsImV4cCI6MjA3NjgyNzg4OH0.1JQTXbdTslRUz9VTeXB5rq6I-aKhdQ-lDC51QMpMGqU";
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    const WHATS_NUMBER = "5350896082";
-
-    // 🕵️ Entrada secreta al panel admin
-    document.addEventListener("keydown", (e) => {
-      if (e.key.toLowerCase() === "j") {
-        const clave = prompt("Introduce la clave secreta:");
-        if (clave === "jackson") {
-          document.getElementById("adminPanel").style.display = "block";
-          alert("✅ Acceso concedido al panel administrativo.");
-          cargarEnvios();
-        }
-      }
-    });
-
-    // 🔍 Buscar envío
-    async function trackLookup() {
-      const code = document.getElementById("trackId").value.trim();
-      if (!code) return alert("Por favor introduce un código.");
-
-      const { data, error } = await supabase
-        .from("rastreo")
-        .select("*")
-        .eq("codigo", code);
-
-      const resultDiv = document.getElementById("trackResult");
-      if (error) {
-        resultDiv.style.display = "block";
-        resultDiv.innerHTML = "❌ Error al consultar.";
-        return;
-      }
-
-      if (data.length === 0) {
-        resultDiv.style.display = "block";
-        resultDiv.innerHTML = "⚠️ No se encontró ningún envío con ese código.";
-      } else {
-        const envio = data[0];
-        resultDiv.style.display = "block";
-        resultDiv.innerHTML = `
-          <strong>Cliente:</strong> ${envio.cliente}<br>
-          <strong>Estado:</strong> ${envio.estado || "En proceso"}<br>
-          <button style="margin-top:8px;background:#25D366;color:white;border:none;padding:8px 12px;border-radius:8px;"
-            onclick="window.open('https://wa.me/${WHATS_NUMBER}?text=Hola, necesito información sobre el envío ${envio.codigo}','_blank')">
-            Contactar por WhatsApp
-          </button>`;
-      }
-    }
-
-    // 🗂️ Cargar lista de envíos (admin)
-    async function cargarEnvios() {
-      const { data, error } = await supabase.from("rastreo").select("*");
-      const contenedor = document.getElementById("enviosLista");
-      contenedor.innerHTML = "";
-      if (error) return alert("Error al cargar: " + error.message);
-
-      data.forEach((envio) => {
-        const div = document.createElement("div");
-        div.style.marginBottom = "10px";
-        div.innerHTML = `
-          <b>${envio.codigo}</b> - ${envio.cliente}<br>
-          Estado: ${envio.estado || "N/A"}
-          <button class="delete-btn" onclick="eliminarEnvio('${envio.id}')">Eliminar</button>
-        `;
-        contenedor.appendChild(div);
-      });
-    }
-
-    // ➕ Agregar envío
-    async function agregarEnvio() {
-      const codigo = document.getElementById("codigo").value.trim();
-      const cliente = document.getElementById("cliente").value.trim();
-      const estado = document.getElementById("estado").value.trim();
-
-      if (!codigo || !cliente) return alert("Rellena todos los campos.");
-
-      const { error } = await supabase.from("rastreo").upsert({ codigo, cliente, estado });
-      if (error) return alert("Error al guardar: " + error.message);
-
-      alert("✅ Envío guardado correctamente.");
-      cargarEnvios();
-    }
-
-    // 🗑️ Eliminar envío
-    async function eliminarEnvio(id) {
-      if (!confirm("¿Eliminar este envío?")) return;
-      const { error } = await supabase.from("rastreo").delete().eq("id", id);
-      if (error) return alert("Error al eliminar: " + error.message);
-      alert("🗑️ Envío eliminado.");
-      cargarEnvios();
-    }
-  </script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
