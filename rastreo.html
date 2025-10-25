@@ -4,46 +4,35 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rastreo de Envíos | Apacargo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
-    }
-
     body {
+      font-family: "Poppins", sans-serif;
       background: #f4f7fb;
+      margin: 0;
       color: #333;
-      overflow-x: hidden;
+      text-align: center;
+      padding: 0 20px;
     }
 
     header {
       background: linear-gradient(90deg, #004aad, #d4af37);
-      color: #fff;
-      text-align: center;
+      color: white;
       padding: 20px;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 600;
       letter-spacing: 1px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
     }
 
     main {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 40px 20px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .box {
-      background: #fff;
+      max-width: 500px;
+      background: white;
+      margin: 50px auto;
+      padding: 30px 25px;
       border-radius: 15px;
-      padding: 30px 40px;
-      width: 100%;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       animation: fadeIn 0.7s ease-in-out;
     }
 
@@ -54,14 +43,7 @@
 
     h2 {
       color: #004aad;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    label {
-      display: block;
-      margin: 10px 0 5px;
-      font-weight: 500;
+      margin-bottom: 15px;
     }
 
     input {
@@ -70,6 +52,7 @@
       border: 1px solid #ccc;
       border-radius: 10px;
       font-size: 1rem;
+      margin-top: 10px;
       outline: none;
       transition: 0.3s;
     }
@@ -89,38 +72,24 @@
       font-size: 1rem;
       cursor: pointer;
       transition: 0.3s;
-      margin-top: 15px;
       width: 100%;
+      margin-top: 20px;
     }
 
     button:hover {
       background: #b9932f;
     }
 
-    .resultado {
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      padding: 20px;
-      margin-top: 30px;
-      width: 100%;
-    }
-
-    .campo {
-      margin: 10px 0;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-
-    .campo strong {
-      color: #004aad;
-    }
-
-    .note {
-      font-size: 0.9rem;
-      color: #777;
-      text-align: center;
-      margin-top: 10px;
+    #trackResult {
+      margin-top: 25px;
+      text-align: left;
+      font-size: 0.95rem;
+      color: #333;
+      background: #f7f9fc;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+      display: none;
     }
 
     footer {
@@ -132,13 +101,10 @@
       font-size: 0.9rem;
     }
 
-    .hidden { display: none; }
-
-    /* 📱 Adaptación móvil */
-    @media (max-width: 600px) {
-      main { padding: 25px 15px; }
-      .box { padding: 25px; }
-      header { font-size: 1.5rem; padding: 15px; }
+    .note {
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 15px;
     }
   </style>
 </head>
@@ -147,65 +113,70 @@
   <header>🚚 Rastreo de Envíos | Apacargo</header>
 
   <main>
-    <div class="box">
-      <h2>Consulta tu Envío</h2>
-      <label for="codigo">Número de Rastreo</label>
-      <input id="codigo" placeholder="Ej: AP-2025-000123" />
-      <button onclick="consultarEnvio()">Consultar</button>
-      <div id="mensaje" class="note"></div>
-    </div>
+    <h2>Consulta tu envío</h2>
+    <p class="note">Introduce el código de rastreo (ej: <strong>AP-2025-000123</strong>)</p>
 
-    <div id="resultado" class="resultado hidden"></div>
+    <input id="trackId" placeholder="Ingresa tu código aquí..." />
+    <button>Consultar</button>
+
+    <div id="trackResult"></div>
   </main>
 
-  <footer>© 2025 Apacargo — Seguimiento de Envíos</footer>
+  <footer>© 2025 Apacargo — Todos los derechos reservados</footer>
 
-  <script type="module">
-    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-    // === CONFIGURACIÓN SUPABASE ===
+  <!-- SUPABASE SCRIPT -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
     const SUPABASE_URL = "https://nqzpmhlxknbtkthifzqt.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xenBtaGx4a25idGt0aGlmenF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyNTE4ODgsImV4cCI6MjA3NjgyNzg4OH0.1JQTXbdTslRUz9VTeXB5rq6I-aKhdQ-lDC51QMpMGqU";
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    window.consultarEnvio = async function () {
-      const codigo = document.getElementById("codigo").value.trim();
-      const mensaje = document.getElementById("mensaje");
-      const resultado = document.getElementById("resultado");
+    const trackButton = document.querySelector("button");
+    const trackInput = document.getElementById("trackId");
+    const trackResult = document.getElementById("trackResult");
 
-      mensaje.textContent = "";
-      resultado.classList.add("hidden");
-      resultado.innerHTML = "";
+    trackButton.addEventListener("click", async () => {
+      const codigo = trackInput.value.trim();
+      trackResult.style.display = "block";
 
       if (!codigo) {
-        mensaje.textContent = "⚠️ Introduce un número de rastreo válido.";
+        trackResult.innerHTML = "⚠️ Ingresa un código de envío.";
         return;
       }
 
-      const { data, error } = await supabase
-        .from("rastreo")
-        .select("*")
-        .eq("codigo", codigo)
-        .single();
+      trackResult.innerHTML = "⏳ Buscando estado del envío...";
 
-      if (error || !data) {
-        mensaje.textContent = "❌ No se encontró ningún envío con ese número.";
-        return;
+      try {
+        const { data, error } = await supabase
+          .from("rastreo")
+          .select("*")
+          .eq("codigo", codigo)
+          .maybeSingle();
+
+        if (error) {
+          console.error(error);
+          trackResult.innerHTML = "🚫 Error al conectar con la base de datos.";
+          return;
+        }
+
+        if (!data) {
+          trackResult.innerHTML = "❌ No se encontró ningún envío con ese código.";
+          return;
+        }
+
+        trackResult.innerHTML = `
+          <strong>Código:</strong> ${data.codigo}<br>
+          <strong>Cliente:</strong> ${data.cliente || "—"}<br>
+          <strong>Estado:</strong> ${data.estado}<br>
+          <strong>Ubicación:</strong> ${data.ubicacion || "—"}<br>
+          <strong>Última actualización:</strong> ${new Date(data.fecha_actualizacion).toLocaleString()}<br>
+          ${data.notas ? `<strong>Notas:</strong> ${data.notas}` : ""}
+        `;
+      } catch (err) {
+        console.error(err);
+        trackResult.innerHTML = "❌ Error inesperado. Verifica tu conexión.";
       }
-
-      resultado.classList.remove("hidden");
-      resultado.innerHTML = `
-        <div class="campo"><strong>Código:</strong> ${data.codigo}</div>
-        <div class="campo"><strong>Cliente:</strong> ${data.cliente || "—"}</div>
-        <div class="campo"><strong>Estado:</strong> ${data.estado}</div>
-        <div class="campo"><strong>Ubicación actual:</strong> ${data.ubicacion || "—"}</div>
-        <div class="campo"><strong>Última actualización:</strong> ${
-          data.fecha_actualizacion
-            ? new Date(data.fecha_actualizacion).toLocaleString()
-            : "—"
-        }</div>
-      `;
-    };
+    });
   </script>
 </body>
 </html>
