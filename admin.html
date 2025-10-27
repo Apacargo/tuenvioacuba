@@ -4,15 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Panel Administrativo | Apacargo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
+    body { 
       font-family: "Poppins", sans-serif;
       background: #f4f7fb;
       margin: 0;
       color: #333;
     }
-
     header {
       background: linear-gradient(90deg, #004aad, #d4af37);
       color: #fff;
@@ -22,40 +21,28 @@
       font-weight: 600;
       letter-spacing: 1px;
     }
-
     main {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      padding: 50px 20px;
-      max-width: 900px;
-      margin: 0 auto;
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
     }
-
-    .box {
-      background: #fff;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      border-radius: 15px;
+    .login-box {
+      background: white;
       padding: 30px 40px;
-      width: 100%;
-      margin-bottom: 30px;
-    }
-
-    h2 {
-      color: #004aad;
-      margin-bottom: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      margin: 100px auto;
       text-align: center;
     }
-
     input, select, textarea {
       width: 100%;
       padding: 10px 15px;
+      margin: 5px 0 15px;
       border: 1px solid #ccc;
       border-radius: 10px;
       font-size: 1rem;
-      margin-top: 10px;
     }
-
     button {
       background: #d4af37;
       border: none;
@@ -63,156 +50,209 @@
       border-radius: 30px;
       color: white;
       font-weight: bold;
-      font-size: 1rem;
       cursor: pointer;
-      width: 100%;
-      margin-top: 15px;
+      transition: 0.3s;
+      margin-top: 10px;
     }
-
     button:hover { background: #b9932f; }
-
-    .envios {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
       background: white;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      padding: 20px;
-      margin-top: 20px;
+      border-radius: 10px;
+      overflow: hidden;
     }
-
-    .envio-item {
-      border-bottom: 1px solid #eee;
-      padding: 12px 0;
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
     }
-
-    .envio-item:last-child { border: none; }
-
-    .envio-id { color: #004aad; font-weight: bold; }
-
-    footer {
-      margin-top: 60px;
-      text-align: center;
+    th {
       background: #004aad;
       color: white;
-      padding: 15px;
-      font-size: 0.9rem;
     }
-
-    .note { font-size: 0.85rem; color: #777; margin-top: 15px; }
-
-    .login-box {
-      background: white;
-      padding: 30px 40px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      max-width: 400px;
-      margin: 100px auto;
-      text-align: center;
-    }
-
     .hidden { display: none; }
+    .new-form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+    .new-form h2 { color: #004aad; margin-bottom: 10px; }
   </style>
 </head>
 <body>
+  <header>🔐 Panel Administrativo | Apacargo</header>
 
-<header>🔐 Panel Administrativo | Apacargo</header>
-
-<div id="login" class="login-box">
-  <h2>Acceso Restringido</h2>
-  <p>Introduce tus credenciales</p>
-  <input id="user" placeholder="Usuario" />
-  <input id="pass" type="password" placeholder="Contraseña" />
-  <button onclick="login()">Ingresar</button>
-  <div id="loginMsg" class="note"></div>
-</div>
-
-<main id="panel" class="hidden">
-  <div class="box">
-    <h2>Actualizar Estado de Envío</h2>
-    <input id="trackId" placeholder="Código del envío" />
-    <input id="cliente" placeholder="Cliente" />
-    <select id="status">
-      <option value="">Seleccionar estado...</option>
-      <option>Recibido en Miami</option>
-      <option>En tránsito hacia Cuba</option>
-      <option>En Aduana de La Habana</option>
-      <option>En distribución</option>
-      <option>Entregado</option>
-    </select>
-    <input id="location" placeholder="Ubicación" />
-    <textarea id="notes" placeholder="Notas (opcional)"></textarea>
-    <button onclick="addShipment()">Agregar / Actualizar envío</button>
+  <!-- LOGIN -->
+  <div id="login" class="login-box">
+    <h2>Acceso Restringido</h2>
+    <p>Introduce tus credenciales para ingresar al panel</p>
+    <input id="user" placeholder="Usuario" />
+    <input id="pass" type="password" placeholder="Contraseña" />
+    <button onclick="login()">Ingresar</button>
+    <div id="loginMsg" style="color:red;margin-top:10px;"></div>
   </div>
 
-  <div class="envios">
-    <h2>📋 Envios Registrados</h2>
-    <div id="enviosList">Cargando envíos...</div>
-  </div>
-</main>
+  <!-- PANEL -->
+  <main id="panel" class="hidden">
 
-<footer>© 2025 Apacargo — Acceso restringido</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL = "https://nqzpmhlxknbtkthifzqt.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xenBtaGx4a25idGt0aGlmenF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyNTE4ODgsImV4cCI6MjA3NjgyNzg4OH0.1JQTXbdTslRUz9VTeXB5rq6I-aKhdQ-lDC51QMpMGqU";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-const ADMIN_USER = "JMS";
-const ADMIN_PASS = "jms980320";
-
-function login() {
-  const u = document.getElementById("user").value.trim();
-  const p = document.getElementById("pass").value.trim();
-  const msg = document.getElementById("loginMsg");
-
-  if(u===ADMIN_USER && p===ADMIN_PASS){
-    document.getElementById("login").classList.add("hidden");
-    document.getElementById("panel").classList.remove("hidden");
-    loadShipments();
-  } else msg.textContent = "❌ Usuario o contraseña incorrectos.";
-}
-
-async function loadShipments(){
-  const list = document.getElementById("enviosList");
-  const { data, error } = await supabase
-    .from("rastreo")
-    .select("*")
-    .order("fecha_actualizacion",{ascending:false});
-
-  if(error) { list.innerHTML="🚫 Error al cargar envíos"; return; }
-  if(!data.length) { list.innerHTML="No hay envíos registrados"; return; }
-
-  list.innerHTML = data.map(e => `
-    <div class="envio-item">
-      <div class="envio-id">${e.codigo}</div>
-      <div>Cliente: ${e.cliente || "—"}</div>
-      <div>Estado: ${e.estado}</div>
-      <div>Ubicación: ${e.ubicacion || "—"}</div>
-      <div>Última actualización: ${new Date(e.fecha_actualizacion).toLocaleString()}</div>
-      ${e.notas ? `<div>Notas: ${e.notas}</div>` : ""}
+    <!-- FORMULARIO NUEVO ENVÍO -->
+    <div class="new-form">
+      <h2>Agregar Nuevo Envío</h2>
+      <input id="new_tracking_id" placeholder="Tracking ID" />
+      <input id="new_codigo" placeholder="Código del envío" />
+      <input id="new_cliente" placeholder="Cliente" />
+      <select id="new_estado">
+        <option value="">Seleccionar estado...</option>
+        <option>Recibido en Miami</option>
+        <option>En tránsito hacia Cuba</option>
+        <option>En Aduana de La Habana</option>
+        <option>En distribución</option>
+        <option>Entregado</option>
+      </select>
+      <input id="new_ubicacion" placeholder="Ubicación actual" />
+      <textarea id="new_notas" placeholder="Notas (opcional)"></textarea>
+      <button onclick="agregarEnvio()">➕ Agregar Envío</button>
     </div>
-  `).join("");
-}
 
-async function addShipment(){
-  const codigo = document.getElementById("trackId").value.trim();
-  const cliente = document.getElementById("cliente").value.trim();
-  const estado = document.getElementById("status").value;
-  const ubicacion = document.getElementById("location").value.trim();
-  const notas = document.getElementById("notes").value.trim();
+    <!-- TABLA DE ENVÍOS -->
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tracking</th>
+          <th>Código</th>
+          <th>Cliente</th>
+          <th>Estado</th>
+          <th>Ubicación</th>
+          <th>Notas</th>
+          <th>Última actualización</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="enviosList">
+        <tr><td colspan="9" style="text-align:center;">Cargando envíos...</td></tr>
+      </tbody>
+    </table>
+  </main>
 
-  if(!codigo || !estado) return alert("Completa los campos obligatorios");
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-  const { error } = await supabase
-    .from("rastreo")
-    .upsert({codigo, cliente, estado, ubicacion, notas, fecha_actualizacion: new Date()},{onConflict:"codigo"});
+    const SUPABASE_URL = "https://nqzpmhlxknbtkthifzqt.supabase.co";
+    const SUPABASE_KEY = "TU_ANON_PUBLIC_KEY"; // reemplaza con tu anon key
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  if(error) alert("Error al guardar: "+error.message);
-  else {
-    alert("✅ Envío guardado correctamente");
-    loadShipments();
-  }
-}
-</script>
+    const ADMIN_USER = "JMS";
+    const ADMIN_PASS = "jms980320";
+
+    window.login = () => {
+      const user = document.getElementById("user").value.trim();
+      const pass = document.getElementById("pass").value.trim();
+      const msg = document.getElementById("loginMsg");
+
+      if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("panel").classList.remove("hidden");
+        cargarEnvios();
+      } else {
+        msg.textContent = "Usuario o contraseña incorrectos.";
+      }
+    };
+
+    async function cargarEnvios() {
+      const { data, error } = await supabase
+        .from("rastreo")
+        .select("*")
+        .order("fecha_actualizacion", { ascending: false });
+
+      const tbody = document.getElementById("enviosList");
+      if (error) {
+        tbody.innerHTML = `<tr><td colspan="9">Error: ${error.message}</td></tr>`;
+        return;
+      }
+
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="9">No hay envíos registrados aún.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = data.map(envio => `
+        <tr>
+          <td>${envio.id}</td>
+          <td>${envio.tracking_id}</td>
+          <td>${envio.codigo}</td>
+          <td><input value="${envio.cliente}" id="cliente-${envio.id}"/></td>
+          <td><input value="${envio.estado}" id="estado-${envio.id}"/></td>
+          <td><input value="${envio.ubicacion}" id="ubicacion-${envio.id}"/></td>
+          <td><input value="${envio.notas || ''}" id="notas-${envio.id}"/></td>
+          <td>${new Date(envio.fecha_actualizacion).toLocaleString()}</td>
+          <td>
+            <button onclick="actualizar(${envio.id})">💾</button>
+            <button onclick="eliminar(${envio.id})" style="background:#c0392b;">🗑️</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    window.actualizar = async (id) => {
+      const cliente = document.getElementById(`cliente-${id}`).value;
+      const estado = document.getElementById(`estado-${id}`).value;
+      const ubicacion = document.getElementById(`ubicacion-${id}`).value;
+      const notas = document.getElementById(`notas-${id}`).value;
+
+      const { error } = await supabase
+        .from("rastreo")
+        .update({ cliente, estado, ubicacion, notas, fecha_actualizacion: new Date() })
+        .eq("id", id);
+
+      if (error) return alert("Error al actualizar: " + error.message);
+      cargarEnvios();
+    };
+
+    window.eliminar = async (id) => {
+      if (!confirm("¿Seguro que deseas eliminar este envío?")) return;
+
+      const { error } = await supabase
+        .from("rastreo")
+        .delete()
+        .eq("id", id);
+
+      if (error) return alert("Error al eliminar: " + error.message);
+      cargarEnvios();
+    };
+
+    window.agregarEnvio = async () => {
+      const tracking_id = document.getElementById("new_tracking_id").value.trim();
+      const codigo = document.getElementById("new_codigo").value.trim();
+      const cliente = document.getElementById("new_cliente").value.trim();
+      const estado = document.getElementById("new_estado").value;
+      const ubicacion = document.getElementById("new_ubicacion").value.trim();
+      const notas = document.getElementById("new_notas").value.trim();
+
+      if (!tracking_id || !codigo || !cliente || !estado || !ubicacion) {
+        return alert("Completa todos los campos obligatorios.");
+      }
+
+      const { error } = await supabase
+        .from("rastreo")
+        .insert([{ tracking_id, codigo, cliente, estado, ubicacion, notas, fecha_actualizacion: new Date() }]);
+
+      if (error) return alert("Error al agregar: " + error.message);
+
+      // Limpiar formulario
+      document.getElementById("new_tracking_id").value = "";
+      document.getElementById("new_codigo").value = "";
+      document.getElementById("new_cliente").value = "";
+      document.getElementById("new_estado").value = "";
+      document.getElementById("new_ubicacion").value = "";
+      document.getElementById("new_notas").value = "";
+
+      cargarEnvios();
+    };
+  </script>
 </body>
 </html>
