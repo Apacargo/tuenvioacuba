@@ -4,98 +4,79 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Panel Administrativo | Apacargo</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background: #f4f7fb;
-      margin: 0;
-      color: #333;
-    }
-    header {
-      background: linear-gradient(90deg, #004aad, #d4af37);
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      font-size: 1.8rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-    main { max-width: 1000px; margin: 20px auto; padding: 20px; }
-    .login-box {
-      background: white; padding: 30px 40px; border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      max-width: 400px; margin: 100px auto; text-align: center;
-    }
-    input, select, textarea {
-      width: 100%; padding: 10px 15px; margin: 5px 0 15px;
-      border: 1px solid #ccc; border-radius: 10px; font-size: 1rem;
-    }
-    button {
-      background: #d4af37; border: none; padding: 12px 25px;
-      border-radius: 30px; color: white; font-weight: bold;
-      cursor: pointer; transition: 0.3s; margin-top: 10px;
-    }
-    button:hover { background: #b9932f; }
-    table {
-      width: 100%; border-collapse: collapse; margin-top: 30px;
-      background: white; border-radius: 10px; overflow: hidden;
-    }
-    th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
-    th { background: #004aad; color: white; }
-    .hidden { display: none; }
-    .new-form {
-      background: white; padding: 20px; border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 20px;
-    }
-    .new-form h2 { color: #004aad; margin-bottom: 10px; }
+    /* pequeñas adaptaciones solo para admin */
+    .admin-wrap { max-width: 1100px; margin: 20px auto; padding: 0 12px; }
+    .top-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .small { font-size:0.9rem; color:#666; }
+    table input { width: 100%; padding:6px; border-radius:6px; border:1px solid #ddd; }
+    .actions button { margin-right:6px; }
   </style>
 </head>
 <body>
   <header>🔐 Panel Administrativo | Apacargo</header>
 
-  <div id="login" class="login-box">
-    <h2>Acceso Restringido</h2>
-    <input id="user" placeholder="Usuario" />
-    <input id="pass" type="password" placeholder="Contraseña" />
-    <button onclick="login()">Ingresar</button>
-    <div id="loginMsg" style="color:red;margin-top:10px;"></div>
-  </div>
-
-  <main id="panel" class="hidden">
-    <div class="new-form">
-      <h2>Agregar Nuevo Envío</h2>
-      <input id="new_tracking_id" placeholder="Tracking ID" />
-      <input id="new_codigo" placeholder="Código del envío" />
-      <input id="new_cliente" placeholder="Cliente" />
-      <select id="new_estado">
-        <option value="">Seleccionar estado...</option>
-        <option>Recibido en Miami</option>
-        <option>En tránsito hacia Cuba</option>
-        <option>En Aduana de La Habana</option>
-        <option>En distribución</option>
-        <option>Entregado</option>
-      </select>
-      <input id="new_ubicacion" placeholder="Ubicación actual" />
-      <textarea id="new_notas" placeholder="Notas (opcional)"></textarea>
-      <button onclick="agregarEnvio()">➕ Agregar Envío</button>
+  <main class="admin-wrap">
+    <div id="loginBox" class="box" style="max-width:420px;margin:24px auto;">
+      <h2>Acceso Administrativo</h2>
+      <input id="user" placeholder="Usuario" />
+      <input id="pass" type="password" placeholder="Contraseña" />
+      <button id="loginBtn">Ingresar</button>
+      <div id="loginMsg" class="small" style="margin-top:8px;color:#b00020"></div>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Tracking</th><th>Código</th><th>Cliente</th>
-          <th>Estado</th><th>Ubicación</th><th>Notas</th>
-          <th>Última actualización</th><th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody id="enviosList"><tr><td colspan="8">Cargando...</td></tr></tbody>
-    </table>
+    <section id="panel" class="hidden">
+      <div class="new-form">
+        <h2>➕ Agregar / Nuevo Envío</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <input id="new_tracking_id" placeholder="Tracking ID (opcional)" style="flex:1 1 200px;">
+          <input id="new_codigo" placeholder="Código del envío (oblig.)" style="flex:1 1 200px;">
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+          <input id="new_cliente" placeholder="Cliente" style="flex:1 1 200px;">
+          <input id="new_ubicacion" placeholder="Ubicación" style="flex:1 1 200px;">
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+          <select id="new_estado" style="flex:1 1 200px;">
+            <option value="">Seleccionar estado...</option>
+            <option>Recibido en Miami</option>
+            <option>En tránsito hacia Cuba</option>
+            <option>En Aduana de La Habana</option>
+            <option>En distribución</option>
+            <option>Entregado</option>
+          </select>
+          <input id="new_destino" placeholder="Destino (p. ej. Holguín)" style="flex:1 1 200px;">
+        </div>
+        <textarea id="new_notas" placeholder="Notas (opcional)" style="margin-top:8px;"></textarea>
+        <button id="addBtn">Agregar Envío</button>
+      </div>
+
+      <div style="margin-top:18px;">
+        <h2>📋 Envíos Registrados</h2>
+        <div id="loadingList" class="small">Cargando envíos...</div>
+        <div style="overflow:auto;">
+          <table id="tableEnvios" style="width:100%;margin-top:8px;">
+            <thead>
+              <tr style="background:#004aad;color:#fff">
+                <th>Tracking</th><th>Código</th><th>Cliente</th><th>Estado</th><th>Ubicación</th><th>Destino</th><th>Notas</th><th>Última</th><th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="enviosList"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
   </main>
+
+  <footer style="margin-top:40px;text-align:center;color:#fff;background:#004aad;padding:14px;">© 2025 Apacargo</footer>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getFirestore, collection, getDocs, addDoc, deleteDoc, updateDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
+    // --- TU FIREBASE CONFIG ---
     const firebaseConfig = {
       apiKey: "AIzaSyDUqgpXR7v5y0JqtNgEz7JMWIvOmRNerXI",
       authDomain: "apacargo-tracking.firebaseapp.com",
@@ -104,85 +85,145 @@
       messagingSenderId: "553785487239",
       appId: "1:553785487239:web:9b8c1cc17bbc1e7f76ad22"
     };
+
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    // Ajusta usuario/contraseña si quieres
     const ADMIN_USER = "JMS";
     const ADMIN_PASS = "jms980320";
 
-    window.login = () => {
-      const user = userInput.value.trim();
-      const pass = passInput.value.trim();
-      if (user === ADMIN_USER && pass === ADMIN_PASS) {
-        loginBox.classList.add("hidden");
-        panel.classList.remove("hidden");
-        cargarEnvios();
-      } else loginMsg.textContent = "Usuario o contraseña incorrectos.";
-    };
+    const loginBox = document.getElementById('loginBox');
+    const panel = document.getElementById('panel');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginMsg = document.getElementById('loginMsg');
 
-    const userInput = document.getElementById("user");
-    const passInput = document.getElementById("pass");
-    const loginBox = document.getElementById("login");
-    const loginMsg = document.getElementById("loginMsg");
-    const panel = document.getElementById("panel");
+    loginBtn.addEventListener('click', () => {
+      const u = document.getElementById('user').value.trim();
+      const p = document.getElementById('pass').value.trim();
+      loginMsg.textContent = '';
+      if (u === ADMIN_USER && p === ADMIN_PASS) {
+        loginBox.classList.add('hidden');
+        panel.classList.remove('hidden');
+        cargarEnvios();
+      } else {
+        loginMsg.textContent = 'Usuario o contraseña incorrectos.';
+      }
+    });
+
+    // ELEMENTOS CRUD
+    const enviosListEl = document.getElementById('enviosList');
+    const loadingList = document.getElementById('loadingList');
+    const addBtn = document.getElementById('addBtn');
+
+    addBtn.addEventListener('click', agregarEnvio);
 
     async function cargarEnvios() {
-      const tbody = document.getElementById("enviosList");
-      const snapshot = await getDocs(collection(db, "rastreo"));
-      let html = "";
-      snapshot.forEach(docSnap => {
-        const e = docSnap.data();
-        html += `
-        <tr>
-          <td>${e.tracking_id}</td>
-          <td>${e.codigo}</td>
-          <td><input value="${e.cliente}" id="cliente-${docSnap.id}" /></td>
-          <td><input value="${e.estado}" id="estado-${docSnap.id}" /></td>
-          <td><input value="${e.ubicacion}" id="ubicacion-${docSnap.id}" /></td>
-          <td><input value="${e.notas || ''}" id="notas-${docSnap.id}" /></td>
-          <td>${new Date(e.fecha_actualizacion?.seconds * 1000 || Date.now()).toLocaleString()}</td>
-          <td>
-            <button onclick="actualizar('${docSnap.id}')">💾</button>
-            <button onclick="eliminar('${docSnap.id}')" style="background:#c0392b;">🗑️</button>
-          </td>
-        </tr>`;
-      });
-      tbody.innerHTML = html || "<tr><td colspan='8'>No hay envíos</td></tr>";
+      loadingList.textContent = 'Cargando envíos...';
+      enviosListEl.innerHTML = '';
+      try {
+        const snap = await getDocs(collection(db, 'rastreo'));
+        if (snap.empty) {
+          loadingList.textContent = 'No hay envíos registrados.';
+          return;
+        }
+        loadingList.textContent = '';
+        let rows = '';
+        snap.forEach(docSnap => {
+          const d = docSnap.data();
+          const id = docSnap.id;
+          rows += `
+            <tr>
+              <td>${d.tracking_id || ''}</td>
+              <td>${d.codigo || ''}</td>
+              <td><input id="cliente-${id}" value="${(d.cliente||'')}" /></td>
+              <td><input id="estado-${id}" value="${(d.estado||'')}" /></td>
+              <td><input id="ubicacion-${id}" value="${(d.ubicacion||'')}" /></td>
+              <td><input id="destino-${id}" value="${(d.destino||'')}" /></td>
+              <td><input id="notas-${id}" value="${(d.notas||'')}" /></td>
+              <td>${d.fecha_actualizacion ? new Date(d.fecha_actualizacion.seconds * 1000).toLocaleString() : '—'}</td>
+              <td class="actions">
+                <button onclick="actualizar('${id}')">💾</button>
+                <button onclick="eliminar('${id}')" style="background:#c0392b;">🗑️</button>
+              </td>
+            </tr>
+          `;
+        });
+        enviosListEl.innerHTML = rows;
+      } catch (err) {
+        console.error(err);
+        loadingList.textContent = 'Error cargando envíos.';
+      }
     }
 
-    window.agregarEnvio = async () => {
-      const tracking_id = document.getElementById("new_tracking_id").value.trim();
-      const codigo = document.getElementById("new_codigo").value.trim();
-      const cliente = document.getElementById("new_cliente").value.trim();
-      const estado = document.getElementById("new_estado").value;
-      const ubicacion = document.getElementById("new_ubicacion").value.trim();
-      const notas = document.getElementById("new_notas").value.trim();
-      if (!tracking_id || !codigo || !cliente || !estado || !ubicacion) return alert("Completa todos los campos.");
-
-      await addDoc(collection(db, "rastreo"), {
-        tracking_id, codigo, cliente, estado, ubicacion, notas,
-        fecha_actualizacion: serverTimestamp()
-      });
-      alert("Envío agregado ✅");
-      cargarEnvios();
-    };
-
     window.actualizar = async (id) => {
-      const ref = doc(db, "rastreo", id);
-      const cliente = document.getElementById(`cliente-${id}`).value;
-      const estado = document.getElementById(`estado-${id}`).value;
-      const ubicacion = document.getElementById(`ubicacion-${id}`).value;
-      const notas = document.getElementById(`notas-${id}`).value;
-      await updateDoc(ref, { cliente, estado, ubicacion, notas, fecha_actualizacion: serverTimestamp() });
-      cargarEnvios();
+      try {
+        const ref = doc(db, 'rastreo', id);
+        const cliente = document.getElementById(`cliente-${id}`).value.trim();
+        const estado = document.getElementById(`estado-${id}`).value.trim();
+        const ubicacion = document.getElementById(`ubicacion-${id}`).value.trim();
+        const destino = document.getElementById(`destino-${id}`).value.trim();
+        const notas = document.getElementById(`notas-${id}`).value.trim();
+        await updateDoc(ref, {
+          cliente, estado, ubicacion, destino, notas,
+          fecha_actualizacion: serverTimestamp()
+        });
+        await cargarEnvios();
+        alert('✅ Envío actualizado');
+      } catch (err) {
+        console.error(err);
+        alert('Error al actualizar');
+      }
     };
 
     window.eliminar = async (id) => {
-      if (confirm("¿Eliminar envío?")) {
-        await deleteDoc(doc(db, "rastreo", id));
-        cargarEnvios();
+      if (!confirm('¿Eliminar envío?')) return;
+      try {
+        await deleteDoc(doc(db, 'rastreo', id));
+        await cargarEnvios();
+        alert('✅ Envío eliminado');
+      } catch (err) {
+        console.error(err);
+        alert('Error al eliminar');
       }
     };
+
+    async function agregarEnvio() {
+      const tracking_id = document.getElementById('new_tracking_id').value.trim();
+      const codigo = document.getElementById('new_codigo').value.trim();
+      const cliente = document.getElementById('new_cliente').value.trim();
+      const ubicacion = document.getElementById('new_ubicacion').value.trim();
+      const estado = document.getElementById('new_estado').value;
+      const destino = document.getElementById('new_destino').value.trim();
+      const notas = document.getElementById('new_notas').value.trim();
+
+      if (!codigo || !cliente || !estado) {
+        alert('Completa los campos obligatorios (código, cliente, estado).');
+        return;
+      }
+
+      try {
+        // Usamos addDoc -> Firestore genera un id. Si quieres que el documento tenga ID == codigo,
+        // reemplaza addDoc por setDoc(doc(db,'rastreo', codigo), {...})
+        await addDoc(collection(db, 'rastreo'), {
+          tracking_id, codigo, cliente, ubicacion, estado, destino, notas,
+          fecha_actualizacion: serverTimestamp()
+        });
+        // limpiar
+        document.getElementById('new_tracking_id').value = '';
+        document.getElementById('new_codigo').value = '';
+        document.getElementById('new_cliente').value = '';
+        document.getElementById('new_ubicacion').value = '';
+        document.getElementById('new_destino').value = '';
+        document.getElementById('new_notas').value = '';
+        document.getElementById('new_estado').value = '';
+        await cargarEnvios();
+        alert('✅ Envío agregado');
+      } catch (err) {
+        console.error(err);
+        alert('Error al agregar envío');
+      }
+    }
   </script>
 </body>
 </html>
