@@ -13,7 +13,7 @@
     <div class="logo">
       <img src="images/logo.png" alt="Apacargo Logo">
     </div>
-    <button class="menu-toggle" id="menuToggle">☰</button>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
     <nav id="navMenu">
       <a href="index.html">Inicio</a>
       <a href="tienda-carros.html">Tienda de Carros</a>
@@ -46,8 +46,22 @@
       const toggle = document.getElementById("menuToggle");
       const navMenu = document.getElementById("navMenu");
 
-      toggle.addEventListener("click", () => {
+      // Toggle menú
+      toggle.addEventListener("click", (e) => {
         navMenu.classList.toggle("show");
+      });
+
+      // Cerrar al hacer click fuera (móvil)
+      document.addEventListener("click", (e) => {
+        if (!navMenu.classList.contains('show')) return;
+        const target = e.target;
+        if (target === toggle || navMenu.contains(target)) return;
+        navMenu.classList.remove('show');
+      });
+
+      // Asegurar comportamiento al cambiar tamaño
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) navMenu.classList.remove('show');
       });
     });
   </script>
