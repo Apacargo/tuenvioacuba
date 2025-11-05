@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Panel Administrativo | Apacargo</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
     body { 
       font-family: "Poppins", sans-serif;
@@ -21,64 +20,32 @@
       font-weight: 600;
       letter-spacing: 1px;
     }
-    main {
-      max-width: 1000px;
-      margin: 20px auto;
-      padding: 20px;
-    }
+    main { max-width: 1000px; margin: 20px auto; padding: 20px; }
     .login-box {
-      background: white;
-      padding: 30px 40px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
-      margin: 100px auto;
-      text-align: center;
+      background: white; padding: 30px 40px; border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 400px; margin: 100px auto; text-align: center;
     }
     input, select, textarea {
-      width: 100%;
-      padding: 10px 15px;
-      margin: 5px 0 15px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 1rem;
+      width: 100%; padding: 10px 15px; margin: 5px 0 15px;
+      border: 1px solid #ccc; border-radius: 10px; font-size: 1rem;
     }
     button {
-      background: #d4af37;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 30px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-      margin-top: 10px;
+      background: #d4af37; border: none; padding: 12px 25px;
+      border-radius: 30px; color: white; font-weight: bold;
+      cursor: pointer; transition: 0.3s; margin-top: 10px;
     }
     button:hover { background: #b9932f; }
     table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 30px;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
+      width: 100%; border-collapse: collapse; margin-top: 30px;
+      background: white; border-radius: 10px; overflow: hidden;
     }
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
-    }
-    th {
-      background: #004aad;
-      color: white;
-    }
+    th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+    th { background: #004aad; color: white; }
     .hidden { display: none; }
     .new-form {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      margin-bottom: 20px;
+      background: white; padding: 20px; border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 20px;
     }
     .new-form h2 { color: #004aad; margin-bottom: 10px; }
   </style>
@@ -89,7 +56,6 @@
   <!-- LOGIN -->
   <div id="login" class="login-box">
     <h2>Acceso Restringido</h2>
-    <p>Introduce tus credenciales para ingresar al panel</p>
     <input id="user" placeholder="Usuario" />
     <input id="pass" type="password" placeholder="Contraseña" />
     <button onclick="login()">Ingresar</button>
@@ -98,11 +64,8 @@
 
   <!-- PANEL -->
   <main id="panel" class="hidden">
-
-    <!-- FORMULARIO NUEVO ENVÍO -->
     <div class="new-form">
       <h2>Agregar Nuevo Envío</h2>
-      <input id="new_tracking_id" placeholder="Tracking ID" />
       <input id="new_codigo" placeholder="Código del envío" />
       <input id="new_cliente" placeholder="Cliente" />
       <select id="new_estado">
@@ -118,33 +81,31 @@
       <button onclick="agregarEnvio()">➕ Agregar Envío</button>
     </div>
 
-    <!-- TABLA DE ENVÍOS -->
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Tracking</th>
-          <th>Código</th>
-          <th>Cliente</th>
-          <th>Estado</th>
-          <th>Ubicación</th>
-          <th>Notas</th>
-          <th>Última actualización</th>
-          <th>Acciones</th>
+          <th>ID</th><th>Código</th><th>Cliente</th>
+          <th>Estado</th><th>Ubicación</th><th>Notas</th>
+          <th>Última actualización</th><th>Acciones</th>
         </tr>
       </thead>
-      <tbody id="enviosList">
-        <tr><td colspan="9" style="text-align:center;">Cargando envíos...</td></tr>
-      </tbody>
+      <tbody id="enviosList"><tr><td colspan="8" style="text-align:center;">Cargando...</td></tr></tbody>
     </table>
   </main>
 
   <script type="module">
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    // --- 🔥 Firebase Import ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-    const SUPABASE_URL = "https://nqzpmhlxknbtkthifzqt.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_dkA9p3BDWz6T7bWWex3BsA__1s2ZamA"; // reemplaza con tu anon key
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    // 🚀 TU CONFIGURACIÓN FIREBASE AQUÍ
+    const firebaseConfig = {
+      apiKey: "AIzaSyDUqgpXR7v5y0JqtNgEz7JMWIvOmRNerXI",
+      authDomain: "apacargo-tracking.firebaseapp.com",
+      projectId: "apacargo-tracking",
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
     const ADMIN_USER = "JMS";
     const ADMIN_PASS = "jms980320";
@@ -153,104 +114,75 @@
       const user = document.getElementById("user").value.trim();
       const pass = document.getElementById("pass").value.trim();
       const msg = document.getElementById("loginMsg");
-
       if (user === ADMIN_USER && pass === ADMIN_PASS) {
         document.getElementById("login").classList.add("hidden");
         document.getElementById("panel").classList.remove("hidden");
         cargarEnvios();
-      } else {
-        msg.textContent = "Usuario o contraseña incorrectos.";
-      }
+      } else msg.textContent = "Usuario o contraseña incorrectos.";
     };
 
     async function cargarEnvios() {
-      const { data, error } = await supabase
-        .from("rastreo")
-        .select("*")
-        .order("fecha_actualizacion", { ascending: false });
-
       const tbody = document.getElementById("enviosList");
-      if (error) {
-        tbody.innerHTML = `<tr><td colspan="9">Error: ${error.message}</td></tr>`;
+      const snap = await getDocs(collection(db, "rastreo"));
+      if (snap.empty) {
+        tbody.innerHTML = "<tr><td colspan='8'>No hay envíos registrados.</td></tr>";
         return;
       }
-
-      if (!data.length) {
-        tbody.innerHTML = `<tr><td colspan="9">No hay envíos registrados aún.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = data.map(envio => `
-        <tr>
-          <td>${envio.id}</td>
-          <td>${envio.tracking_id}</td>
-          <td>${envio.codigo}</td>
-          <td><input value="${envio.cliente}" id="cliente-${envio.id}"/></td>
-          <td><input value="${envio.estado}" id="estado-${envio.id}"/></td>
-          <td><input value="${envio.ubicacion}" id="ubicacion-${envio.id}"/></td>
-          <td><input value="${envio.notas || ''}" id="notas-${envio.id}"/></td>
-          <td>${new Date(envio.fecha_actualizacion).toLocaleString()}</td>
-          <td>
-            <button onclick="actualizar(${envio.id})">💾</button>
-            <button onclick="eliminar(${envio.id})" style="background:#c0392b;">🗑️</button>
-          </td>
-        </tr>
-      `).join("");
+      let html = "";
+      snap.forEach((d) => {
+        const e = d.data();
+        html += `
+          <tr>
+            <td>${d.id}</td>
+            <td><input id="codigo-${d.id}" value="${e.codigo}"></td>
+            <td><input id="cliente-${d.id}" value="${e.cliente}"></td>
+            <td><input id="estado-${d.id}" value="${e.estado}"></td>
+            <td><input id="ubicacion-${d.id}" value="${e.ubicacion}"></td>
+            <td><input id="notas-${d.id}" value="${e.notas || ''}"></td>
+            <td>${e.fecha_actualizacion ? new Date(e.fecha_actualizacion.seconds*1000).toLocaleString() : '—'}</td>
+            <td>
+              <button onclick="actualizar('${d.id}')">💾</button>
+              <button onclick="eliminar('${d.id}')" style="background:#c0392b;">🗑️</button>
+            </td>
+          </tr>`;
+      });
+      tbody.innerHTML = html;
     }
 
     window.actualizar = async (id) => {
-      const cliente = document.getElementById(`cliente-${id}`).value;
-      const estado = document.getElementById(`estado-${id}`).value;
-      const ubicacion = document.getElementById(`ubicacion-${id}`).value;
-      const notas = document.getElementById(`notas-${id}`).value;
-
-      const { error } = await supabase
-        .from("rastreo")
-        .update({ cliente, estado, ubicacion, notas, fecha_actualizacion: new Date() })
-        .eq("id", id);
-
-      if (error) return alert("Error al actualizar: " + error.message);
+      const ref = doc(db, "rastreo", id);
+      await updateDoc(ref, {
+        codigo: document.getElementById(`codigo-${id}`).value,
+        cliente: document.getElementById(`cliente-${id}`).value,
+        estado: document.getElementById(`estado-${id}`).value,
+        ubicacion: document.getElementById(`ubicacion-${id}`).value,
+        notas: document.getElementById(`notas-${id}`).value,
+        fecha_actualizacion: serverTimestamp()
+      });
+      alert("✅ Envío actualizado");
       cargarEnvios();
     };
 
     window.eliminar = async (id) => {
       if (!confirm("¿Seguro que deseas eliminar este envío?")) return;
-
-      const { error } = await supabase
-        .from("rastreo")
-        .delete()
-        .eq("id", id);
-
-      if (error) return alert("Error al eliminar: " + error.message);
+      await deleteDoc(doc(db, "rastreo", id));
       cargarEnvios();
     };
 
     window.agregarEnvio = async () => {
-      const tracking_id = document.getElementById("new_tracking_id").value.trim();
       const codigo = document.getElementById("new_codigo").value.trim();
       const cliente = document.getElementById("new_cliente").value.trim();
       const estado = document.getElementById("new_estado").value;
       const ubicacion = document.getElementById("new_ubicacion").value.trim();
       const notas = document.getElementById("new_notas").value.trim();
-
-      if (!tracking_id || !codigo || !cliente || !estado || !ubicacion) {
-        return alert("Completa todos los campos obligatorios.");
+      if (!codigo || !cliente || !estado || !ubicacion) {
+        alert("Completa todos los campos obligatorios.");
+        return;
       }
-
-      const { error } = await supabase
-        .from("rastreo")
-        .insert([{ tracking_id, codigo, cliente, estado, ubicacion, notas, fecha_actualizacion: new Date() }]);
-
-      if (error) return alert("Error al agregar: " + error.message);
-
-      // Limpiar formulario
-      document.getElementById("new_tracking_id").value = "";
-      document.getElementById("new_codigo").value = "";
-      document.getElementById("new_cliente").value = "";
-      document.getElementById("new_estado").value = "";
-      document.getElementById("new_ubicacion").value = "";
-      document.getElementById("new_notas").value = "";
-
+      await addDoc(collection(db, "rastreo"), {
+        codigo, cliente, estado, ubicacion, notas, fecha_actualizacion: serverTimestamp()
+      });
+      alert("✅ Envío agregado correctamente");
       cargarEnvios();
     };
   </script>
