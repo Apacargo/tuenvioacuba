@@ -6,26 +6,27 @@
   <title>Panel Administrativo | Apacargo</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* pequeñas adaptaciones solo para admin */
-    .admin-wrap { max-width: 1100px; margin: 20px auto; padding: 0 12px; }
-    .top-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .admin-wrap { max-width:1100px; margin:20px auto; padding:0 12px; }
     .small { font-size:0.9rem; color:#666; }
     table input { width: 100%; padding:6px; border-radius:6px; border:1px solid #ddd; }
     .actions button { margin-right:6px; }
+    .hint { font-size:0.95rem; color:#444; margin-bottom:8px; }
   </style>
 </head>
 <body>
   <header>🔐 Panel Administrativo | Apacargo</header>
 
   <main class="admin-wrap">
-    <div id="loginBox" class="box" style="max-width:420px;margin:24px auto;">
-      <h2>Acceso Administrativo</h2>
-      <input id="user" placeholder="Usuario" />
-      <input id="pass" type="password" placeholder="Contraseña" />
-      <button id="loginBtn">Ingresar</button>
-      <div id="loginMsg" class="small" style="margin-top:8px;color:#b00020"></div>
+    <!-- BOX: si no hay sesión, mostramos formulario para ingresar clave -->
+    <div id="noSessionBox" class="box" style="max-width:420px;margin:24px auto;">
+      <h2>Acceso Administrador (clave secreta)</h2>
+      <p class="hint">Introduce la clave secreta para abrir el panel.</p>
+      <input id="secretInput" placeholder="Clave secreta" />
+      <button id="secretBtn">Entrar</button>
+      <div id="secretMsg" style="margin-top:10px;color:#b00020"></div>
     </div>
 
+    <!-- PANEL (oculto si no hay sesión) -->
     <section id="panel" class="hidden">
       <div class="new-form">
         <h2>➕ Agregar / Nuevo Envío</h2>
@@ -49,7 +50,10 @@
           <input id="new_destino" placeholder="Destino (p. ej. Holguín)" style="flex:1 1 200px;">
         </div>
         <textarea id="new_notas" placeholder="Notas (opcional)" style="margin-top:8px;"></textarea>
-        <button id="addBtn">Agregar Envío</button>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button id="addBtn">Agregar Envío</button>
+          <button id="logoutBtn" style="background:#c0392b">Cerrar sesión</button>
+        </div>
       </div>
 
       <div style="margin-top:18px;">
@@ -66,7 +70,6 @@
           </table>
         </div>
       </div>
-
     </section>
   </main>
 
@@ -86,32 +89,58 @@
       appId: "1:553785487239:web:9b8c1cc17bbc1e7f76ad22"
     };
 
+    const SECRET = 'jackson'; // <-- la misma clave que en rastreo.html (cámbiala si deseas otra)
+
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Ajusta usuario/contraseña si quieres
-    const ADMIN_USER = "JMS";
-    const ADMIN_PASS = "jms980320";
-
-    const loginBox = document.getElementById('loginBox');
+    const noSessionBox = document.getElementById('noSessionBox');
     const panel = document.getElementById('panel');
-    const loginBtn = document.getElementById('loginBtn');
-    const loginMsg = document.getElementById('loginMsg');
+    const secretBtn = document.getElementById('secretBtn');
+    const secretInput = document.getElementById('secretInput');
+    const secretMsg = document.getElementById('secretMsg');
+    const logoutBtn = document.getElementById('logoutBtn');
 
-    loginBtn.addEventListener('click', () => {
-      const u = document.getElementById('user').value.trim();
-      const p = document.getElementById('pass').value.trim();
-      loginMsg.textContent = '';
-      if (u === ADMIN_USER && p === ADMIN_PASS) {
-        loginBox.classList.add('hidden');
-        panel.classList.remove('hidden');
-        cargarEnvios();
+    // Comprueba si hay sesión de admin
+    function isAdmin() {
+      return sessionStorage.getItem('apacargo_admin') === '1';
+    }
+
+    function showPanel() {
+      noSessionBox.classList.add('hidden');
+      panel.classList.remove('hidden');
+      cargarEnvios();
+    }
+    function hidePanel() {
+      noSessionBox.classList.remove('hidden');
+      panel.classList.add('hidden');
+    }
+
+    // Si la sesión ya está activa mostramos el panel
+    if (isAdmin()) {
+      showPanel();
+    } else {
+      hidePanel();
+    }
+
+    secretBtn.addEventListener('click', () => {
+      const v = (secretInput.value || '').trim();
+      secretMsg.textContent = '';
+      if (!v) { secretMsg.textContent = 'Introduce la clave.'; return; }
+      if (v.toLowerCase() === SECRET.toLowerCase()) {
+        sessionStorage.setItem('apacargo_admin', '1');
+        showPanel();
       } else {
-        loginMsg.textContent = 'Usuario o contraseña incorrectos.';
+        secretMsg.textContent = 'Clave incorrecta.';
       }
     });
 
-    // ELEMENTOS CRUD
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('apacargo_admin');
+      location.reload();
+    });
+
+    // CRUD
     const enviosListEl = document.getElementById('enviosList');
     const loadingList = document.getElementById('loadingList');
     const addBtn = document.getElementById('addBtn');
@@ -134,13 +163,13 @@
           const id = docSnap.id;
           rows += `
             <tr>
-              <td>${d.tracking_id || ''}</td>
-              <td>${d.codigo || ''}</td>
-              <td><input id="cliente-${id}" value="${(d.cliente||'')}" /></td>
-              <td><input id="estado-${id}" value="${(d.estado||'')}" /></td>
-              <td><input id="ubicacion-${id}" value="${(d.ubicacion||'')}" /></td>
-              <td><input id="destino-${id}" value="${(d.destino||'')}" /></td>
-              <td><input id="notas-${id}" value="${(d.notas||'')}" /></td>
+              <td>${escapeHtml(d.tracking_id || '')}</td>
+              <td>${escapeHtml(d.codigo || '')}</td>
+              <td><input id="cliente-${id}" value="${escapeHtml(d.cliente||'')}" /></td>
+              <td><input id="estado-${id}" value="${escapeHtml(d.estado||'')}" /></td>
+              <td><input id="ubicacion-${id}" value="${escapeHtml(d.ubicacion||'')}" /></td>
+              <td><input id="destino-${id}" value="${escapeHtml(d.destino||'')}" /></td>
+              <td><input id="notas-${id}" value="${escapeHtml(d.notas||'')}" /></td>
               <td>${d.fecha_actualizacion ? new Date(d.fecha_actualizacion.seconds * 1000).toLocaleString() : '—'}</td>
               <td class="actions">
                 <button onclick="actualizar('${id}')">💾</button>
@@ -203,13 +232,11 @@
       }
 
       try {
-        // Usamos addDoc -> Firestore genera un id. Si quieres que el documento tenga ID == codigo,
-        // reemplaza addDoc por setDoc(doc(db,'rastreo', codigo), {...})
         await addDoc(collection(db, 'rastreo'), {
           tracking_id, codigo, cliente, ubicacion, estado, destino, notas,
           fecha_actualizacion: serverTimestamp()
         });
-        // limpiar
+        // limpiar campos
         document.getElementById('new_tracking_id').value = '';
         document.getElementById('new_codigo').value = '';
         document.getElementById('new_cliente').value = '';
@@ -223,6 +250,10 @@
         console.error(err);
         alert('Error al agregar envío');
       }
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     }
   </script>
 </body>
