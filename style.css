@@ -154,3 +154,12 @@ body {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* Mostrar menú móvil cuando tenga clase .show */
+#navMenu.show {
+  display: flex !important;
+}
+
+/* Asegurar que los enlaces del nav se vean en mobile */
+#navMenu a {
+  padding: 10px 8px;
+}
