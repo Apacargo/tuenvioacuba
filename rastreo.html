@@ -4,86 +4,108 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rastreo de Envíos | Apacargo</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
-    body { background: #f4f7fb; color: #333; overflow-x: hidden; }
-    header { background: linear-gradient(90deg, #004aad, #d4af37); color: #fff; text-align: center; padding: 20px; font-size: 1.8rem; font-weight: 600; letter-spacing: 1px; }
-    main { display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 40px 20px; max-width: 600px; margin: 0 auto; }
-    .box { background: #fff; border-radius: 15px; padding: 30px 40px; width: 100%; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
-    h2 { color: #004aad; margin-bottom: 20px; text-align: center; }
-    label { display: block; margin: 10px 0 5px; font-weight: 500; }
-    input { width: 100%; padding: 12px 15px; border: 1px solid #ccc; border-radius: 10px; font-size: 1rem; outline: none; }
-    button { background: #d4af37; border: none; padding: 12px 25px; border-radius: 30px; color: white; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 15px; width: 100%; }
-    button:hover { background: #b9932f; }
-    .resultado { background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); padding: 20px; margin-top: 30px; width: 100%; }
-    .campo { margin: 10px 0; font-size: 1rem; }
-    .campo strong { color: #004aad; }
-    .note { font-size: 0.9rem; color: #777; text-align: center; margin-top: 10px; }
-    footer { margin-top: 60px; text-align: center; background: #004aad; color: white; padding: 15px; font-size: 0.9rem; }
-    .hidden { display: none; }
+    /* Mantengo estilos específicos del rastreo (puedes dejarlos o moverlos a style.css) */
+    .rastreo-wrap { max-width: 760px; margin: 30px auto; padding: 0 16px; }
+    .resultado-box { background:#fff; padding:18px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.06); }
   </style>
 </head>
 <body>
   <header>🚚 Rastreo de Envíos | Apacargo</header>
-  <main>
-    <div class="box">
+
+  <main class="rastreo-wrap">
+    <section class="box">
       <h2>Consulta tu Envío</h2>
       <label for="codigo">Número de Rastreo</label>
       <input id="codigo" placeholder="Ej: AP-2025-000123" />
-      <button onclick="consultarEnvio()">Consultar</button>
-      <div id="mensaje" class="note"></div>
-    </div>
-    <div id="resultado" class="resultado hidden"></div>
+      <button id="consultarBtn">Consultar</button>
+      <div id="mensaje" class="note" style="margin-top:10px;"></div>
+    </section>
+
+    <div id="resultado" class="resultado hidden" style="margin-top:18px;"></div>
   </main>
+
   <footer>© 2025 Apacargo — Seguimiento de Envíos</footer>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
+    // --- TU FIREBASE CONFIG --- (ya me la diste)
     const firebaseConfig = {
       apiKey: "AIzaSyDUqgpXR7v5y0JqtNgEz7JMWIvOmRNerXI",
       authDomain: "apacargo-tracking.firebaseapp.com",
       projectId: "apacargo-tracking",
+      storageBucket: "apacargo-tracking.firebasestorage.app",
+      messagingSenderId: "553785487239",
+      appId: "1:553785487239:web:9b8c1cc17bbc1e7f76ad22"
     };
+
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    window.consultarEnvio = async () => {
-      const codigo = document.getElementById("codigo").value.trim();
-      const mensaje = document.getElementById("mensaje");
-      const resultado = document.getElementById("resultado");
-      mensaje.textContent = "";
-      resultado.classList.add("hidden");
-      resultado.innerHTML = "";
+    const btn = document.getElementById('consultarBtn');
+    const input = document.getElementById('codigo');
+    const mensaje = document.getElementById('mensaje');
+    const resultado = document.getElementById('resultado');
+
+    btn.addEventListener('click', consultarEnvio);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') consultarEnvio(); });
+
+    async function consultarEnvio() {
+      const codigo = (input.value || '').trim();
+      mensaje.textContent = '';
+      resultado.classList.add('hidden');
+      resultado.innerHTML = '';
 
       if (!codigo) {
-        mensaje.textContent = "⚠️ Introduce un número de rastreo válido.";
+        mensaje.textContent = '⚠️ Introduce un número de rastreo válido.';
         return;
       }
 
-      const snapshot = await getDocs(collection(db, "rastreo"));
-      let encontrado = null;
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        if (data.codigo === codigo) encontrado = data;
-      });
+      try {
+        // Buscamos documentos en la colección "rastreo" con campo codigo == codigo
+        const col = collection(db, "rastreo");
+        const q = query(col, where("codigo", "==", codigo), orderBy("fecha_actualizacion","desc"));
+        const snap = await getDocs(q);
 
-      if (!encontrado) {
-        mensaje.textContent = "❌ No se encontró ningún envío con ese número.";
-        return;
+        if (snap.empty) {
+          mensaje.textContent = '❌ No se encontró ningún envío con ese número.';
+          return;
+        }
+
+        // Si hay varios, mostramos el más reciente (por fecha_actualizacion si existe)
+        let best = null;
+        snap.forEach(doc => {
+          const d = doc.data();
+          if (!best) best = d;
+          else {
+            // comparar fecha_actualizacion si está disponible
+            const bd = best.fecha_actualizacion ? best.fecha_actualizacion.seconds || best.fecha_actualizacion : null;
+            const nd = d.fecha_actualizacion ? d.fecha_actualizacion.seconds || d.fecha_actualizacion : null;
+            if (nd && (!bd || nd > bd)) best = d;
+          }
+        });
+
+        const data = best;
+        resultado.innerHTML = `
+          <div class="resultado-box">
+            <h3>📦 Estado del Envío</h3>
+            <div class="campo"><strong>Código:</strong> ${data.codigo || '—'}</div>
+            <div class="campo"><strong>Cliente:</strong> ${data.cliente || '—'}</div>
+            <div class="campo"><strong>Destino:</strong> ${data.destino || '—'}</div>
+            <div class="campo"><strong>Estado:</strong> ${data.estado || '—'}</div>
+            <div class="campo"><strong>Ubicación actual:</strong> ${data.ubicacion || '—'}</div>
+            <div class="campo"><strong>Última actualización:</strong> ${data.fecha_actualizacion ? new Date(data.fecha_actualizacion.seconds * 1000).toLocaleString() : '—'}</div>
+          </div>
+        `;
+        resultado.classList.remove('hidden');
+      } catch (err) {
+        console.error(err);
+        mensaje.textContent = '⚠️ Error al consultar, inténtalo otra vez.';
       }
-
-      resultado.classList.remove("hidden");
-      resultado.innerHTML = `
-        <div class="campo"><strong>Código:</strong> ${encontrado.codigo}</div>
-        <div class="campo"><strong>Cliente:</strong> ${encontrado.cliente || "—"}</div>
-        <div class="campo"><strong>Estado:</strong> ${encontrado.estado}</div>
-        <div class="campo"><strong>Ubicación actual:</strong> ${encontrado.ubicacion || "—"}</div>
-        <div class="campo"><strong>Última actualización:</strong> ${
-          encontrado.fecha_actualizacion ? new Date(encontrado.fecha_actualizacion.seconds*1000).toLocaleString() : "—"
-        }</div>`;
-    };
+    }
   </script>
 </body>
 </html>
