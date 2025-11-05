@@ -6,8 +6,8 @@
   <title>Rastreo de Envíos | Apacargo</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Mantengo estilos específicos del rastreo (puedes dejarlos o moverlos a style.css) */
-    .rastreo-wrap { max-width: 760px; margin: 30px auto; padding: 0 16px; }
+    * { box-sizing:border-box; }
+    .rastreo-wrap { max-width:760px; margin:30px auto; padding:16px; }
     .resultado-box { background:#fff; padding:18px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.06); }
   </style>
 </head>
@@ -18,7 +18,7 @@
     <section class="box">
       <h2>Consulta tu Envío</h2>
       <label for="codigo">Número de Rastreo</label>
-      <input id="codigo" placeholder="Ej: AP-2025-000123" />
+      <input id="codigo" placeholder="Ej: AP-2025-000123 o clave secreta" />
       <button id="consultarBtn">Consultar</button>
       <div id="mensaje" class="note" style="margin-top:10px;"></div>
     </section>
@@ -32,7 +32,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-    // --- TU FIREBASE CONFIG --- (ya me la diste)
+    // --- TU FIREBASE CONFIG ---
     const firebaseConfig = {
       apiKey: "AIzaSyDUqgpXR7v5y0JqtNgEz7JMWIvOmRNerXI",
       authDomain: "apacargo-tracking.firebaseapp.com",
@@ -41,6 +41,8 @@
       messagingSenderId: "553785487239",
       appId: "1:553785487239:web:9b8c1cc17bbc1e7f76ad22"
     };
+
+    const SECRET = 'jackson'; // <-- Si deseas otra clave, cámbiala aquí.
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
@@ -60,7 +62,16 @@
       resultado.innerHTML = '';
 
       if (!codigo) {
-        mensaje.textContent = '⚠️ Introduce un número de rastreo válido.';
+        mensaje.textContent = '⚠️ Introduce un número de rastreo o la clave secreta.';
+        return;
+      }
+
+      // Si escribió la clave secreta -> iniciar sesión admin y redirigir
+      if (codigo.toLowerCase() === SECRET.toLowerCase()) {
+        // marcar sesión de admin en sessionStorage y redirigir
+        sessionStorage.setItem('apacargo_admin', '1');
+        // redirigir a admin.html
+        window.location.href = 'admin.html';
         return;
       }
 
@@ -75,15 +86,14 @@
           return;
         }
 
-        // Si hay varios, mostramos el más reciente (por fecha_actualizacion si existe)
+        // Tomar el más reciente (por fecha_actualizacion si existe)
         let best = null;
         snap.forEach(doc => {
           const d = doc.data();
           if (!best) best = d;
           else {
-            // comparar fecha_actualizacion si está disponible
-            const bd = best.fecha_actualizacion ? best.fecha_actualizacion.seconds || best.fecha_actualizacion : null;
-            const nd = d.fecha_actualizacion ? d.fecha_actualizacion.seconds || d.fecha_actualizacion : null;
+            const bd = best.fecha_actualizacion?.seconds || best.fecha_actualizacion || 0;
+            const nd = d.fecha_actualizacion?.seconds || d.fecha_actualizacion || 0;
             if (nd && (!bd || nd > bd)) best = d;
           }
         });
@@ -92,11 +102,11 @@
         resultado.innerHTML = `
           <div class="resultado-box">
             <h3>📦 Estado del Envío</h3>
-            <div class="campo"><strong>Código:</strong> ${data.codigo || '—'}</div>
-            <div class="campo"><strong>Cliente:</strong> ${data.cliente || '—'}</div>
-            <div class="campo"><strong>Destino:</strong> ${data.destino || '—'}</div>
-            <div class="campo"><strong>Estado:</strong> ${data.estado || '—'}</div>
-            <div class="campo"><strong>Ubicación actual:</strong> ${data.ubicacion || '—'}</div>
+            <div class="campo"><strong>Código:</strong> ${escapeHtml(data.codigo || codigo)}</div>
+            <div class="campo"><strong>Cliente:</strong> ${escapeHtml(data.cliente || '—')}</div>
+            <div class="campo"><strong>Destino:</strong> ${escapeHtml(data.destino || '—')}</div>
+            <div class="campo"><strong>Estado:</strong> ${escapeHtml(data.estado || '—')}</div>
+            <div class="campo"><strong>Ubicación actual:</strong> ${escapeHtml(data.ubicacion || '—')}</div>
             <div class="campo"><strong>Última actualización:</strong> ${data.fecha_actualizacion ? new Date(data.fecha_actualizacion.seconds * 1000).toLocaleString() : '—'}</div>
           </div>
         `;
@@ -105,6 +115,11 @@
         console.error(err);
         mensaje.textContent = '⚠️ Error al consultar, inténtalo otra vez.';
       }
+    }
+
+    // pequeña función para escapar textos (seguridad XSS simple)
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     }
   </script>
 </body>
