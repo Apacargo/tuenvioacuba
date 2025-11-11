@@ -71,6 +71,12 @@
       height: 300px;
       object-fit: cover;
       border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .product img:hover {
+      transform: scale(1.05);
     }
 
     .product h2 {
@@ -116,9 +122,52 @@
       margin-top: 40px;
     }
 
+    /* Modal para imagen ampliada */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.9);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      margin: 80px auto;
+      display: block;
+      max-width: 80%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .cerrar {
+      position: absolute;
+      top: 30px;
+      right: 45px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .cerrar:hover {
+      color: gold;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
     @media (max-width: 600px) {
       h1 { font-size: 22px; }
       .buy-button { padding: 8px 12px; font-size: 14px; }
+      .modal-content { width: 95%; }
     }
   </style>
 </head>
@@ -135,8 +184,9 @@
 
   <!-- 🛒 Cuadrícula de productos -->
   <section class="product-grid" id="productGrid">
+
     <div class="product">
-      <img src="images/panel1.jpg" alt="Panel solar">
+      <img src="images/panel1.jpg" alt="Panel solar" onclick="ampliar(this)">
       <h2>Panel Solar 500W</h2>
       <p>Alta eficiencia para uso doméstico o industrial.</p>
       <p class="price">$420 USD</p>
@@ -144,7 +194,7 @@
     </div>
 
     <div class="product">
-      <img src="images/bici1.jpg" alt="Bicicleta eléctrica">
+      <img src="images/bici1.jpg" alt="Bicicleta eléctrica" onclick="ampliar(this)">
       <h2>Bicicleta Eléctrica Urbana</h2>
       <p>Motor de 500W y batería de larga duración.</p>
       <p class="price">$950 USD</p>
@@ -152,7 +202,7 @@
     </div>
 
     <div class="product">
-      <img src="images/lavadora1.jpg" alt="Lavadora automática">
+      <img src="images/lavadora1.jpg" alt="Lavadora automática" onclick="ampliar(this)">
       <h2>Lavadora Automática 19kg</h2>
       <p>Silenciosa y de bajo consumo.</p>
       <p class="price">$380 USD</p>
@@ -160,15 +210,15 @@
     </div>
 
     <div class="product">
-      <img src="images/congelador1.jpg" alt="Congelador vertical">
+      <img src="images/congelador1.jpg" alt="Congelador vertical" onclick="ampliar(this)">
       <h2>Congelador Vertical 300L</h2>
-      <p>Ideal para exibir productos en negocios .</p>
+      <p>Ideal para exibir productos en negocios.</p>
       <p class="price">$600 USD</p>
       <a class="buy-button" href="https://wa.me/5350896082?text=Estoy%20interesado%20en%20el%20Congelador%20Vertical%20300L">Comprar por WhatsApp</a>
     </div>
 
     <div class="product">
-      <img src="images/amasadora1.jpg" alt="Amasadora industrial">
+      <img src="images/amasadora1.jpg" alt="Amasadora industrial" onclick="ampliar(this)">
       <h2>Amasadora Industrial</h2>
       <p>Capacidad de 25L, perfecta para panaderías.</p>
       <p class="price">$720 USD</p>
@@ -176,7 +226,7 @@
     </div>
 
     <div class="product">
-      <img src="images/hornopan1.jpg" alt="Horno de panadería">
+      <img src="images/hornopan1.jpg" alt="Horno de panadería" onclick="ampliar(this)">
       <h2>Horno Profesional de Panadería</h2>
       <p>De acero inoxidable, alta capacidad.</p>
       <p class="price">$950 USD</p>
@@ -184,7 +234,7 @@
     </div>
 
     <div class="product">
-      <img src="images/nevera1.jpg" alt="Refrigerador de doble puerta">
+      <img src="images/nevera1.jpg" alt="Refrigerador doble puerta" onclick="ampliar(this)">
       <h2>Refrigerador Doble Puerta</h2>
       <p>Diseño elegante y eficiente.</p>
       <p class="price">$680 USD</p>
@@ -192,7 +242,7 @@
     </div>
 
     <div class="product">
-      <img src="images/licuadora1.jpg" alt="Licuadora industrial">
+      <img src="images/licuadora1.jpg" alt="Licuadora industrial" onclick="ampliar(this)">
       <h2>Licuadora Industrial</h2>
       <p>Alta potencia para uso profesional.</p>
       <p class="price">$210 USD</p>
@@ -200,86 +250,103 @@
     </div>
 
     <div class="product">
-      <img src="images/bateria1.jpg" alt="Batería solar de respaldo">
+      <img src="images/bateria1.jpg" alt="Batería solar" onclick="ampliar(this)">
       <h2>Batería Solar de Respaldo</h2>
       <p>Para sistemas fotovoltaicos domésticos.</p>
       <p class="price">$320 USD</p>
       <a class="buy-button" href="https://wa.me/5350896082?text=Estoy%20interesado%20en%20la%20Batería%20Solar%20de%20Respaldo">Comprar por WhatsApp</a>
     </div>
- 
-   <div class="product">
-      <img src="images/planta gasolina.jpg" alt="planta gasolina">
-      <h2>planta gasolina </h2>
-      <p>DEPREDADOR Generador portátil de 13.000 vatios de tricombustible con tecnología de arranque remoto y CO SECURE, EPA.</p>
+
+    <div class="product">
+      <img src="images/planta gasolina.jpg" alt="Planta gasolina" onclick="ampliar(this)">
+      <h2>Planta Gasolina</h2>
+      <p>Generador portátil de 13.000 vatios de tricombustible con tecnología de arranque remoto.</p>
       <p class="price">$920 USD</p>
       <a class="buy-button" href="https://wa.me/5350896082?text=Estoy%20interesado%20en%20la%20planta%20de%20gasolina">Comprar por WhatsApp</a>
     </div>
 
-  <div class="product">
-      <img src="images/planta gasolina1.jpg" alt="planta gasolina1">
-      <h2>planta gasolina</h2>
-      <p>Generador portátil de la copia de seguridad del hogar de 28000 vatios, arranque eléctrico con el estrangulador automático, interruptor de transferencia listo 30A y 50A</p>
+    <div class="product">
+      <img src="images/planta gasolina1.jpg" alt="Planta gasolina 1" onclick="ampliar(this)">
+      <h2>Planta Gasolina</h2>
+      <p>Generador portátil de respaldo del hogar de 28000 vatios con arranque eléctrico.</p>
       <p class="price">$1800 USD</p>
       <a class="buy-button" href="https://wa.me/5350896082?text=Estoy%20interesado%20en%20la%20planta%20%20de%20gasolina">Comprar por WhatsApp</a>
     </div>
- 
-   <div class="product">
-      <img src="images/nevera2.jpg" alt="nevera">
-      <h2>nevera</h2>
-      <p>Nevera No frost 404 litros Manija Externa Dispensador de Agua Gris Titanio.</p>
+
+    <div class="product">
+      <img src="images/nevera2.jpg" alt="Nevera grande" onclick="ampliar(this)">
+      <h2>Nevera No Frost 404L</h2>
+      <p>Dispensador de agua y manija externa.</p>
       <p class="price">$1900 USD</p>
       <a class="buy-button" href="https://wa.me/5350896082?text=Estoy%20interesado%20en%20la%20nevera%20de%20404lt">Comprar por WhatsApp</a>
     </div>
-  
-  <div class="product">
-      <img src="images/bateria2.jpg" alt="Batería de motos eléctricas">
+
+    <div class="product">
+      <img src="images/bateria2.jpg" alt="Batería TOPMAQ 45AH" onclick="ampliar(this)">
       <h2>Batería TOPMAQ 72v 45AH</h2>
-      <p>Tensión nominal: 72V.Amperaje: 45 AH.BMS Smart con Bluetooth.BMS con doble acción
-         Caja de Aluminio, resistente a altas temperaturas</p>
+      <p>Tensión nominal: 72V, Amperaje: 45AH, Caja de aluminio resistente a altas temperaturas.</p>
       <p class="price">$590 USD</p>
       <a class="buy-button" href="https://wa.me/5350896082?text=Estoy%20interesado%20en%20la%20Batería%20Topmaq45AH">Comprar por WhatsApp</a>
     </div>
- 
-  <div class="product">
-      <img src="images/bateria3.jpg" alt="Batería de motos eléctricas">
+
+    <div class="product">
+      <img src="images/bateria3.jpg" alt="Batería TOPMAQ 75AH" onclick="ampliar(this)">
       <h2>Batería TOPMAQ 72v 75AH</h2>
-      <p>Voltaje nominal: 72v Amperaje: 75ah.Bms doble acción.Fusible de seguridad 100ah
-Sistema de cable con fusible incorporado para altos consumos de corrientes.Caja de aluminio, resistente altas temperaturas.Microchip incorporado para altas temperatura.Celdas lithium</p>
+      <p>BMS doble acción, caja de aluminio, fusible 100ah, microchip térmico.</p>
       <p class="price">$700 USD</p>
       <a class="buy-button" href="https://wa.me/5350896082?text=Estoy%20interesado%20en%20la%20Batería%20TOPMAQ75HA">Comprar por WhatsApp</a>
     </div>
-  
-   <div class="product">
-      <img src="images/calentador1.jpg" alt="Calentador de agua 60lt">
+
+    <div class="product">
+      <img src="images/calentador1.jpg" alt="Calentador 60lt" onclick="ampliar(this)">
       <h2>Calentador de 60lt</h2>
-      <p>Calentador De Agua Eléctrico 60 Litros 220V Tanque. Marca Genaire.</p>
+      <p>Calentador de agua eléctrico marca Genaire 220V.</p>
       <p class="price">$200 USD</p>
       <a class="buy-button" href="https://wa.me/5350896082?text=Estoy%20interesado%20en%20el%20Calentador%20de%20agua%20de%2060lt">Comprar por WhatsApp</a>
     </div>
- 
-  <div class="product">
-      <img src="images/congelador2.jpg" alt="Congelador vertical">
-      <h2>CONGELADOR VERTICAL 2 PUERTAS DE VIDRIO</h2>
-      <p>Construcción en acero inoxidable.Capacidad: 44.8 pies cúbicos (1268.6 Lts).Sistema digital de control de temperatura Dixell
-       Puerta en doble panel de vidrio, abatible y desprendible, tipo parche, con cierre hermético mediante empaque imantado, con cerradura para mayor control</p>
+
+    <div class="product">
+      <img src="images/congelador2.jpg" alt="Congelador vertical 2 puertas" onclick="ampliar(this)">
+      <h2>Congelador Vertical 2 Puertas de Vidrio</h2>
+      <p>Acero inoxidable, control digital, doble puerta de vidrio con cerradura.</p>
       <p class="price">$1800 USD</p>
       <a class="buy-button" href="https://wa.me/5350896082?text=Estoy%20interesado%20en%20el%20congelador%20vertical%20de%2044.8pies">Comprar por WhatsApp</a>
     </div>
+
   </section>
+
+  <!-- Modal para ampliar imágenes -->
+  <div id="miModal" class="modal" onclick="cerrarModal()">
+    <span class="cerrar">&times;</span>
+    <img class="modal-content" id="imgAmpliada">
+  </div>
 
   <footer>
     <p>© 2025 APA Cargo - Todos los derechos reservados.</p>
   </footer>
 
   <script>
+    // 🔍 Búsqueda
     function buscarProducto() {
       const input = document.getElementById("searchInput").value.toLowerCase();
       const productos = document.getElementsByClassName("product");
-
       for (let producto of productos) {
         const texto = producto.innerText.toLowerCase();
         producto.style.display = texto.includes(input) ? "block" : "none";
       }
+    }
+
+    // 🔍 Ampliar imagen
+    function ampliar(img) {
+      const modal = document.getElementById("miModal");
+      const modalImg = document.getElementById("imgAmpliada");
+      modal.style.display = "block";
+      modalImg.src = img.src;
+    }
+
+    // 🔙 Cerrar imagen ampliada
+    function cerrarModal() {
+      document.getElementById("miModal").style.display = "none";
     }
   </script>
 </body>
