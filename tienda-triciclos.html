@@ -64,6 +64,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      cursor: pointer;
     }
 
     .triciclo-card:hover {
@@ -126,9 +127,82 @@
       margin-top: 20px;
     }
 
+    /* ===== MODAL ===== */
+    .modal {
+      position: fixed;
+      top:0;
+      left:0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 100%;
+      overflow: hidden;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-body h3 {
+      margin: 10px 0;
+      color: #001f4d;
+    }
+
+    .modal-body p {
+      color: #444;
+      margin-bottom: 15px;
+    }
+
+    .modal-body .price {
+      font-weight: bold;
+      color: #d4af37;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #001f4d;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity:0; transform: scale(0.9);}
+      to { opacity:1; transform: scale(1);}
+    }
+
     @media (max-width: 480px) {
       header { font-size: 18px; padding: 12px; }
       .triciclo-card img { height: 160px; }
+      .modal-content img { height: 180px; }
     }
   </style>
 </head>
@@ -138,14 +212,11 @@
     <div style="font-weight:700; color:#d4af37; font-size:18px;">Triciclos Eléctricos y de Combustión</div>
   </header>
 
-  <!-- ====== BUSCADOR ====== -->
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Buscar triciclo por nombre o descripción...">
   </div>
 
   <main class="triciclo-container" id="tricicloContainer">
-    <!-- ====== TRICICLOS ====== -->
-
     <div class="triciclo-card">
       <img src="images/triciclo1.jpg" alt="DAYANG BEIYI T5">
       <div class="body">
@@ -293,8 +364,8 @@
       <img src="images/triciclo15.jpg" alt="Triciclo Raly">
       <div class="body">
         <h3>Triciclo Raly</h3>
-        <p class="desc">Motor:1500W.Batería:Raly 2 LT PO4 de 72V.Autonomía: 120-130 Km por carga.Tiempo de Carga
-8-10h.Carga máxima (kg) 1000.Velocidad máxima 50km-h.</p>
+        <p class="desc">Motor:1500W.Batería:Raly 2 LT PO4 de 72V.Autonomía: 120-130 Km por carga.Tiempo de Carga 
+                        8-10h.Carga máxima (kg) 1000.Velocidad máxima 50km-h.</p>
         <div class="price">$2400 USD</div>
         <a class="buy-btn" href="#" data-name="Triciclo Raly" onclick="openWhats(event)">Comprar</a>
       </div>
@@ -302,20 +373,51 @@
  
   </main>
 
+  <!-- ====== MODAL ====== -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <img src="" alt="" id="modalImg">
+      <div class="modal-body">
+        <h3 id="modalName"></h3>
+        <p id="modalDesc"></p>
+        <div class="price" id="modalPrice"></div>
+        <a class="buy-btn" href="#" id="modalWhats">Comprar por WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p>© 2025 Apacargo – Todos los derechos reservados</p>
   </footer>
 
   <script>
     const WHATS_NUMBER = '5350896082';
+    const modal = document.getElementById('productModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalName = document.getElementById('modalName');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalWhats = document.getElementById('modalWhats');
 
-    function openWhats(e) {
+    function openModal(e) {
       e.preventDefault();
-      const el = e.currentTarget;
-      const name = el.getAttribute('data-name') || 'interés en un producto';
-      const text = encodeURIComponent(`Hola, estoy interesado en el ${name}. ¿Podría darme más información sobre precio y envío?`);
-      const url = `https://wa.me/${WHATS_NUMBER}?text=${text}`;
-      window.open(url, '_blank');
+      const card = e.currentTarget.closest('.triciclo-card');
+      const name = card.dataset.name;
+      const desc = card.dataset.desc;
+      const price = card.dataset.price;
+      const img = card.dataset.img;
+
+      modalImg.src = img;
+      modalName.textContent = name;
+      modalDesc.textContent = desc;
+      modalPrice.textContent = price;
+      modalWhats.href = `https://wa.me/${WHATS_NUMBER}?text=${encodeURIComponent(`Hola, estoy interesado en el ${name}. ¿Podría darme más información sobre precio y envío?`)}`;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
     }
 
     // ===== BUSCADOR =====
@@ -326,8 +428,8 @@
       const term = this.value.toLowerCase();
       const cards = container.getElementsByClassName('triciclo-card');
       for (let card of cards) {
-        const name = card.querySelector('h3').textContent.toLowerCase();
-        const desc = card.querySelector('.desc').textContent.toLowerCase();
+        const name = card.dataset.name.toLowerCase();
+        const desc = card.dataset.desc.toLowerCase();
         card.style.display = (name.includes(term) || desc.includes(term)) ? 'flex' : 'none';
       }
     });
