@@ -6,172 +6,28 @@
   <title>Tienda de Triciclos | Apacargo</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f2f2f2;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background: #001f4d;
-      color: #fff;
-      padding: 15px;
-      text-align: center;
-      font-size: 24px;
-      letter-spacing: 1px;
-    }
-
-    .search-box {
-      text-align: center;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .search-box input {
-      width: 90%;
-      max-width: 500px;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      outline: none;
-      transition: 0.3s;
-    }
-
-    .search-box input:focus {
-      border-color: #d4af37;
-      box-shadow: 0 0 6px rgba(212,175,55,0.6);
-    }
-
-    .triciclo-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 30px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .triciclo-card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-      text-align: center;
-      transition: transform 0.2s;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .triciclo-card:hover {
-      transform: scale(1.03);
-    }
-
-    .triciclo-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display:block;
-    }
-
-    .triciclo-card .body {
-      padding: 16px;
-    }
-
-    .triciclo-card h3 {
-      margin: 10px 0 6px;
-      font-size: 20px;
-      color: #001f4d;
-    }
-
-    .triciclo-card p.desc {
-      color: #444;
-      font-size: 15px;
-      margin: 0 0 12px;
-      min-height: 44px;
-    }
-
-    .triciclo-card .price {
-      font-weight: bold;
-      color: #d4af37;
-      font-size: 18px;
-      margin-bottom: 12px;
-    }
-
-    .buy-btn {
-      background-color: #d4af37;
-      color: #001f4d;
-      padding: 10px 18px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.2s;
-      font-weight: bold;
-      text-decoration: none;
-      display:inline-block;
-    }
-
-    .buy-btn:hover {
-      background-color: #b6912c;
-    }
-
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #001f4d;
-      color: white;
-      margin-top: 20px;
-    }
-
+    body { font-family: 'Poppins', sans-serif; background: #f2f2f2; margin: 0; padding: 0; }
+    header { background: #001f4d; color: #fff; padding: 15px; text-align: center; font-size: 24px; letter-spacing: 1px; }
+    .search-box { text-align: center; padding: 20px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .search-box input { width: 90%; max-width: 500px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; outline: none; transition: 0.3s; }
+    .search-box input:focus { border-color: #d4af37; box-shadow: 0 0 6px rgba(212,175,55,0.6); }
+    .triciclo-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 30px; max-width: 1200px; margin: auto; }
+    .triciclo-card { background: white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow: hidden; text-align: center; transition: transform 0.2s; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+    .triciclo-card:hover { transform: scale(1.03); }
+    .triciclo-card img { width: 100%; height: 200px; object-fit: cover; display:block; }
+    .triciclo-card .body { padding: 16px; }
+    .triciclo-card h3 { margin: 10px 0 6px; font-size: 20px; color: #001f4d; }
+    .triciclo-card p.desc { color: #444; font-size: 15px; margin: 0 0 12px; min-height: 44px; }
+    .triciclo-card .price { font-weight: bold; color: #d4af37; font-size: 18px; margin-bottom: 12px; }
+    .buy-btn { background-color: #d4af37; color: #001f4d; padding: 10px 18px; border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s; font-weight: bold; text-decoration: none; display:inline-block; }
+    .buy-btn:hover { background-color: #b6912c; }
+    footer { text-align: center; padding: 15px; background: #001f4d; color: white; margin-top: 20px; }
     /* ===== MODAL ===== */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.7);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 500px;
-      width: 90%;
-      text-align: center;
-      position: relative;
-    }
-
-    .modal-content img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #001f4d;
-      cursor: pointer;
-    }
-
-    @media (max-width: 480px) {
-      header { font-size: 18px; padding: 12px; }
-      .triciclo-card img { height: 160px; }
-    }
+    .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); justify-content: center; align-items: center; }
+    .modal-content { background: white; padding: 20px; border-radius: 10px; max-width: 500px; width: 90%; text-align: center; position: relative; }
+    .modal-content img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; }
+    .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; font-weight: bold; color: #001f4d; cursor: pointer; }
+    @media (max-width: 480px) { header { font-size: 18px; padding: 12px; } .triciclo-card img { height: 160px; } }
   </style>
 </head>
 <body>
@@ -185,68 +41,68 @@
   </div>
 
   <main class="triciclo-container" id="tricicloContainer">
-
-  <div class="triciclo-card" data-name="DAYANG BEIYI T5" data-desc="Motor 250cc, refrigeración por agua. Carga hasta 2000 kg. Velocidad máxima 65km/h." data-price="$3500 USD" data-img="images/triciclo1.jpg">
-    <img src="images/triciclo1.jpg" alt="DAYANG BEIYI T5">
-    <div class="body">
-      <h3>DAYANG BEIYI T5</h3>
-      <p class="desc">Motor 250cc, refrigeración por agua. Carga hasta 2000 kg. Velocidad máxima 65km/h.</p>
-      <div class="price">$3500 USD</div>
-      <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+    <!-- ===== TARJETAS DE TRICICLOS ===== -->
+    <div class="triciclo-card" data-name="DAYANG BEIYI T5" data-desc="Motor 250cc, refrigeración por agua. Carga hasta 2000 kg. Velocidad máxima 65km/h." data-price="$3500 USD" data-img="images/triciclo1.jpg">
+      <img src="images/triciclo1.jpg" alt="DAYANG BEIYI T5">
+      <div class="body">
+        <h3>DAYANG BEIYI T5</h3>
+        <p class="desc">Motor 250cc, refrigeración por agua. Carga hasta 2000 kg. Velocidad máxima 65km/h.</p>
+        <div class="price">$3500 USD</div>
+        <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+      </div>
     </div>
-  </div>
 
-  <div class="triciclo-card" data-name="Motorizado 200cc Triciclo de Carga Motocicleta" data-desc="200cc refrigeración por agua. Semi cabina, freno hidráulico, 3 ruedas reforzadas." data-price="$3000 USD" data-img="images/triciclo2.jpg">
-    <img src="images/triciclo2.jpg" alt="Motorizado 200cc Triciclo de Carga Motocicleta">
-    <div class="body">
-      <h3>Motorizado 200cc Triciclo de Carga Motocicleta</h3>
-      <p class="desc">200cc refrigeración por agua. Semi cabina, freno hidráulico, 3 ruedas reforzadas.</p>
-      <div class="price">$3000 USD</div>
-      <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+    <div class="triciclo-card" data-name="Motorizado 200cc Triciclo de Carga Motocicleta" data-desc="200cc refrigeración por agua. Semi cabina, freno hidráulico, 3 ruedas reforzadas." data-price="$3000 USD" data-img="images/triciclo2.jpg">
+      <img src="images/triciclo2.jpg" alt="Motorizado 200cc Triciclo de Carga Motocicleta">
+      <div class="body">
+        <h3>Motorizado 200cc Triciclo de Carga Motocicleta</h3>
+        <p class="desc">200cc refrigeración por agua. Semi cabina, freno hidráulico, 3 ruedas reforzadas.</p>
+        <div class="price">$3000 USD</div>
+        <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+      </div>
     </div>
-  </div>
 
-  <div class="triciclo-card" data-name="Triciclo de motor de camión DY-P2" data-desc="Motor 250cc, caja de carga 2.4x1.5m, freno hidráulico, cabina cerrada completa." data-price="$3800 USD" data-img="images/triciclo3.jpg">
-    <img src="images/triciclo3.jpg" alt="Triciclo de motor de camión DY-P2">
-    <div class="body">
-      <h3>Triciclo de motor de camión DY-P2</h3>
-      <p class="desc">Motor 250cc, caja de carga 2.4x1.5m, freno hidráulico, cabina cerrada completa.</p>
-      <div class="price">$3800 USD</div>
-      <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+    <div class="triciclo-card" data-name="Triciclo de motor de camión DY-P2" data-desc="Motor 250cc, caja de carga 2.4x1.5m, freno hidráulico, cabina cerrada completa." data-price="$3800 USD" data-img="images/triciclo3.jpg">
+      <img src="images/triciclo3.jpg" alt="Triciclo de motor de camión DY-P2">
+      <div class="body">
+        <h3>Triciclo de motor de camión DY-P2</h3>
+        <p class="desc">Motor 250cc, caja de carga 2.4x1.5m, freno hidráulico, cabina cerrada completa.</p>
+        <div class="price">$3800 USD</div>
+        <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+      </div>
     </div>
-  </div>
 
-  <div class="triciclo-card" data-name="Triciclo 150CC" data-desc="Motor 150cc 4 tiempos. Carga máxima 500kg. Freno delantero y trasero de tambor." data-price="$2900 USD" data-img="images/triciclo4.jpg">
-    <img src="images/triciclo4.jpg" alt="Triciclo 150CC">
-    <div class="body">
-      <h3>Triciclo 150CC</h3>
-      <p class="desc">Motor 150cc 4 tiempos. Carga máxima 500kg. Freno delantero y trasero de tambor.</p>
-      <div class="price">$2900 USD</div>
-      <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+    <div class="triciclo-card" data-name="Triciclo 150CC" data-desc="Motor 150cc 4 tiempos. Carga máxima 500kg. Freno delantero y trasero de tambor." data-price="$2900 USD" data-img="images/triciclo4.jpg">
+      <img src="images/triciclo4.jpg" alt="Triciclo 150CC">
+      <div class="body">
+        <h3>Triciclo 150CC</h3>
+        <p class="desc">Motor 150cc 4 tiempos. Carga máxima 500kg. Freno delantero y trasero de tambor.</p>
+        <div class="price">$2900 USD</div>
+        <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+      </div>
     </div>
-  </div>
 
-  <div class="triciclo-card" data-name="Triciclo de cabina cerrada para carga" data-desc="Motor 250cc enfriado hidráulicamente. Carga hasta 2000 kg. Freno de tambor." data-price="$3800 USD" data-img="images/triciclo5.jpg">
-    <img src="images/triciclo5.jpg" alt="Triciclo de cabina cerrada para carga">
-    <div class="body">
-      <h3>Triciclo de cabina cerrada para carga</h3>
-      <p class="desc">Motor 250cc enfriado hidráulicamente. Carga hasta 2000 kg. Freno de tambor.</p>
-      <div class="price">$3800 USD</div>
-      <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+    <div class="triciclo-card" data-name="Triciclo de cabina cerrada para carga" data-desc="Motor 250cc enfriado hidráulicamente. Carga hasta 2000 kg. Freno de tambor." data-price="$3800 USD" data-img="images/triciclo5.jpg">
+      <img src="images/triciclo5.jpg" alt="Triciclo de cabina cerrada para carga">
+      <div class="body">
+        <h3>Triciclo de cabina cerrada para carga</h3>
+        <p class="desc">Motor 250cc enfriado hidráulicamente. Carga hasta 2000 kg. Freno de tambor.</p>
+        <div class="price">$3800 USD</div>
+        <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+      </div>
     </div>
-  </div>
 
-  <div class="triciclo-card" data-name="TRICICLO ELECTRICO 3 RUEDAS MISHOZUKI" data-desc="Motor 1200w 72v. Carga 500kg. Autonomía 80km. Batería plomo-ácido 72v 60Ah." data-price="$2400 USD" data-img="images/triciclo6.jpg">
-    <img src="images/triciclo6.jpg" alt="TRICICLO ELECTRICO 3 RUEDAS MISHOZUKI">
-    <div class="body">
-      <h3>TRICICLO ELECTRICO 3 RUEDAS MISHOZUKI</h3>
-      <p class="desc">Motor 1200w 72v. Carga 500kg. Autonomía 80km. Batería plomo-ácido 72v 60Ah.</p>
-      <div class="price">$2400 USD</div>
-      <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+    <div class="triciclo-card" data-name="TRICICLO ELECTRICO 3 RUEDAS MISHOZUKI" data-desc="Motor 1200w 72v. Carga 500kg. Autonomía 80km. Batería plomo-ácido 72v 60Ah." data-price="$2400 USD" data-img="images/triciclo6.jpg">
+      <img src="images/triciclo6.jpg" alt="TRICICLO ELECTRICO 3 RUEDAS MISHOZUKI">
+      <div class="body">
+        <h3>TRICICLO ELECTRICO 3 RUEDAS MISHOZUKI</h3>
+        <p class="desc">Motor 1200w 72v. Carga 500kg. Autonomía 80km. Batería plomo-ácido 72v 60Ah.</p>
+        <div class="price">$2400 USD</div>
+        <a class="buy-btn" href="#" onclick="openModal(event)">Comprar</a>
+      </div>
     </div>
-  </div>
 
-  <div class="triciclo-card" data-name="ONEBOT Triciclo eléctrico T414 (X1)" data-desc="Motor 1000W, 72V. Velocidad máx. 40km/h. Carga 300kg. Freno de disco." data-price="$2300 USD" data-img="images/triciclo7.jpg">
+    <div class="triciclo-card" data-name="ONEBOT Triciclo eléctrico T414 (X1)" data-desc="Motor 1000W, 72V. Velocidad máx. 40km/h. Carga 300kg. Freno de disco." data-price="$2300 USD" data-img="images/triciclo7.jpg">
     <img src="images/triciclo7.jpg" alt="ONEBOT Triciclo eléctrico T414 (X1)">
     <div class="body">
       <h3>ONEBOT Triciclo eléctrico T414 (X1)</h3>
@@ -336,7 +192,7 @@
     </div>
   </div>
 
-  </main>
+</main>
 
   <footer>
     <p>© 2025 Apacargo – Todos los derechos reservados</p>
@@ -357,7 +213,7 @@
   <script>
     const WHATS_NUMBER = '5350896082';
 
-    // ===== FUNCIONES MODAL =====
+    // ===== MODAL =====
     const modal = document.getElementById('modal');
     const modalImg = document.getElementById('modalImg');
     const modalName = document.getElementById('modalName');
@@ -378,18 +234,12 @@
       modal.style.display = 'flex';
     }
 
-    closeModalBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', e => {
-      if(e.target === modal) modal.style.display = 'none';
-    });
+    closeModalBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+    window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
 
     // ===== BUSCADOR =====
     const searchInput = document.getElementById('searchInput');
     const container = document.getElementById('tricicloContainer');
-
     searchInput.addEventListener('keyup', function() {
       const term = this.value.toLowerCase();
       const cards = container.getElementsByClassName('triciclo-card');
