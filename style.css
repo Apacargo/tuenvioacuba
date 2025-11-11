@@ -163,18 +163,3 @@ body {
 #navMenu a {
   padding: 10px 8px;
 }
-.btn-joyeria {
-  display: inline-block;
-  background: linear-gradient(90deg, #004aad, #d4af37);
-  color: white;
-  font-weight: 600;
-  padding: 15px 25px;
-  border-radius: 30px;
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: 0.3s;
-}
-.btn-joyeria:hover {
-  background: linear-gradient(90deg, #d4af37, #004aad);
-  transform: scale(1.05);
-}
