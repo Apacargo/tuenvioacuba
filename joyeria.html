@@ -22,8 +22,26 @@
     }
     main {
       max-width: 1000px;
-      margin: 40px auto;
+      margin: 30px auto;
       padding: 20px;
+    }
+    .search-box {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .search-box input {
+      width: 80%;
+      max-width: 400px;
+      padding: 12px 15px;
+      border: 2px solid #004aad;
+      border-radius: 25px;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.3s;
+    }
+    .search-box input:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
     }
     .joyas {
       display: grid;
@@ -36,6 +54,7 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       overflow: hidden;
       transition: transform 0.3s;
+      cursor: pointer;
     }
     .joya:hover { transform: scale(1.03); }
     .joya img {
@@ -49,19 +68,12 @@
     .joya-info h3 {
       color: #004aad;
       margin-bottom: 8px;
+      font-size: 1.1rem;
     }
     .joya-info p {
       font-size: 0.95rem;
       color: #555;
       line-height: 1.5;
-    }
-    footer {
-      margin-top: 50px;
-      text-align: center;
-      background: #004aad;
-      color: white;
-      padding: 15px;
-      font-size: 0.9rem;
     }
     a.btn-volver {
       display: inline-block;
@@ -73,8 +85,52 @@
       margin-bottom: 25px;
       transition: 0.3s;
     }
-    a.btn-volver:hover {
-      background: #b9932f;
+    a.btn-volver:hover { background: #b9932f; }
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      background: #004aad;
+      color: white;
+      padding: 15px;
+      font-size: 0.9rem;
+    }
+
+    /* === MODAL === */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+    .modal .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* 📱 Responsive */
+    @media (max-width: 600px) {
+      header { font-size: 1.5rem; padding: 15px; }
+      .joya-info h3 { font-size: 1rem; }
+      .joya-info p { font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -85,16 +141,22 @@
   <main>
     <a href="index.html" class="btn-volver">← Volver al inicio</a>
 
-    <div class="joyas">
-      <div class="joya">
+    <!-- 🔍 Buscador -->
+    <div class="search-box">
+      <input id="searchInput" type="text" placeholder="Buscar joyas por nombre o descripción...">
+    </div>
+
+    <!-- 💍 Galería de Joyas -->
+    <div class="joyas" id="joyasContainer">
+      <div class="joya" data-name="anillo oro" data-desc="anillo de oro amarillo 18k elegante clásico">
         <img src="https://i.imgur.com/7tbw9WQ.jpg" alt="Anillo de oro">
         <div class="joya-info">
           <h3>Anillo de Oro 18k</h3>
-          <p>Elegante anillo de oro amarillo de 18 quilates, diseño clásico con acabado pulido. Perfecto para regalo.</p>
+          <p>Elegante anillo de oro amarillo de 18 quilates, diseño clásico con acabado pulido.</p>
         </div>
       </div>
 
-      <div class="joya">
+      <div class="joya" data-name="collar plata" data-desc="collar plata italiana colgante corazón">
         <img src="https://i.imgur.com/0DjZ6Wj.jpg" alt="Collar de plata">
         <div class="joya-info">
           <h3>Collar de Plata Italiana</h3>
@@ -102,7 +164,7 @@
         </div>
       </div>
 
-      <div class="joya">
+      <div class="joya" data-name="pulsera oro blanco" data-desc="pulsera oro blanco 14k cierre seguro">
         <img src="https://i.imgur.com/tcFfF7V.jpg" alt="Pulsera de oro blanco">
         <div class="joya-info">
           <h3>Pulsera de Oro Blanco</h3>
@@ -113,5 +175,45 @@
   </main>
 
   <footer>© 2025 Apacargo — Colección de Joyería</footer>
+
+  <!-- 🖼️ Modal para ampliar imágenes -->
+  <div id="modal" class="modal">
+    <span class="close" onclick="cerrarModal()">&times;</span>
+    <img id="modalImg" src="" alt="Vista ampliada">
+  </div>
+
+  <script>
+    // === MODAL ===
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+
+    document.querySelectorAll(".joya img").forEach(img => {
+      img.addEventListener("click", () => {
+        modal.style.display = "flex";
+        modalImg.src = img.src;
+      });
+    });
+
+    function cerrarModal() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = (e) => {
+      if (e.target === modal) modal.style.display = "none";
+    };
+
+    // === BUSCADOR ===
+    const searchInput = document.getElementById("searchInput");
+    const joyas = document.querySelectorAll(".joya");
+
+    searchInput.addEventListener("input", () => {
+      const texto = searchInput.value.toLowerCase();
+      joyas.forEach(j => {
+        const nombre = j.dataset.name.toLowerCase();
+        const desc = j.dataset.desc.toLowerCase();
+        j.style.display = (nombre.includes(texto) || desc.includes(texto)) ? "block" : "none";
+      });
+    });
+  </script>
 </body>
 </html>
