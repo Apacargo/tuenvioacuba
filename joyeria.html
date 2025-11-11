@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joyería | Apacargo</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #004aad, #d4af37);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    main {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .joyas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .joya {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .joya:hover { transform: scale(1.03); }
+    .joya img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .joya-info {
+      padding: 15px;
+    }
+    .joya-info h3 {
+      color: #004aad;
+      margin-bottom: 8px;
+    }
+    .joya-info p {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.5;
+    }
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      background: #004aad;
+      color: white;
+      padding: 15px;
+      font-size: 0.9rem;
+    }
+    a.btn-volver {
+      display: inline-block;
+      background: #d4af37;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      margin-bottom: 25px;
+      transition: 0.3s;
+    }
+    a.btn-volver:hover {
+      background: #b9932f;
+    }
+  </style>
+</head>
+<body>
+
+  <header>💎 Colección de Joyería | Apacargo</header>
+
+  <main>
+    <a href="index.html" class="btn-volver">← Volver al inicio</a>
+
+    <div class="joyas">
+      <div class="joya">
+        <img src="https://i.imgur.com/7tbw9WQ.jpg" alt="Anillo de oro">
+        <div class="joya-info">
+          <h3>Anillo de Oro 18k</h3>
+          <p>Elegante anillo de oro amarillo de 18 quilates, diseño clásico con acabado pulido. Perfecto para regalo.</p>
+        </div>
+      </div>
+
+      <div class="joya">
+        <img src="https://i.imgur.com/0DjZ6Wj.jpg" alt="Collar de plata">
+        <div class="joya-info">
+          <h3>Collar de Plata Italiana</h3>
+          <p>Collar hecho con plata 925, con colgante de corazón y piedras de zirconia cúbica.</p>
+        </div>
+      </div>
+
+      <div class="joya">
+        <img src="https://i.imgur.com/tcFfF7V.jpg" alt="Pulsera de oro blanco">
+        <div class="joya-info">
+          <h3>Pulsera de Oro Blanco</h3>
+          <p>Pulsera fina con detalles en oro blanco 14k, cierre seguro y acabado espejo.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2025 Apacargo — Colección de Joyería</footer>
+</body>
+</html>
