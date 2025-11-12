@@ -4,54 +4,234 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Quiénes Somos • Apacargo</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- Fuentes Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== Global ===== */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      color: #002b7f;
+      background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/fondo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1, h3 {
+      font-family: 'Playfair Display', serif;
+      color: #002b7f;
+      margin-bottom: 15px;
+    }
+
+    /* ===== Header ===== */
+    .site-header {
+      background-color: rgba(255,255,255,0.95);
+      padding: 20px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: #002b7f;
+      transition: transform 0.3s ease;
+    }
+
+    .brand:hover {
+      transform: scale(1.02);
+    }
+
+    .brand-logo {
+      height: 60px;
+      margin-right: 15px;
+    }
+
+    .brand-name {
+      font-weight: bold;
+      font-size: 1.6rem;
+    }
+
+    .brand-sub {
+      font-size: 1rem;
+      color: #d4af37;
+    }
+
+    /* ===== Sección Quiénes Somos ===== */
+    .quienes-somos {
+      background-color: rgba(255,255,255,0.95);
+      padding: 40px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards;
+    }
+
+    .quienes-somos p {
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+    }
+
+    .destacado {
+      font-size: 1.3rem;
+      color: #d4af37;
+      font-style: italic;
+      margin-top: 20px;
+    }
+
+    /* ===== Botón Volver ===== */
+    .btn-volver {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #002b7f;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-volver:hover {
+      background-color: #d4af37;
+      color: #002b7f;
+      transform: scale(1.05);
+    }
+
+    /* ===== Mapa ===== */
+    .map-wrap {
+      margin-top: 25px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+
+    .map-wrap iframe {
+      width: 100%;
+      height: 450px;
+      border: 0;
+    }
+
+    /* ===== Footer ===== */
+    .site-footer {
+      background-color: rgba(0,43,127,0.95);
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 0.95rem;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+    }
+
+    .site-footer a {
+      color: #d4af37;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .site-footer a:hover {
+      color: #fff;
+    }
+
+    /* ===== Animaciones ===== */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== Responsivo ===== */
+    @media (max-width: 768px) {
+      .brand {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .brand-logo {
+        margin-bottom: 10px;
+      }
+
+      .quienes-somos {
+        padding: 25px;
+      }
+    }
+  </style>
 </head>
 <body>
+
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html"><img src="images/logo.png" alt="Apacargo" class="brand-logo"><div><div class="brand-name">Apacargo</div><div class="brand-sub">Quiénes Somos</div></div></a>
+      <a class="brand" href="index.html">
+        <img src="images/logo.png" alt="Apacargo" class="brand-logo">
+        <div>
+          <div class="brand-name">Apacargo</div>
+          <div class="brand-sub">Quiénes Somos</div>
+        </div>
+      </a>
+    </div>
   </header>
 
   <main>
-    <section class="section">
-      <div class="container">
-        <section class="quienes-somos">
-  <div class="container">
-    <h1>¿Quiénes Somos?</h1>
-    <p>
-      En <strong>Apacargo Tu Envío a Cuba</strong> somos mucho más que una empresa de envíos: somos un puente directo entre tus necesidades y tu destino. 
-      Nacimos con una misión clara: ofrecer el servicio de transporte y entrega más <strong>rápido, seguro y económico</strong> de toda la isla.
-    </p>
+    <div class="container">
+      <section class="quienes-somos">
+        <h1>¿Quiénes Somos?</h1>
+        <p>
+          En <strong>Apacargo Tu Envío a Cuba</strong> somos mucho más que una empresa de envíos: somos un puente directo entre tus necesidades y tu destino. 
+          Nacimos con una misión clara: ofrecer el servicio de transporte y entrega más <strong>rápido, seguro y económico</strong> de toda la isla.
+        </p>
 
-    <p>
-      Combinamos tecnología moderna con la eficiencia del trabajo cubano para garantizar que cada envío, vehículo o mercancía llegue 
-      <strong>a tiempo, en perfecto estado</strong> y sin complicaciones. Desde autos y motos hasta artículos personales, cada entrega es manejada con la máxima seriedad y transparencia.
-    </p>
+        <p>
+          Combinamos tecnología moderna con la eficiencia del trabajo cubano para garantizar que cada envío, vehículo o mercancía llegue 
+          <strong>a tiempo, en perfecto estado</strong> y sin complicaciones. Desde autos y motos hasta artículos personales, cada entrega es manejada con la máxima seriedad y transparencia.
+        </p>
 
-    <p>
-      Nuestra filosofía es simple: <strong>calidad sin sobrecostos</strong>. En Apacargo creemos que la velocidad no tiene por qué ser un lujo, 
-      y que cada cliente merece un servicio de primer nivel sin pagar de más.
-    </p>
+        <p>
+          Nuestra filosofía es simple: <strong>calidad sin sobrecostos</strong>. En Apacargo creemos que la velocidad no tiene por qué ser un lujo, 
+          y que cada cliente merece un servicio de primer nivel sin pagar de más.
+        </p>
 
-    <p class="destacado">
-      <em>Apacargo Tu Envío a Cuba — la opción más económica, moderna y veloz de toda la isla.</em>
-    </p>
-  </div>
-</section>
+        <p class="destacado">
+          <em>Apacargo Tu Envío a Cuba — la opción más económica, moderna y veloz de toda la isla.</em>
+        </p>
 
+        <a href="index.html" class="btn-volver">Volver</a>
+      </section>
 
-        <h3>Oficinas</h3>
-        <p>Miami / Doral — 1335 NW 98 Ct, Doral, FL 33172</p>
+      <h3>Oficinas</h3>
+      <p>Miami / Doral — 1335 NW 98 Ct, Doral, FL 33172</p>
 
-        <div class="map-wrap">
-          <!-- mapa centrado en la ubicación principal (editable por admin si quieres) -->
-          <iframe title="Oficina principal" src="https://www.google.com/maps?q=1335+NW+98+Ct+Doral+FL+33172&output=embed" loading="lazy"></iframe>
-        </div>
+      <div class="map-wrap">
+        <iframe title="Oficina principal" src="https://www.google.com/maps?q=1335+NW+98+Ct+Doral+FL+33172&output=embed" loading="lazy"></iframe>
       </div>
-    </section>
+    </div>
   </main>
 
-  <footer class="site-footer"><div class="container footer-inner"><div><strong>Apacargo</strong></div><div class="socials"><a href="index.html">Volver</a></div></div></footer>
-  <script src="script.js"></script>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div><strong>Apacargo</strong></div>
+      <div class="socials"><a href="index.html">Volver</a></div>
+    </div>
+  </footer>
+
 </body>
 </html>
