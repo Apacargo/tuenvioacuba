@@ -4,12 +4,12 @@ import { getFirestore, collection, query, where, getDocs } from "https://www.gst
 
 // ✅ Tu configuración de Firebase (copiala desde Configuración del proyecto → SDK de Firebase)
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
+  apiKey: "AIzaSyDUqgpXR7v5y0JqtNgEz7JMWIvOmRNerXI",
   authDomain: "apacargo-tracking.firebaseapp.com",
   projectId: "apacargo-tracking",
   storageBucket: "apacargo-tracking.appspot.com",
-  messagingSenderId: "TU_SENDER_ID",
-  appId: "TU_APP_ID"
+  messagingSenderId: "553785487239",
+  appId: "1:553785487239:web:9b8c1cc17bbc1e7f76ad22"
 };
 
 // Inicializar Firebase
