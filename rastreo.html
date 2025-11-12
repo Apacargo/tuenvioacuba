@@ -7,8 +7,16 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     * { box-sizing:border-box; }
+    body { background:#f7f9fb; font-family:Arial, sans-serif; color:#222; }
+    header, footer { text-align:center; padding:10px; background:#002b7f; color:white; }
     .rastreo-wrap { max-width:760px; margin:30px auto; padding:16px; }
+    .box { background:white; padding:18px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.06); }
+    input, button { padding:10px; font-size:1rem; margin-top:8px; width:100%; border-radius:6px; border:1px solid #ccc; }
+    button { background:#002b7f; color:white; cursor:pointer; }
+    button:hover { background:#0040c0; }
     .resultado-box { background:#fff; padding:18px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.06); }
+    .hidden { display:none; }
+    .note { color:#c00; font-size:0.95rem; }
   </style>
 </head>
 <body>
@@ -18,7 +26,7 @@
     <section class="box">
       <h2>Consulta tu Envío</h2>
       <label for="codigo">Número de Rastreo</label>
-      <input id="codigo" placeholder="Ej: AP-2025-000123 o clave secreta" />
+      <input id="codigo" placeholder="Ej: AP-2025-00000" />
       <button id="consultarBtn">Consultar</button>
       <div id="mensaje" class="note" style="margin-top:10px;"></div>
     </section>
@@ -30,9 +38,9 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-    // --- TU FIREBASE CONFIG ---
+    // --- CONFIGURACIÓN DE FIREBASE ---
     const firebaseConfig = {
       apiKey: "AIzaSyDUqgpXR7v5y0JqtNgEz7JMWIvOmRNerXI",
       authDomain: "apacargo-tracking.firebaseapp.com",
@@ -42,84 +50,86 @@
       appId: "1:553785487239:web:9b8c1cc17bbc1e7f76ad22"
     };
 
-    const SECRET = 'jackson'; // <-- Si deseas otra clave, cámbiala aquí.
+    const SECRET = "jackson"; // Clave secreta para el panel admin
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const btn = document.getElementById('consultarBtn');
-    const input = document.getElementById('codigo');
-    const mensaje = document.getElementById('mensaje');
-    const resultado = document.getElementById('resultado');
+    const btn = document.getElementById("consultarBtn");
+    const input = document.getElementById("codigo");
+    const mensaje = document.getElementById("mensaje");
+    const resultado = document.getElementById("resultado");
 
-    btn.addEventListener('click', consultarEnvio);
-    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') consultarEnvio(); });
+    btn.addEventListener("click", consultarEnvio);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") consultarEnvio();
+    });
 
     async function consultarEnvio() {
-      const codigo = (input.value || '').trim();
-      mensaje.textContent = '';
-      resultado.classList.add('hidden');
-      resultado.innerHTML = '';
+      const codigo = input.value.trim();
+      mensaje.textContent = "";
+      resultado.classList.add("hidden");
+      resultado.innerHTML = "";
 
       if (!codigo) {
-        mensaje.textContent = '⚠️ Introduce un número de rastreo o la clave secreta.';
+        mensaje.textContent = "⚠️ Introduce un número de rastreo o la clave secreta.";
         return;
       }
 
-      // Si escribió la clave secreta -> iniciar sesión admin y redirigir
+      // --- Acceso admin ---
       if (codigo.toLowerCase() === SECRET.toLowerCase()) {
-        // marcar sesión de admin en sessionStorage y redirigir
-        sessionStorage.setItem('apacargo_admin', '1');
-        // redirigir a admin.html
-        window.location.href = 'admin.html';
+        sessionStorage.setItem("apacargo_admin", "1");
+        window.location.href = "admin.html";
         return;
       }
 
       try {
-        // Buscamos documentos en la colección "rastreo" con campo codigo == codigo
-        const col = collection(db, "rastreo");
-        const q = query(col, where("codigo", "==", codigo), orderBy("fecha_actualizacion","desc"));
+        const colRef = collection(db, "rastreo");
+        const q = query(colRef, where("codigo", "==", codigo));
         const snap = await getDocs(q);
 
         if (snap.empty) {
-          mensaje.textContent = '❌ No se encontró ningún envío con ese número.';
+          mensaje.textContent = "❌ No se encontró ningún envío con ese número.";
           return;
         }
 
-        // Tomar el más reciente (por fecha_actualizacion si existe)
-        let best = null;
-        snap.forEach(doc => {
-          const d = doc.data();
-          if (!best) best = d;
-          else {
-            const bd = best.fecha_actualizacion?.seconds || best.fecha_actualizacion || 0;
-            const nd = d.fecha_actualizacion?.seconds || d.fecha_actualizacion || 0;
-            if (nd && (!bd || nd > bd)) best = d;
-          }
-        });
+        // Tomar primer documento encontrado
+        const data = snap.docs[0].data();
 
-        const data = best;
+        // Mostrar datos
         resultado.innerHTML = `
           <div class="resultado-box">
             <h3>📦 Estado del Envío</h3>
-            <div class="campo"><strong>Código:</strong> ${escapeHtml(data.codigo || codigo)}</div>
-            <div class="campo"><strong>Cliente:</strong> ${escapeHtml(data.cliente || '—')}</div>
-            <div class="campo"><strong>Destino:</strong> ${escapeHtml(data.destino || '—')}</div>
-            <div class="campo"><strong>Estado:</strong> ${escapeHtml(data.estado || '—')}</div>
-            <div class="campo"><strong>Ubicación actual:</strong> ${escapeHtml(data.ubicacion || '—')}</div>
-            <div class="campo"><strong>Última actualización:</strong> ${data.fecha_actualizacion ? new Date(data.fecha_actualizacion.seconds * 1000).toLocaleString() : '—'}</div>
+            <div><strong>Código:</strong> ${escapeHtml(data.codigo || codigo)}</div>
+            <div><strong>Cliente:</strong> ${escapeHtml(data.cliente || "—")}</div>
+            <div><strong>Destino:</strong> ${escapeHtml(data.destino || "—")}</div>
+            <div><strong>Estado:</strong> ${escapeHtml(data.estado || "—")}</div>
+            <div><strong>Ubicación actual:</strong> ${escapeHtml(data.ubicacion || "—")}</div>
+            <div><strong>Notas:</strong> ${escapeHtml(data.notas || "—")}</div>
+            <div><strong>Última actualización:</strong> ${data.fecha_actualizacion ? formatDate(data.fecha_actualizacion) : "—"}</div>
           </div>
         `;
-        resultado.classList.remove('hidden');
+        resultado.classList.remove("hidden");
       } catch (err) {
         console.error(err);
-        mensaje.textContent = '⚠️ Error al consultar, inténtalo otra vez.';
+        mensaje.textContent = "⚠️ Error al consultar. Revisa tu conexión o inténtalo de nuevo.";
       }
     }
 
-    // pequeña función para escapar textos (seguridad XSS simple)
+    // Formatear fecha Firestore
+    function formatDate(fecha) {
+      if (fecha.seconds) {
+        return new Date(fecha.seconds * 1000).toLocaleString("es-ES");
+      }
+      if (typeof fecha === "string") return fecha;
+      return "—";
+    }
+
+    // Evitar inyección XSS
     function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+      return String(s).replace(/[&<>"']/g, (m) => (
+        { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]
+      ));
     }
   </script>
 </body>
