@@ -2,259 +2,187 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Panel Administrativo | Apacargo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Administrador | Apacargo</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .admin-wrap { max-width:1100px; margin:20px auto; padding:0 12px; }
-    .small { font-size:0.9rem; color:#666; }
-    table input { width: 100%; padding:6px; border-radius:6px; border:1px solid #ddd; }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: #f5f6fa;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(90deg, #004aad, #d4af37);
+      color: white;
+      padding: 18px;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 600;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    main {
+      max-width: 980px;
+      margin: 28px auto;
+      padding: 18px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    }
+
+    .login-box {
+      max-width: 420px;
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px 14px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: 1px solid #dcdcdc;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .btn {
+      display:inline-block;
+      background: #004aad;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .btn.secondary { background:#d4af37; color:#002b7f; }
+    .btn.critical { background:#e03b3b; }
+
+    .row { display:flex; gap:12px; align-items:center; }
+    @media (max-width:760px) { .row { flex-direction:column; } }
+
+    .form-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .shipments {
+      margin-top: 18px;
+    }
+
+    table {
+      width:100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align:left;
+    }
+
+    th { background:#f7f9fc; color:#004aad; font-weight:600; }
+
+    .small-note { font-size:0.9rem; color:#666; margin-top:6px; }
+
     .actions button { margin-right:6px; }
-    .hint { font-size:0.95rem; color:#444; margin-bottom:8px; }
+
+    .logout {
+      float: right;
+      margin-top: -44px;
+      margin-right: 8px;
+      background: #ffd700;
+      color: #002b7f;
+      border-radius: 8px;
+      padding: 8px 12px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    @media (max-width:760px) { .logout { float:none; display:block; margin: 12px auto 0; } }
+
   </style>
 </head>
 <body>
-  <header>🔐 Panel Administrativo | Apacargo</header>
+  <header>
+    🔐 Panel Administrativo — Apacargo
+  </header>
 
-  <main class="admin-wrap">
-    <!-- BOX: si no hay sesión, mostramos formulario para ingresar clave -->
-    <div id="noSessionBox" class="box" style="max-width:420px;margin:24px auto;">
-      <h2>Acceso Administrador (clave secreta)</h2>
-      <p class="hint">Introduce la clave secreta para abrir el panel.</p>
-      <input id="secretInput" placeholder="Clave secreta" />
-      <button id="secretBtn">Entrar</button>
-      <div id="secretMsg" style="margin-top:10px;color:#b00020"></div>
-    </div>
-
-    <!-- PANEL (oculto si no hay sesión) -->
-    <section id="panel" class="hidden">
-      <div class="new-form">
-        <h2>➕ Agregar / Nuevo Envío</h2>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <input id="new_tracking_id" placeholder="Tracking ID (opcional)" style="flex:1 1 200px;">
-          <input id="new_codigo" placeholder="Código del envío (oblig.)" style="flex:1 1 200px;">
+  <main>
+    <div class="card">
+      <!-- Login -->
+      <div id="loginSection" class="login-box">
+        <h2 style="color:#004aad; margin-bottom:6px;">Ingreso Administrador</h2>
+        <input id="inputEmail" type="email" placeholder="Correo (ej. apacargo2025@gmail.com)" />
+        <input id="inputPass" type="password" placeholder="Contraseña" />
+        <div style="display:flex; gap:10px; justify-content:center; margin-top:8px;">
+          <button id="btnLogin" class="btn">Entrar</button>
+          <button id="btnTryDemo" class="btn secondary">Prueba rápida</button>
         </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-          <input id="new_cliente" placeholder="Cliente" style="flex:1 1 200px;">
-          <input id="new_ubicacion" placeholder="Ubicación" style="flex:1 1 200px;">
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-          <select id="new_estado" style="flex:1 1 200px;">
-            <option value="">Seleccionar estado...</option>
-            <option>Recibido en Miami</option>
-            <option>En tránsito hacia Cuba</option>
-            <option>En Aduana de La Habana</option>
-            <option>En distribución</option>
-            <option>Entregado</option>
-          </select>
-          <input id="new_destino" placeholder="Destino (p. ej. Holguín)" style="flex:1 1 200px;">
-        </div>
-        <textarea id="new_notas" placeholder="Notas (opcional)" style="margin-top:8px;"></textarea>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <button id="addBtn">Agregar Envío</button>
-          <button id="logoutBtn" style="background:#c0392b">Cerrar sesión</button>
-        </div>
+        <div id="loginMsg" class="small-note"></div>
       </div>
 
-      <div style="margin-top:18px;">
-        <h2>📋 Envíos Registrados</h2>
-        <div id="loadingList" class="small">Cargando envíos...</div>
-        <div style="overflow:auto;">
-          <table id="tableEnvios" style="width:100%;margin-top:8px;">
+      <!-- Panel -->
+      <div id="panelSection" class="hidden">
+        <a id="logoutBtn" class="logout">Cerrar sesión</a>
+
+        <h2 style="color:#004aad; margin-bottom:14px;">Agregar / Actualizar Envíos</h2>
+
+        <form id="formAdd" class="card" style="padding:14px; margin-bottom:12px;">
+          <div class="form-grid">
+            <input name="tracking_id" placeholder="Tracking ID (opcional)" />
+            <input name="codigo" placeholder="Código (Ej: AP-2025-0001)" required />
+            <input name="cliente" placeholder="Nombre del cliente" />
+            <input name="destino" placeholder="Destino" />
+            <input name="estado" placeholder="Estado (Recibido / En tránsito / Entregado)" />
+            <input name="ubicacion" placeholder="Ubicación actual" />
+          </div>
+          <div style="display:flex; gap:8px;">
+            <input name="notas" placeholder="Notas (opcional)" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ddd;" />
+            <button class="btn secondary" type="submit">➕ Agregar</button>
+          </div>
+          <div id="formMsg" class="small-note"></div>
+        </form>
+
+        <h3 style="color:#004aad; margin-bottom:10px;">📋 Envíos registrados</h3>
+        <div class="shipments card" style="padding:10px;">
+          <table>
             <thead>
-              <tr style="background:#004aad;color:#fff">
-                <th>Tracking</th><th>Código</th><th>Cliente</th><th>Estado</th><th>Ubicación</th><th>Destino</th><th>Notas</th><th>Última</th><th>Acciones</th>
-              </tr>
+              <tr><th>Tracking</th><th>Código</th><th>Cliente</th><th>Estado</th><th>Ubicación</th><th>Última actualización</th><th>Acciones</th></tr>
             </thead>
-            <tbody id="enviosList"></tbody>
+            <tbody id="tableBody">
+              <tr><td colspan="7" style="text-align:center;">Cargando...</td></tr>
+            </tbody>
           </table>
         </div>
+
+        <div style="margin-top:12px;">
+          <button id="clearLocal" class="btn">🔄 Recargar datos</button>
+          <a href="rastreo.html" class="btn" style="background:#d4af37; color:#002b7f; margin-left:8px;">← Abrir rastreo</a>
+        </div>
       </div>
-    </section>
+
+    </div>
   </main>
 
-  <footer style="margin-top:40px;text-align:center;color:#fff;background:#004aad;padding:14px;">© 2025 Apacargo</footer>
+  <footer style="text-align:center; padding:18px; color:#666;">
+    © 2025 Apacargo — Administración
+  </footer>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-
-    // --- TU FIREBASE CONFIG ---
-    const firebaseConfig = {
-      apiKey: "AIzaSyDUqgpXR7v5y0JqtNgEz7JMWIvOmRNerXI",
-      authDomain: "apacargo-tracking.firebaseapp.com",
-      projectId: "apacargo-tracking",
-      storageBucket: "apacargo-tracking.firebasestorage.app",
-      messagingSenderId: "553785487239",
-      appId: "1:553785487239:web:9b8c1cc17bbc1e7f76ad22"
-    };
-
-    const SECRET = 'jackson'; // <-- la misma clave que en rastreo.html (cámbiala si deseas otra)
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const noSessionBox = document.getElementById('noSessionBox');
-    const panel = document.getElementById('panel');
-    const secretBtn = document.getElementById('secretBtn');
-    const secretInput = document.getElementById('secretInput');
-    const secretMsg = document.getElementById('secretMsg');
-    const logoutBtn = document.getElementById('logoutBtn');
-
-    // Comprueba si hay sesión de admin
-    function isAdmin() {
-      return sessionStorage.getItem('apacargo_admin') === '1';
-    }
-
-    function showPanel() {
-      noSessionBox.classList.add('hidden');
-      panel.classList.remove('hidden');
-      cargarEnvios();
-    }
-    function hidePanel() {
-      noSessionBox.classList.remove('hidden');
-      panel.classList.add('hidden');
-    }
-
-    // Si la sesión ya está activa mostramos el panel
-    if (isAdmin()) {
-      showPanel();
-    } else {
-      hidePanel();
-    }
-
-    secretBtn.addEventListener('click', () => {
-      const v = (secretInput.value || '').trim();
-      secretMsg.textContent = '';
-      if (!v) { secretMsg.textContent = 'Introduce la clave.'; return; }
-      if (v.toLowerCase() === SECRET.toLowerCase()) {
-        sessionStorage.setItem('apacargo_admin', '1');
-        showPanel();
-      } else {
-        secretMsg.textContent = 'Clave incorrecta.';
-      }
-    });
-
-    logoutBtn.addEventListener('click', () => {
-      sessionStorage.removeItem('apacargo_admin');
-      location.reload();
-    });
-
-    // CRUD
-    const enviosListEl = document.getElementById('enviosList');
-    const loadingList = document.getElementById('loadingList');
-    const addBtn = document.getElementById('addBtn');
-
-    addBtn.addEventListener('click', agregarEnvio);
-
-    async function cargarEnvios() {
-      loadingList.textContent = 'Cargando envíos...';
-      enviosListEl.innerHTML = '';
-      try {
-        const snap = await getDocs(collection(db, 'rastreo'));
-        if (snap.empty) {
-          loadingList.textContent = 'No hay envíos registrados.';
-          return;
-        }
-        loadingList.textContent = '';
-        let rows = '';
-        snap.forEach(docSnap => {
-          const d = docSnap.data();
-          const id = docSnap.id;
-          rows += `
-            <tr>
-              <td>${escapeHtml(d.tracking_id || '')}</td>
-              <td>${escapeHtml(d.codigo || '')}</td>
-              <td><input id="cliente-${id}" value="${escapeHtml(d.cliente||'')}" /></td>
-              <td><input id="estado-${id}" value="${escapeHtml(d.estado||'')}" /></td>
-              <td><input id="ubicacion-${id}" value="${escapeHtml(d.ubicacion||'')}" /></td>
-              <td><input id="destino-${id}" value="${escapeHtml(d.destino||'')}" /></td>
-              <td><input id="notas-${id}" value="${escapeHtml(d.notas||'')}" /></td>
-              <td>${d.fecha_actualizacion ? new Date(d.fecha_actualizacion.seconds * 1000).toLocaleString() : '—'}</td>
-              <td class="actions">
-                <button onclick="actualizar('${id}')">💾</button>
-                <button onclick="eliminar('${id}')" style="background:#c0392b;">🗑️</button>
-              </td>
-            </tr>
-          `;
-        });
-        enviosListEl.innerHTML = rows;
-      } catch (err) {
-        console.error(err);
-        loadingList.textContent = 'Error cargando envíos.';
-      }
-    }
-
-    window.actualizar = async (id) => {
-      try {
-        const ref = doc(db, 'rastreo', id);
-        const cliente = document.getElementById(`cliente-${id}`).value.trim();
-        const estado = document.getElementById(`estado-${id}`).value.trim();
-        const ubicacion = document.getElementById(`ubicacion-${id}`).value.trim();
-        const destino = document.getElementById(`destino-${id}`).value.trim();
-        const notas = document.getElementById(`notas-${id}`).value.trim();
-        await updateDoc(ref, {
-          cliente, estado, ubicacion, destino, notas,
-          fecha_actualizacion: serverTimestamp()
-        });
-        await cargarEnvios();
-        alert('✅ Envío actualizado');
-      } catch (err) {
-        console.error(err);
-        alert('Error al actualizar');
-      }
-    };
-
-    window.eliminar = async (id) => {
-      if (!confirm('¿Eliminar envío?')) return;
-      try {
-        await deleteDoc(doc(db, 'rastreo', id));
-        await cargarEnvios();
-        alert('✅ Envío eliminado');
-      } catch (err) {
-        console.error(err);
-        alert('Error al eliminar');
-      }
-    };
-
-    async function agregarEnvio() {
-      const tracking_id = document.getElementById('new_tracking_id').value.trim();
-      const codigo = document.getElementById('new_codigo').value.trim();
-      const cliente = document.getElementById('new_cliente').value.trim();
-      const ubicacion = document.getElementById('new_ubicacion').value.trim();
-      const estado = document.getElementById('new_estado').value;
-      const destino = document.getElementById('new_destino').value.trim();
-      const notas = document.getElementById('new_notas').value.trim();
-
-      if (!codigo || !cliente || !estado) {
-        alert('Completa los campos obligatorios (código, cliente, estado).');
-        return;
-      }
-
-      try {
-        await addDoc(collection(db, 'rastreo'), {
-          tracking_id, codigo, cliente, ubicacion, estado, destino, notas,
-          fecha_actualizacion: serverTimestamp()
-        });
-        // limpiar campos
-        document.getElementById('new_tracking_id').value = '';
-        document.getElementById('new_codigo').value = '';
-        document.getElementById('new_cliente').value = '';
-        document.getElementById('new_ubicacion').value = '';
-        document.getElementById('new_destino').value = '';
-        document.getElementById('new_notas').value = '';
-        document.getElementById('new_estado').value = '';
-        await cargarEnvios();
-        alert('✅ Envío agregado');
-      } catch (err) {
-        console.error(err);
-        alert('Error al agregar envío');
-      }
-    }
-
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-    }
-  </script>
+  <!-- Script: admin logic -->
+  <script type="module" src="js/admin.js"></script>
 </body>
 </html>
