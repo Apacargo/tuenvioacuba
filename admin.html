@@ -1,46 +1,188 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel Administrativo • Apacargo</title>
-  <link rel="stylesheet" href="style.css">
-  <script type="module" src="./js/firebase.js"></script>
-  <script type="module" src="./js/admin.js"></script>
+  <title>Panel Administrador | Apacargo</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: #f5f6fa;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(90deg, #004aad, #d4af37);
+      color: white;
+      padding: 18px;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 600;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    main {
+      max-width: 980px;
+      margin: 28px auto;
+      padding: 18px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    }
+
+    .login-box {
+      max-width: 420px;
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px 14px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: 1px solid #dcdcdc;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .btn {
+      display:inline-block;
+      background: #004aad;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .btn.secondary { background:#d4af37; color:#002b7f; }
+    .btn.critical { background:#e03b3b; }
+
+    .row { display:flex; gap:12px; align-items:center; }
+    @media (max-width:760px) { .row { flex-direction:column; } }
+
+    .form-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .shipments {
+      margin-top: 18px;
+    }
+
+    table {
+      width:100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align:left;
+    }
+
+    th { background:#f7f9fc; color:#004aad; font-weight:600; }
+
+    .small-note { font-size:0.9rem; color:#666; margin-top:6px; }
+
+    .actions button { margin-right:6px; }
+
+    .logout {
+      float: right;
+      margin-top: -44px;
+      margin-right: 8px;
+      background: #ffd700;
+      color: #002b7f;
+      border-radius: 8px;
+      padding: 8px 12px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    @media (max-width:760px) { .logout { float:none; display:block; margin: 12px auto 0; } }
+
+  </style>
 </head>
 <body>
-  <header class="navbar">
-    <h1>Panel Administrativo Apacargo</h1>
+  <header>
+    🔐 Panel Administrativo — Apacargo
   </header>
 
-  <main style="padding: 20px;">
-    <!-- LOGIN -->
-    <section id="login-section">
-      <h2>Iniciar Sesión</h2>
-      <form id="login-form">
-        <input type="email" id="email" placeholder="Correo" required>
-        <input type="password" id="password" placeholder="Contraseña" required>
-        <button type="submit">Entrar</button>
-      </form>
-      <p id="login-error" style="color:red;"></p>
-    </section>
+  <main>
+    <div class="card">
+      <!-- Login -->
+      <div id="loginSection" class="login-box">
+        <h2 style="color:#004aad; margin-bottom:6px;">Ingreso Administrador</h2>
+        <input id="inputEmail" type="email" placeholder="Correo (ej. apacargo2025@gmail.com)" />
+        <input id="inputPass" type="password" placeholder="Contraseña" />
+        <div style="display:flex; gap:10px; justify-content:center; margin-top:8px;">
+          <button id="btnLogin" class="btn">Entrar</button>
+          <button id="btnTryDemo" class="btn secondary">Prueba rápida</button>
+        </div>
+        <div id="loginMsg" class="small-note"></div>
+      </div>
 
-    <!-- PANEL -->
-    <section id="panel-section" style="display:none;">
-      <h2>Agregar Envío</h2>
-      <form id="add-form">
-        <input type="text" id="codigo" placeholder="Código de envío" required>
-        <input type="text" id="cliente" placeholder="Nombre del cliente" required>
-        <input type="text" id="destino" placeholder="Destino" required>
-        <input type="text" id="estado" placeholder="Estado actual" required>
-        <button type="submit">Agregar Envío</button>
-      </form>
+      <!-- Panel -->
+      <div id="panelSection" class="hidden">
+        <a id="logoutBtn" class="logout">Cerrar sesión</a>
 
-      <h2>Lista de Envíos</h2>
-      <div id="envios-list"></div>
+        <h2 style="color:#004aad; margin-bottom:14px;">Agregar / Actualizar Envíos</h2>
 
-      <button id="logout-btn" style="margin-top:20px;">Cerrar Sesión</button>
-    </section>
+        <form id="formAdd" class="card" style="padding:14px; margin-bottom:12px;">
+          <div class="form-grid">
+            <input name="tracking_id" placeholder="Tracking ID (opcional)" />
+            <input name="codigo" placeholder="Código (Ej: AP-2025-0001)" required />
+            <input name="cliente" placeholder="Nombre del cliente" />
+            <input name="destino" placeholder="Destino" />
+            <input name="estado" placeholder="Estado (Recibido / En tránsito / Entregado)" />
+            <input name="ubicacion" placeholder="Ubicación actual" />
+          </div>
+          <div style="display:flex; gap:8px;">
+            <input name="notas" placeholder="Notas (opcional)" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ddd;" />
+            <button class="btn secondary" type="submit">➕ Agregar</button>
+          </div>
+          <div id="formMsg" class="small-note"></div>
+        </form>
+
+        <h3 style="color:#004aad; margin-bottom:10px;">📋 Envíos registrados</h3>
+        <div class="shipments card" style="padding:10px;">
+          <table>
+            <thead>
+              <tr><th>Tracking</th><th>Código</th><th>Cliente</th><th>Estado</th><th>Ubicación</th><th>Última actualización</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tableBody">
+              <tr><td colspan="7" style="text-align:center;">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:12px;">
+          <button id="clearLocal" class="btn">🔄 Recargar datos</button>
+          <a href="rastreo.html" class="btn" style="background:#d4af37; color:#002b7f; margin-left:8px;">← Abrir rastreo</a>
+        </div>
+      </div>
+
+    </div>
   </main>
+
+  <footer style="text-align:center; padding:18px; color:#666;">
+    © 2025 Apacargo — Administración
+  </footer>
+
+  <!-- Script: admin logic -->
+  <script type="module" src="js/admin.js"></script>
 </body>
 </html>
