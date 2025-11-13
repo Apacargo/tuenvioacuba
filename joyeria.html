@@ -1,500 +1,282 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Joyería | Apacargo</title>
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      margin: 0;
-      background: #f8f9fa;
-      color: #333;
-    }
-    header {
-      background: linear-gradient(90deg, #004aad, #d4af37);
-      color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 1.8rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-    main {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 20px;
-    }
-    .search-box {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-    .search-box input {
-      width: 80%;
-      max-width: 400px;
-      padding: 12px 15px;
-      border: 2px solid #004aad;
-      border-radius: 25px;
-      font-size: 1rem;
-      outline: none;
-      transition: 0.3s;
-    }
-    .search-box input:focus {
-      border-color: #d4af37;
-      box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
-    }
-    .joyas {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .joya {
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.3s;
-      cursor: pointer;
-    }
-    .joya:hover { transform: scale(1.03); }
-    .joya img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-    }
-    .joya-info {
-      padding: 15px;
-      text-align: center;
-    }
-    .joya-info h3 {
-      color: #004aad;
-      margin-bottom: 8px;
-      font-size: 1.1rem;
-    }
-    .joya-info p {
-      font-size: 0.95rem;
-      color: #555;
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-    .btn-whatsapp {
-      display: inline-block;
-      background: #25d366;
-      color: white;
-      padding: 10px 18px;
-      border-radius: 25px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    .btn-whatsapp:hover {
-      background: #1ebd5a;
-    }
-    a.btn-volver {
-      display: inline-block;
-      background: #d4af37;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 25px;
-      text-decoration: none;
-      margin-bottom: 25px;
-      transition: 0.3s;
-    }
-    a.btn-volver:hover { background: #b9932f; }
-    footer {
-      margin-top: 50px;
-      text-align: center;
-      background: #004aad;
-      color: white;
-      padding: 15px;
-      font-size: 0.9rem;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joyería • Colección Exclusiva</title>
+<style>
+/* ===== ESTILO GLOBAL ===== */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #000;
+  color: #d4af37;
+}
+h1 {
+  color: #d4af37;
+  text-align: center;
+  margin: 20px 0;
+}
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+.search-box {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.search-box input {
+  width: 80%;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+}
 
-    /* === MODAL === */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .modal img {
-      max-width: 90%;
-      max-height: 80vh;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
-    }
-    .modal .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 2rem;
-      color: white;
-      cursor: pointer;
-    }
+/* ===== GRID DE JOYAS ===== */
+.joyas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+  gap: 20px;
+}
+.joya-card {
+  background: #111;
+  border: 2px solid #d4af37;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.joya-card:hover {
+  transform: scale(1.05);
+}
+.joya-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  cursor: pointer;
+}
+.joya-content {
+  padding: 15px;
+}
+.joya-content h3 {
+  margin: 10px 0 5px 0;
+  font-size: 20px;
+  color: #d4af37;
+}
+.joya-content p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #fff;
+}
+.joya-content .precio {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #ffd700;
+}
+.joya-content button {
+  margin-top: 10px;
+  width: 100%;
+  background-color: #d4af37;
+  border: none;
+  color: #000;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.joya-content button:hover {
+  background-color: #ffd700;
+}
 
-    /* 📱 Responsive */
-    @media (max-width: 600px) {
-      header { font-size: 1.5rem; padding: 15px; }
-      .joya-info h3 { font-size: 1rem; }
-      .joya-info p { font-size: 0.9rem; }
-    }
-  </style>
+/* ===== MODAL / LIGHTBOX ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.95);
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  max-width: 90%;
+  max-height: 80%;
+}
+.modal-caption {
+  text-align: center;
+  color: #d4af37;
+  font-size: 18px;
+  margin: 15px 0;
+}
+.modal-close, .prev, .next {
+  position: absolute;
+  top: 50%;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  transform: translateY(-50%);
+  padding: 10px;
+}
+.modal-close {
+  top: 20px;
+  right: 30px;
+}
+.prev { left: 10px; }
+.next { right: 10px; }
+
+@media screen and (max-width: 600px) {
+  .joya-card img {
+    height: 200px;
+  }
+  .modal-close, .prev, .next { font-size: 30px; }
+}
+</style>
 </head>
 <body>
 
-  <header>💎 Colección de Joyería | Apacargo</header>
+<div class="container">
+  <h1>Colección Exclusiva de Joyería</h1>
 
-  <main>
-    <a href="index.html" class="btn-volver">← Volver al inicio</a>
+  <div class="search-box">
+    <input type="text" id="buscador" placeholder="Buscar joya por nombre...">
+  </div>
 
-    <!-- 🔍 Buscador -->
-    <div class="search-box">
-      <input id="searchInput" type="text" placeholder="Buscar joyas por nombre o descripción...">
-    </div>
+  <div class="joyas-grid" id="joyasGrid">
+    <!-- Joya Cards -->
+  </div>
+</div>
 
-    <!-- 💍 Galería de Joyas -->
-    <div class="joyas" id="joyasContainer">
-      
-      <div class="joya" data-name="anillo oro" data-desc="anillo de oro amarillo 18k elegante clásico">
-        <img src="images/joya1.jpg" alt="Anillo de oro">
-        <div class="joya-info">
-          <h3>Anillo de Oro 18k</h3>
-          <p>Circones Blancos Verde<br>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo</p>
-          <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Anillo%20de%20Oro%2018k%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-        </div>
+<!-- MODAL / LIGHTBOX -->
+<div id="modal" class="modal">
+  <span class="modal-close">&times;</span>
+  <span class="prev">&#10094;</span>
+  <span class="next">&#10095;</span>
+  <img class="modal-content" id="modalImg">
+  <div class="modal-caption" id="modalCaption"></div>
+  <div style="text-align:center; margin-top:10px;">
+    <button id="solicitarBtn" style="padding:10px 20px; background:#d4af37; color:#000; border:none; border-radius:5px; cursor:pointer;">Solicitar esta joya</button>
+  </div>
+</div>
+
+<script>
+const joyas = [
+  {id:1, nombre:"Cadena Trebol Cajon", detalles:"Diamantada • Oro 18K Garantizado • Color: Oro Amarillo • Peso: 4,85gr • Largo: 46cm • Grosor: 1,28mm • Oro Nacional • Tipo de Broche: Reasa", precio:"620 USD", img:"images/joya1.jpg"},
+  {id:2, nombre:"Cadena Trebol Aro Seguido", detalles:"Diamantada Graduable • Oro 18K Garantizado • Color: Oro Amarillo • Peso: 8,2gr • Largo: 45cm-51,2cm • Grosor: 1,42mm • Oro Nacional", precio:"1073 USD", img:"images/joya2.jpg"},
+  {id:3, nombre:"Cadena Dubai", detalles:"Oro 18K Garantizado • Dos Oros Amarillo Blanco • Peso: 30,65gr • Largo: 62,5cm • Grosor: 3,9mm • Oro Nacional • Tipo de Broche: Broche", precio:"3750 USD", img:"images/joya3.jpg"},
+  {id:4, nombre:"Cadena Franco", detalles:"Oro 18K Garantizado • Dos Oros Blanco Rosa • Peso: 5,5gr • Largo: 60,1cm • Grosor: 1,67mm • Oro Italiano • Tipo de Broche: Broche", precio:"800 USD", img:"images/joya4.jpg"},
+  {id:5, nombre:"Cadena Franco", detalles:"Oro 18K Garantizado • Dos Oros Amarillo Blanco • Peso: 12,15gr • Largo: 65cm • Grosor: 2,52mm • Oro Italiano • Tipo de Broche: Broche", precio:"1820 USD", img:"images/joya5.jpg"},
+  {id:6, nombre:"Cadena Figaro", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 5,45gr • Largo: 60,7cm • Grosor: 3,17mm • Oro Italiano • Tipo de Broche: Broche", precio:"800 USD", img:"images/joya6.jpg"},
+  {id:7, nombre:"Cadena Figaro", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 6,5gr • Largo: 60,2cm • Grosor: 2,93mm • Oro Italiano • Tipo de Broche: Reasa", precio:"958 USD", img:"images/joya7.jpg"},
+  {id:8, nombre:"Cadena GC", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 5,1gr • Largo: 50,8cm • Grosor: 3,15mm • Oro Nacional • Tipo de Broche: Reasa", precio:"670 USD", img:"images/joya8.jpg"},
+  {id:9, nombre:"Cadena Peruana", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 24gr • Largo: 60cm • Grosor: 2,2mm • Oro Italiano • Tipo de Broche: Broche", precio:"3590 USD", img:"images/joya9.jpg"},
+  {id:10, nombre:"Cadena Militar", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 22,6gr • Largo: 60cm • Grosor: 3,8mm • Oro Italiano • Tipo de Broche: Broche", precio:"3397 USD", img:"images/joya10.jpg"},
+  {id:11, nombre:"Cadena Serpiente", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 4,95gr • Largo: 40cm • Grosor: 3,1mm • Oro Italiano • Tipo de Broche: Broche", precio:"750 USD", img:"images/joya11.jpg"},
+  {id:12, nombre:"Cadena Lumachina", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 7,9gr • Largo: 60cm • Grosor: 3,4mm • Oro Italiano • Tipo de Broche: Reasa", precio:"1180 USD", img:"images/joya12.jpg"},
+  {id:13, nombre:"Cadena Lazo", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 8,25gr • Largo: 60cm • Grosor: 3,3mm • Oro Italiano • Tipo de Broche: Broche", precio:"1230 USD", img:"images/joya13.jpg"},
+  {id:14, nombre:"Cadena China", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 15,7gr • Largo: 60cm • Grosor: 4,9mm • Oro Italiano • Tipo de Broche: Broche", precio:"2310 USD", img:"images/joya14.jpg"},
+  {id:15, nombre:"Cadena GC", detalles:"Oro 18K Garantizado • Lisos • Color: Oro Amarillo • Peso: 13,05gr • Largo: 65cm • Grosor: 5,3mm • Oro Nacional • Tipo de Broche: Broche", precio:"1690 USD", img:"images/joya15.jpg"},
+  {id:16, nombre:"Cadena Figaro", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 17,45gr • Largo: 65cm • Grosor: 5,6mm • Oro Italiano • Tipo de Broche: Broche", precio:"2570 USD", img:"images/joya16.jpg"},
+  {id:17, nombre:"Cadena Cubana", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 8,35gr • Largo: 69,5cm • Grosor: 3,05mm • Oro Italiano • Tipo de Broche: Broche", precio:"1230 USD", img:"images/joya17.jpg"},
+  {id:18, nombre:"Cadena Sedusa", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 6,35gr • Largo: 50cm • Grosor: 4,6mm • Oro Italiano • Tipo de Broche: Reasa", precio:"950 USD", img:"images/joya18.jpg"},
+  {id:19, nombre:"Cadena Espiga Rústica", detalles:"Oro 18K Garantizado • Dos Oros Blanco Rosa • Peso: 10,2gr • Largo: 45,5cm • Grosor: 4,9mm • Oro Nacional • Tipo de Broche: Broche", precio:"1280 USD", img:"images/joya19.jpg"},
+  {id:20, nombre:"Cadena Espiga Rústica", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 9,4gr • Largo: 48cm • Grosor: 4,35mm • Oro Nacional • Tipo de Broche: Broche", precio:"1200 USD", img:"images/joya20.jpg"},
+  {id:21, nombre:"Cadena GC", detalles:"Rayada • Oro 18K Garantizado • Oro Amarillo • Peso: 9,25gr • Largo: 45,5cm • Grosor: 5,6mm • Oro Nacional • Tipo de Broche: Broche", precio:"1190 USD", img:"images/joya21.jpg"},
+  {id:22, nombre:"Cadena Rosario Virgen Milagrosa", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 8,95gr • Largo: 53cm • Grosor: 5mm-4mmmm • Oro Nacional", precio:"1180 USD", img:"images/joya22.jpg"},
+  {id:23, nombre:"Cadena Rosario Virgen Maria", detalles:"Diamantada Circones Blancos • Oro 18K Garantizado • Oro Rosa • Peso: 18,2gr • Largo: 62cm • Grosor: 6mm-5mmmm • Oro Nacional", precio:"2300 USD", img:"images/joya23.jpg"},
+  {id:24, nombre:"Cadena Rustica Barril", detalles:"Oro 18K Garantizado • Tres Oros • Peso: 13,8gr • Largo: 61cm • Grosor: 4mm • Oro Nacional • Tipo de Broche: Broche", precio:"1780 USD", img:"images/joya24.jpg"},
+  {id:25, nombre:"Cadena Veneciana", detalles:"Diamantada • Oro 18K Garantizado • Dos Oros Blanco Rosa • Peso: 8,95gr • Largo: 70,5cm • Grosor: 1,58mm • Oro Italiano • Tipo de Broche: Broche", precio:"1340 USD", img:"images/joya25.jpg"},
+  {id:26, nombre:"Cadena Morse", detalles:"Diamantada • Oro 18K Garantizado • Dos Oros Blanco Rosa • Peso: 10,85gr • Largo: 60,5cm • Grosor: 2,93mm • Oro Italiano • Tipo de Broche: Broche", precio:"1610 USD", img:"images/joya26.jpg"},
+  {id:27, nombre:"Cadena Veneciana", detalles:"Oro 18K Garantizado • Dos Oros Blanco Rosa • Peso: 14,25gr • Largo: 60,4cm • Grosor: 2,06mm • Oro Italiano • Tipo de Broche: Broche", precio:"2140 USD", img:"images/joya27.jpg"},
+  {id:28, nombre:"Cadena Rustica Trebol", detalles:"Circones Blancos • Oro 18K Garantizado • Oro Amarillo • Peso: 78,65gr • Largo: 65cm • Grosor: 5,6mm • Oro Nacional • Tipo de Broche: Broche", precio:"9950 USD", img:"images/joya28.jpg"},
+  {id:29, nombre:"Cadena Dubai Trenzada", detalles:"Circones Negros • Oro 18K Garantizado • Oro Rosa • Peso: 45,05gr • Largo: 61cm • Grosor: 5mm • Oro Nacional • Tipo de Broche: Broche", precio:"5690 USD", img:"images/joya29.jpg"},
+  {id:30, nombre:"Cadena Tenis", detalles:"Circones Blancos • Oro 18K Garantizado • Oro Amarillo • Peso: 24,4gr • Largo: 45,6cm • Grosor: 4mm • Oro Nacional • Tipo de Broche: Broche", precio:"3080 USD", img:"images/joya30.jpg"},
+  {id:31, nombre:"Cadena Cubana Monaco", detalles:"Diamantada • Oro 18K Garantizado • Oro Amarillo • Peso: 19,85gr • Largo: 60,3cm • Grosor: 4,8mm • Oro Italiano • Tipo de Broche: Broche", precio:"3000 USD", img:"images/joya31.jpg"},
+  {id:32, nombre:"Cadena Cubana", detalles:"Diamantada • Oro 18K Garantizado • Oro Amarillo • Peso: 12,55gr • Largo: 55,7cm • Grosor: 4,1mm • Oro Italiano • Tipo de Broche: Reasa", precio:"1850 USD", img:"images/joya32.jpg"},
+  {id:33, nombre:"Cadena Roll-on", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 10,8gr • Largo: 60,5cm • Grosor: 3,8mm • Oro Italiano • Tipo de Broche: Broche", precio:"1610 USD", img:"images/joya33.jpg"},
+  {id:34, nombre:"Cadena Veneciana", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 48,15gr • Largo: 50cm • Grosor: 3,9mm • Oro Italiano • Tipo de Broche: Broche", precio:"7200 USD", img:"images/joya34.jpg"},
+  {id:35, nombre:"Cadena Lumachina", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 9gr • Largo: 60cm • Grosor: 4,2mm • Oro Italiano • Tipo de Broche: Broche", precio:"1340 USD", img:"images/joya35.jpg"},
+  {id:36, nombre:"Cadena Burbujas", detalles:"Circones Blancos • Oro 18K Garantizado • Oro Amarillo • Peso: 17,95gr • Largo: 50cm • Grosor: 4,8mm • Oro Nacional • Tipo de Broche: Broche", precio:"2300 USD", img:"images/joya36.jpg"},
+  {id:37, nombre:"Cadena Franco", detalles:"Diamantada • Oro 18K Garantizado • Dos Oros Amarillo Blanco • Peso: 17,6gr • Largo: 60cm • Grosor: 3,35mm • Oro Italiano", precio:"2640 USD", img:"images/joya37.jpg"},
+  {id:38, nombre:"Cadena Figaro Tres Aros", detalles:"Broche Cajón • Oro 18K Garantizado • Oro Amarillo • Peso: 32,05gr • Largo: 60cm • Grosor: 8mm • Oro Nacional • Tipo de Broche: Broche", precio:"4130 USD", img:"images/joya38.jpg"},
+  {id:39, nombre:"Cadena Cubana", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 60,4gr • Largo: 60cm • Grosor: 7mm • Oro Nacional • Tipo de Broche: Broche", precio:"7800 USD", img:"images/joya39.jpg"},
+  {id:40, nombre:"Cadena CG", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 14,55gr • Largo: 62cm • Grosor: 6mm • Oro Nacional • Tipo de Broche: Broche", precio:"1820 USD", img:"images/joya40.jpg"},
+  {id:41, nombre:"Cadena Rústica Corona", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 13,05gr • Largo: 65cm • Grosor: 4,3mm • Oro Nacional • Tipo de Broche: Broche", precio:"1630 USD", img:"images/joya41.jpg"},
+  {id:42, nombre:"Cadena CG Rectangular", detalles:"Oro 18K Garantizado • Oro Amarillo • Peso: 13,65gr • Largo: 55,3cm • Grosor: 5,2mm • Oro Nacional", precio:"1700 USD", img:"images/joya42.jpg"},
+  {id:43, nombre:"Pulso GC", detalles:"Diamantado • Oro 18K Garantizado • Tres Oros • Peso: 8,65gr • Largo: 21,5cm • Grosor: 8,1mm • Oro Nacional • Tipo de Broche: Broche", precio:"1100 USD", img:"images/joya43.jpg"}
+];
+
+// ===== FUNCION PARA CREAR CARDS =====
+const joyasGrid = document.getElementById('joyasGrid');
+
+function mostrarJoyas(arrayJoyas){
+  joyasGrid.innerHTML = '';
+  arrayJoyas.forEach((j, index) => {
+    const card = document.createElement('div');
+    card.classList.add('joya-card');
+    card.innerHTML = `
+      <img src="${j.img}" alt="${j.nombre}" onclick="abrirModal(${index})">
+      <div class="joya-content">
+        <h3>${j.nombre}</h3>
+        <p>${j.detalles}</p>
+        <p class="precio">${j.precio}</p>
+        <button onclick="solicitarJoya('${j.nombre}')">Solicitar esta joya</button>
       </div>
+    `;
+    joyasGrid.appendChild(card);
+  });
+}
 
-      <div class="joya" data-name="anillo oro 18k" data-desc="anillo oro 18k">
-        <img src="images/joya2.jpg" alt="Anillo de oro">
-        <div class="joya-info">
-          <h3>Anillo oro 18k</h3>
-          <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo</p>
-          <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Anillo%20de%20Oro%2018k%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-        </div>
-      </div>
+mostrarJoyas(joyas);
 
-      <div class="joya" data-name="anillo de oro 14k" data-desc="anillo de oro 14k">
-        <img src="images/joya3.jpg" alt="Anillo de oro 14k">
-        <div class="joya-info">
-          <h3>Anillo de Oro 14k</h3>
-          <p>Calidad: Oro 14K Garantizado<br>Color: Oro Amarillo</p>
-          <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Anillo%20de%20Oro%2014k%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-        </div>
-      </div>
+// ===== BUSCADOR =====
+const buscador = document.getElementById('buscador');
+buscador.addEventListener('input', (e)=>{
+  const filtrado = joyas.filter(j => j.nombre.toLowerCase().includes(e.target.value.toLowerCase()));
+  mostrarJoyas(filtrado);
+});
 
-      <div class="joya" data-name="cadena franco" data-desc="Cadena franco, Oro 18K, Dos Oros Blanco Rosa, 5,5gr, 60,1cm, Grosor 1,67mm, Oro Italiano, Broche">
-    <img src="images/joya4.jpg" alt="Cadena Franco">
-    <div class="joya-info">
-      <h3>Cadena Franco</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Dos Oros Blanco Rosa<br>Peso: 5,5gr<br>Largo: 60,1cm<br>Grosor: 1,67mm<br>Oro Italiano<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20Franco%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
+// ===== MODAL / LIGHTBOX =====
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modalImg');
+const modalCaption = document.getElementById('modalCaption');
+const modalClose = document.querySelector('.modal-close');
+const prev = document.querySelector('.prev');
+const next = document.querySelector('.next');
+const solicitarBtn = document.getElementById('solicitarBtn');
 
-  <div class="joya" data-name="cadena figaro" data-desc="Cadena Figaro, Oro 18K, Oro Amarillo, 5,45gr, 60,7cm, Grosor 3,17mm, Oro Italiano, Broche">
-    <img src="images/joya5.jpg" alt="Cadena Figaro">
-    <div class="joya-info">
-      <h3>Cadena Figaro</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 5,45gr<br>Largo: 60,7cm<br>Grosor: 3,17mm<br>Oro Italiano<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20Figaro%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
+let currentIndex = 0;
 
-  <div class="joya" data-name="cadena cubana" data-desc="Cadena Cubana, Oro 18K, Oro Amarillo, 4,95gr, 50,5cm, Grosor 3mm, Oro Nacional, Broche Reasa">
-    <img src="images/joya6.jpg" alt="Cadena Cubana">
-    <div class="joya-info">
-      <h3>Cadena Cubana</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 4,95gr<br>Largo: 50,5cm<br>Grosor: 3mm<br>Oro Nacional<br>Tipo de Broche: Reasa</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20Cubana%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
+function abrirModal(index){
+  currentIndex = index;
+  modal.style.display = 'flex';
+  modalImg.src = joyas[index].img;
+  modalCaption.textContent = joyas[index].nombre;
+  solicitarBtn.onclick = ()=> solicitarJoya(joyas[index].nombre);
+}
 
-  <div class="joya" data-name="cadenaGC" data-desc="Cadena GC, Oro 18K, Oro Amarillo, 8,35gr, 69,5cm, Grosor 3,05mm, Oro Italiano, Broche">
-    <img src="images/joya7.jpg" alt="Cadena GC">
-    <div class="joya-info">
-      <h3>Cadena GC</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 8,35gr<br>Largo: 69,5cm<br>Grosor: 3,05mm<br>Oro Italiano<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20GC%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
+modalClose.onclick = ()=> modal.style.display = 'none';
+modal.onclick = (e)=> { if(e.target === modal) modal.style.display='none'; }
 
-  <div class="joya" data-name="cadena veneciana" data-desc="Cadena Veneciana, Oro 18K, Oro Amarillo, 5,35gr, 70cm, Grosor 1mm, Oro Italiano, Broche Reasa">
-    <img src="images/joya8.jpg" alt="Cadena Veneciana">
-    <div class="joya-info">
-      <h3>Cadena Veneciana</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 5,35gr<br>Largo: 70cm<br>Grosor: 1mm<br>Oro Italiano<br>Tipo de Broche: Reasa</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20Veneciana%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
+prev.onclick = ()=>{
+  currentIndex = (currentIndex-1+joyas.length)%joyas.length;
+  abrirModal(currentIndex);
+}
+next.onclick = ()=>{
+  currentIndex = (currentIndex+1)%joyas.length;
+  abrirModal(currentIndex);
+}
 
-  <div class="joya" data-name="cadena militar" data-desc="Cadena Militar, Oro 18K, Oro Amarillo, 2,55gr, 60,5cm, Grosor 0,7mm, Oro Italiano, Broche Reasa">
-    <img src="images/joya9.jpg" alt="Cadena Militar">
-    <div class="joya-info">
-      <h3>Cadena Militar</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 2,55gr<br>Largo: 60,5cm<br>Grosor: 0,7mm<br>Oro Italiano<br>Tipo de Broche: Reasa</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20Militar%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
+// ===== WHATSAPP =====
+function solicitarJoya(nombre){
+  const mensaje = `Hola, estoy interesado en la joya ${nombre}.`;
+  window.open(`https://wa.me/5350896082?text=${encodeURIComponent(mensaje)}`,'_blank');
+}
+</script>
 
-  <div class="joya" data-name="Cadena Lazo" data-desc="Cadena Lazo, Oro 18K, Oro Amarillo, 1,1gr, 60cm, Grosor 1mm, Oro Italiano, Broche Reasa">
-    <img src="images/joya10.jpg" alt="Cadena Lazo">
-    <div class="joya-info">
-      <h3>Cadena Lazo</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 1,1gr<br>Largo: 60cm<br>Grosor: 1mm<br>Oro Italiano<br>Tipo de Broche: Reasa</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20Lazo%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-  
-  <div class="joya" data-name="cadena china" data-desc="Cadena China, Oro 18K, Oro Amarillo, 14,8gr, 60cm, Grosor 6,2mm, Oro Italiano, Broche">
-    <img src="images/joya11.jpg" alt="Cadena China">
-    <div class="joya-info">
-      <h3>Cadena China</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 14,8gr<br>Largo: 60cm<br>Grosor: 6,2mm<br>Oro Italiano<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20China%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="cadena de aro seguido" data-desc="Cadena de Aro Seguido, Oro 18K, Oro Rosa, 1,55gr, 44,6cm, Grosor 0,75mm, Oro Italiano, Broche Reasa">
-    <img src="images/joya12.jpg" alt="Cadena de Aro Seguido">
-    <div class="joya-info">
-      <h3>Cadena de Aro Seguido</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Rosa<br>Peso: 1,55gr<br>Largo: 44,6cm<br>Grosor: 0,75mm<br>Oro Italiano<br>Tipo de Broche: Reasa</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20de%20Aro%20Seguido%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="cadena trebol cajon" data-desc="Cadena Trebol Cajon, Ojo de Tigre, Oro 18K, Oro Amarillo, 36,85gr, 67,6cm, Grosor 2,3mm, Oro Nacional, Broche">
-    <img src="images/joya13.jpg" alt="Cadena Trebol Cajon">
-    <div class="joya-info">
-      <h3>Cadena Trebol Cajon</h3>
-      <p>Ojo de Tigre<br>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 36,85gr<br>Largo: 67,6cm<br>Grosor: 2,3mm<br>Oro Nacional<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20Trebol%20Cajon%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="cadena de espiga rústica" data-desc="Cadena de Espiga Rústica, Oro 18K, Oro Amarillo, 9,4gr, 48cm, Grosor 4,35mm, Oro Nacional, Broche">
-    <img src="images/joya14.jpg" alt="Cadena de Espiga Rústica">
-    <div class="joya-info">
-      <h3>Cadena de Espiga Rústica</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 9,4gr<br>Largo: 48cm<br>Grosor: 4,35mm<br>Oro Nacional<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20de%20Espiga%20Rústica%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="pulso aro seguido trebol" data-desc="Pulso Aro Seguido Trébol, Oro 18K, Oro Amarillo, 5gr, 19cm, Grosor 13mm, Oro Nacional, Broche">
-    <img src="images/joya15.jpg" alt="Pulso Aro Seguido Trébol">
-    <div class="joya-info">
-      <h3>Pulso Aro Seguido Trébol</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 5gr<br>Largo: 19cm<br>Grosor: 13mm<br>Oro Nacional<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Pulso%20Aro%20Seguido%20Trébol%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="pulso cubano 14k" data-desc="Pulso Cubano, Oro 14K Italy, 8,4gr, 21cm, Grosor 6,9mm, Broche Cajon Liso">
-    <img src="images/joya16.jpg" alt="Pulso Cubano 14K">
-    <div class="joya-info">
-      <h3>Pulso Cubano 14K</h3>
-      <p>Calidad: Oro 14K Italy Garantizado<br>Color: Oro Amarillo<br>Peso: 8,4gr<br>Largo: 21cm<br>Grosor: 6,9mm<br>Oro 14K Italiano<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Pulso%20Cubano%2014K%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="pulso marinero" data-desc="Pulso Marinero, Oro 18K, Oro Amarillo, 1,75gr, 19cm, Grosor 2,6mm, Oro Italiano, Broche">
-    <img src="images/joya17.jpg" alt="Pulso Marinero">
-    <div class="joya-info">
-      <h3>Pulso Marinero</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 1,75gr<br>Largo: 19cm<br>Grosor: 2,6mm<br>Oro Italiano<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Pulso%20Marinero%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="pulso bebe espiga" data-desc="Pulso Bebé Espiga, Oro 18K, Oro Amarillo, 1,7gr, 13-14cm, Grosor 1,6mm, Oro Nacional, Reasa">
-    <img src="images/joya18.jpg" alt="Pulso Bebé Espiga">
-    <div class="joya-info">
-      <h3>Pulso Bebé Espiga</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 1,7gr<br>Largo: 13-14cm<br>Grosor: 1,6mm<br>Oro Nacional<br>Tipo de Broche: Reasa</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Pulso%20Bebé%20Espiga%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="pulso bebe gc" data-desc="Pulso Bebé GC Virgen Milagrosa, Oro 18K, Oro Amarillo, 1,9gr, 14cm, Grosor 3,6mm, Oro Nacional, Reasa">
-    <img src="images/joya19.jpg" alt="Pulso Bebé GC">
-    <div class="joya-info">
-      <h3>Pulso Bebé GC</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 1,9gr<br>Largo: 14cm<br>Grosor: 3,6mm<br>Oro Nacional<br>Tipo de Broche: Reasa</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Pulso%20Bebé%20GC%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="pulso gc" data-desc="Pulso GC, Oro 18K, Tres Oros, 8,65gr, 21,5cm, Grosor 8,1mm, Oro Nacional, Broche">
-    <img src="images/joya20.jpg" alt="Pulso GC">
-    <div class="joya-info">
-      <h3>Pulso GC</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Tres Oros<br>Peso: 8,65gr<br>Largo: 21,5cm<br>Grosor: 8,1mm<br>Oro Nacional<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Pulso%20GC%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-      
-  <div class="joya" data-name="pulso tennis trebol" data-desc="Pulso Tennis Trebol, Oro 18K, Tres Oros, Diamantado Circones Blancos, 14,8gr, 18cm, Oro Nacional">
-    <img src="images/joya21.jpg" alt="Pulso Tennis Trebol">
-    <div class="joya-info">
-      <h3>Pulso Tennis Trebol</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Tres Oros<br>Peso: 14,8gr<br>Largo: 18cm<br>Diamantado: Circones Blancos<br>Oro Nacional</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Pulso%20Tennis%20Trebol%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="pulso clavo" data-desc="Pulso Clavo, Oro 18K, Oro Amarillo, 4,65gr, 19,5cm, Grosor 1,7mm, Oro Italiano">
-    <img src="images/joya22.jpg" alt="Pulso Clavo">
-    <div class="joya-info">
-      <h3>Pulso Clavo</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 4,65gr<br>Largo: 19,5cm<br>Grosor: 1,7mm<br>Oro Italiano</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Pulso%20Clavo%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="pulso roll on" data-desc="Pulso Roll On, Oro 18K, Oro Amarillo, 5,4gr, 19cm, Grosor 4,57mm, Oro Italiano, Broche">
-    <img src="images/joya23.jpg" alt="Pulso Roll On">
-    <div class="joya-info">
-      <h3>Pulso Roll On</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 5,4gr<br>Largo: 19cm<br>Grosor: 4,57mm<br>Oro Italiano<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Pulso%20Roll%20On%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="anillo sello medusa" data-desc="Anillo Sello Medusa, Circones Blancos y Amarillos, Oro 18K, Oro Amarillo, 10,55gr, Talla T10, Oro Nacional">
-    <img src="images/joya24.jpg" alt="Anillo Sello Medusa">
-    <div class="joya-info">
-      <h3>Anillo Sello Medusa</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 10,55gr<br>Talla: T10<br>Circones Blancos y Amarillos<br>Oro Nacional</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Anillo%20Sello%20Medusa%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="anillo sello cruz" data-desc="Anillo Sello Cruz, Oro 18K, Oro Amarillo, 7,5gr, Talla T9 3/4, Oro Nacional">
-    <img src="images/joya25.jpg" alt="Anillo Sello Cruz">
-    <div class="joya-info">
-      <h3>Anillo Sello Cruz</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 7,5gr<br>Talla: T9 3/4<br>Oro Nacional</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Anillo%20Sello%20Cruz%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="anillo solitario cuencas esmeraldas" data-desc="Anillo Solitario Cuencas Fijas Esmeraldas 1 Qts, Oro 18K, Oro Amarillo, 1,75gr, Talla 7,25">
-    <img src="images/joya26.jpg" alt="Anillo Solitario Cuencas Esmeraldas">
-    <div class="joya-info">
-      <h3>Anillo Solitario Esmeraldas</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 1,75gr<br>Talla: 7,25</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Anillo%20Solitario%20Esmeraldas%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="anillo timon movil" data-desc="Anillo Timon Movil, Oro 18K, Oro Amarillo, 9,45gr, Talla 9,75, Oro Nacional">
-    <img src="images/joya27.jpg" alt="Anillo Timon Movil">
-    <div class="joya-info">
-      <h3>Anillo Timon Movil</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 9,45gr<br>Talla: 9,75<br>Oro Nacional</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Anillo%20Timon%20Movil%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="anillo sello incrustado" data-desc="Anillo Sello Incrustado, Circones Verdes, Oro 18K, Oro Amarillo, 6gr, Talla 9,75">
-    <img src="images/joya28.jpg" alt="Anillo Sello Incrustado">
-    <div class="joya-info">
-      <h3>Anillo Sello Incrustado</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 6gr<br>Talla: 9,75<br>Circones Verdes</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20el%20Anillo%20Sello%20Incrustado%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="cadena rosario" data-desc="Cadena Rosario Virgen Milagrosa, Oro 18K, Oro Amarillo, 8,95gr, 53cm, Grosor 5-4mm">
-    <img src="images/joya29.jpg" alt="Cadena Rosario Virgen Milagrosa">
-    <div class="joya-info">
-      <h3>Cadena Rosario Virgen Milagrosa</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 8,95gr<br>Largo: 53cm<br>Grosor: 5-4mm</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20Rosario%20Virgen%20Milagrosa%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="cadena dubai" data-desc="Cadena Dubai, Oro 18K, Oro Amarillo, 31,9gr, 61cm, Grosor 3mm, Oro Nacional, Broche">
-    <img src="images/joya30.jpg" alt="Cadena Dubai">
-    <div class="joya-info">
-      <h3>Cadena Dubai</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 31,9gr<br>Largo: 61cm<br>Grosor: 3mm<br>Oro Nacional<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20Dubai%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="cadena peruana" data-desc="Cadena Peruana, Oro 18K, Oro Amarillo, 24gr, 60cm, Grosor 2,1mm, Oro Italiano, Broche">
-    <img src="images/joya31.jpg" alt="Cadena Peruana">
-    <div class="joya-info">
-      <h3>Cadena Peruana</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 24gr<br>Largo: 60cm<br>Grosor: 2,1mm<br>Oro Italiano<br>Tipo de Broche: Broche</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20Peruana%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-  <div class="joya" data-name="cadena sedusa" data-desc="Cadena Sedusa, Oro 18K, Oro Amarillo, 4,55gr, 50cm, Grosor 4mm, Oro Italiano, Reasa">
-    <img src="images/joya32.jpg" alt="Cadena Sedusa">
-    <div class="joya-info">
-      <h3>Cadena Sedusa</h3>
-      <p>Calidad: Oro 18K Garantizado<br>Color: Oro Amarillo<br>Peso: 4,55gr<br>Largo: 50cm<br>Grosor: 4mm<br>Oro Italiano<br>Tipo de Broche: Reasa</p>
-      <a class="btn-whatsapp" href="https://wa.me/5350896082?text=Hola%20estoy%20interesado%20en%20la%20Cadena%20Sedusa%20que%20vi%20en%20su%20página%20web.">💬 Estoy interesado</a>
-    </div>
-  </div>
-
-    </div>
-  </main>
-
-  <footer>© 2025 Apacargo — Colección de Joyería</footer>
-
-  <!-- 🖼️ Modal para ampliar imágenes -->
-  <div id="modal" class="modal">
-    <span class="close" onclick="cerrarModal()">&times;</span>
-    <img id="modalImg" src="" alt="Vista ampliada">
-  </div>
-
-  <script>
-    // === MODAL ===
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modalImg");
-
-    document.querySelectorAll(".joya img").forEach(img => {
-      img.addEventListener("click", () => {
-        modal.style.display = "flex";
-        modalImg.src = img.src;
-      });
-    });
-
-    function cerrarModal() {
-      modal.style.display = "none";
-    }
-
-    window.onclick = (e) => {
-      if (e.target === modal) modal.style.display = "none";
-    };
-
-    // === BUSCADOR ===
-    const searchInput = document.getElementById("searchInput");
-    const joyas = document.querySelectorAll(".joya");
-
-    searchInput.addEventListener("input", () => {
-      const texto = searchInput.value.toLowerCase();
-      joyas.forEach(j => {
-        const nombre = j.dataset.name.toLowerCase();
-        const desc = j.dataset.desc.toLowerCase();
-        j.style.display = (nombre.includes(texto) || desc.includes(texto)) ? "block" : "none";
-      });
-    });
-  </script>
 </body>
 </html>
