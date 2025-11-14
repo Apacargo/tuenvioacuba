@@ -1,139 +1,103 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Joyería • Colección Exclusiva</title>
 <style>
-/* ===== ESTILO GLOBAL ===== */
+/* ===== ESTILO GLOBAL (NEGRO & DORADO) ===== */
+:root{
+  --oro:#d4af37;
+  --oro-claro:#ffd700;
+  --fondo:#000;
+  --card:#111;
+  --txt-white:#ffffff;
+}
+*{box-sizing:border-box}
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #000;
-  color: #d4af37;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--fondo);
+  color: var(--oro);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
-h1 {
-  color: #d4af37;
-  text-align: center;
-  margin: 20px 0;
-}
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-}
-.search-box {
-  text-align: center;
-  margin-bottom: 30px;
-}
-.search-box input {
-  width: 80%;
-  padding: 12px;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-}
+.container { max-width:1200px; margin:24px auto; padding:18px; }
+h1 { color:var(--oro); text-align:center; margin:6px 0 18px 0; font-size:1.7rem; letter-spacing:0.6px; }
 
-/* ===== GRID DE JOYAS ===== */
+/* buscador y controles */
+.controls { display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+.search-box { flex:1 1 420px; max-width:720px; }
+#buscador {
+  width:100%; padding:12px 14px; border-radius:8px; border:2px solid rgba(212,175,55,0.12);
+  background:#0b0b0b; color:var(--txt-white); font-size:15px;
+  outline:none;
+}
+#buscador::placeholder{ color:rgba(255,255,255,0.45) }
+.controls .info { color:#fff; font-size:14px; }
+
+/* grid */
 .joyas-grid {
-  display: grid;
+  display:grid;
   grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
-  gap: 20px;
+  gap:18px;
 }
+
+/* card */
 .joya-card {
-  background: #111;
-  border: 2px solid #d4af37;
-  border-radius: 10px;
-  overflow: hidden;
-  transition: transform 0.3s;
+  background:var(--card);
+  border: 2px solid var(--oro);
+  border-radius:12px;
+  overflow:hidden;
+  transition: transform .25s ease, box-shadow .25s ease;
+  display:flex; flex-direction:column;
 }
-.joya-card:hover {
-  transform: scale(1.05);
+.joya-card:hover { transform: translateY(-6px); box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+.joya-thumb {
+  width:100%; height:250px; object-fit:cover; display:block; cursor:pointer; background:linear-gradient(180deg,#0b0b0b,#111);
 }
-.joya-card img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  cursor: pointer;
-}
-.joya-content {
-  padding: 15px;
-}
-.joya-content h3 {
-  margin: 10px 0 5px 0;
-  font-size: 20px;
-  color: #d4af37;
-}
-.joya-content p {
-  margin: 5px 0;
-  font-size: 14px;
-  color: #fff;
-}
-.joya-content .precio {
-  font-weight: bold;
-  margin-top: 10px;
-  color: #ffd700;
-}
-.joya-content button {
-  margin-top: 10px;
-  width: 100%;
-  background-color: #d4af37;
-  border: none;
-  color: #000;
-  font-weight: bold;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.joya-content button:hover {
-  background-color: #ffd700;
-}
+.joya-content { padding:14px; flex:1 1 auto; display:flex; flex-direction:column; }
+.joya-content h3 { margin:0 0 8px 0; font-size:18px; color:var(--oro); }
+.joya-content p { margin:4px 0; font-size:13.5px; color:#eee; line-height:1.35; }
+.precio { margin-top:auto; font-weight:700; color:var(--oro-claro); font-size:16px; }
 
-/* ===== MODAL / LIGHTBOX ===== */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.95);
-  align-items: center;
-  justify-content: center;
+/* button */
+.joya-content .btn {
+  margin-top:10px; display:inline-block; width:100%; padding:10px; border-radius:8px;
+  background:var(--oro); color:#000; border:none; font-weight:700; cursor:pointer;
+  transition: background .2s ease;
 }
-.modal-content {
-  max-width: 90%;
-  max-height: 80%;
-}
-.modal-caption {
-  text-align: center;
-  color: #d4af37;
-  font-size: 18px;
-  margin: 15px 0;
-}
-.modal-close, .prev, .next {
-  position: absolute;
-  top: 50%;
-  color: #fff;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  transform: translateY(-50%);
-  padding: 10px;
-}
-.modal-close {
-  top: 20px;
-  right: 30px;
-}
-.prev { left: 10px; }
-.next { right: 10px; }
+.joya-content .btn:hover { background:var(--oro-claro); }
 
-@media screen and (max-width: 600px) {
-  .joya-card img {
-    height: 200px;
-  }
-  .modal-close, .prev, .next { font-size: 30px; }
+/* cargar mas */
+#loadMoreWrap { text-align:center; margin:20px 0; }
+#loadMore { padding:10px 18px; background:transparent; border:2px solid var(--oro); color:var(--oro); border-radius:8px; cursor:pointer; font-weight:700; }
+#loadMore:hover { background:rgba(212,175,55,0.06); }
+
+/* modal */
+.modal { display:none; position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,0.9); align-items:center; justify-content:center; padding:20px; }
+.modal-inner { width:100%; max-width:1000px; max-height:90vh; background:transparent; border-radius:12px; display:grid; grid-template-columns: 1fr 380px; gap:18px; align-items:start; }
+.modal-left { display:flex; align-items:center; justify-content:center; }
+.modal-left img { max-width:100%; max-height:85vh; border-radius:10px; object-fit:contain; background:#000; }
+.modal-right { background:var(--card); border:2px solid var(--oro); padding:16px; border-radius:10px; color:#fff; overflow:auto; max-height:85vh; }
+.modal-right h2 { color:var(--oro); margin:0 0 10px; font-size:20px; }
+.modal-right p { color:#eee; font-size:14px; line-height:1.45; margin:6px 0; }
+.modal-right .precio { color:var(--oro-claro); font-size:18px; margin:12px 0; }
+.modal-actions { display:flex; gap:8px; margin-top:12px; }
+.modal-actions a.btn-whatsapp { background:var(--oro); color:#000; padding:10px 12px; border-radius:8px; text-decoration:none; font-weight:700; }
+.modal-close { position:absolute; top:18px; right:20px; color:#fff; font-size:34px; cursor:pointer; }
+
+/* modal nav */
+.modal-nav { position:absolute; left:10px; right:10px; top:50%; display:flex; justify-content:space-between; pointer-events:none; }
+.modal-nav button { pointer-events:auto; background:transparent; border:none; font-size:38px; color:#fff; cursor:pointer; padding:8px; }
+
+/* responsive */
+@media (max-width:980px){ .modal-inner{grid-template-columns:1fr 320px} }
+@media (max-width:720px){
+  .modal-inner{grid-template-columns:1fr; }
+  .modal-right{ max-height:40vh; }
+  .joya-thumb{ height:200px; }
+  .container{padding:12px}
 }
 </style>
 </head>
@@ -142,28 +106,47 @@ h1 {
 <div class="container">
   <h1>Colección Exclusiva de Joyería</h1>
 
-  <div class="search-box">
-    <input type="text" id="buscador" placeholder="Buscar joya por nombre...">
+  <div class="controls">
+    <div class="search-box">
+      <input id="buscador" type="text" placeholder="Buscar joya por nombre... (ej. 'Cadena', 'Pulso', 'Aretes')">
+    </div>
+    <div class="info" id="infoCount">Mostrando <span id="shown">0</span> / 80</div>
   </div>
 
-  <div class="joyas-grid" id="joyasGrid">
-    <!-- Joya Cards -->
+  <div class="joyas-grid" id="joyasGrid"></div>
+
+  <div id="loadMoreWrap">
+    <button id="loadMore">Cargar más</button>
   </div>
 </div>
 
-<!-- MODAL / LIGHTBOX -->
-<div id="modal" class="modal">
-  <span class="modal-close">&times;</span>
-  <span class="prev">&#10094;</span>
-  <span class="next">&#10095;</span>
-  <img class="modal-content" id="modalImg">
-  <div class="modal-caption" id="modalCaption"></div>
-  <div style="text-align:center; margin-top:10px;">
-    <button id="solicitarBtn" style="padding:10px 20px; background:#d4af37; color:#000; border:none; border-radius:5px; cursor:pointer;">Solicitar esta joya</button>
+<!-- MODAL -->
+<div id="modal" class="modal" aria-hidden="true" role="dialog" aria-label="Vista ampliada de joya">
+  <div class="modal-close" id="modalClose" title="Cerrar">&times;</div>
+
+  <div class="modal-nav">
+    <button id="modalPrev" title="Anterior">&#10094;</button>
+    <button id="modalNext" title="Siguiente">&#10095;</button>
+  </div>
+
+  <div class="modal-inner" role="document">
+    <div class="modal-left">
+      <img id="modalImg" data-src="" alt="Imagen joya">
+    </div>
+    <div class="modal-right">
+      <h2 id="modalTitle">Nombre Joya</h2>
+      <p id="modalDetails">Detalles...</p>
+      <div class="precio" id="modalPrice">Precio</div>
+      <div class="modal-actions">
+        <a id="modalWhats" class="btn-whatsapp" href="#" target="_blank" rel="noopener">Abrir WhatsApp</a>
+        <button id="modalSolicitar" class="btn-whatsapp" style="background:transparent;color:var(--oro);border:2px solid var(--oro);">Copiar mensaje</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
+/* ======= Datos (1..80) exactamente como me diste ======= */
 const joyas = [
   {id:1, nombre:"Cadena Trebol Cajon", detalles:"Diamantada • Oro 18K Garantizado • Color: Oro Amarillo • Peso: 4,85gr • Largo: 46cm • Grosor: 1,28mm • Oro Nacional • Tipo de Broche: Reasa", precio:"620 USD", img:"images/joya1.jpg"},
   {id:2, nombre:"Cadena Trebol Aro Seguido", detalles:"Diamantada Graduable • Oro 18K Garantizado • Color: Oro Amarillo • Peso: 8,2gr • Largo: 45cm-51,2cm • Grosor: 1,42mm • Oro Nacional", precio:"1073 USD", img:"images/joya2.jpg"},
@@ -247,72 +230,242 @@ const joyas = [
   {id:80, nombre:"Aretes Cagl Esmeralda", detalles:"Esmeralda 80Pts • Diamantes 18Pts • Calidad: Oro 18K Garantizado • Color: Dos Oros Amarillo Blanco • Peso: 2,85gr • Grosor: 7mm • Oro Nacional", precio:"2500 USD", img:"images/joya80.jpg"},
 ];
 
-// ===== FUNCION PARA CREAR CARDS =====
-const joyasGrid = document.getElementById('joyasGrid');
+/* ====== Config paginado y referencias ====== */
+const CHUNK = 24; // cuantos mostrar al inicio y por "Cargar más"
+let renderedCount = 0;
+const grid = document.getElementById('joyasGrid');
+const infoShown = document.getElementById('shown');
+const loadMoreBtn = document.getElementById('loadMore');
+const buscador = document.getElementById('buscador');
 
-function mostrarJoyas(arrayJoyas){
-  joyasGrid.innerHTML = '';
-  arrayJoyas.forEach((j, index) => {
-    const card = document.createElement('div');
-    card.classList.add('joya-card');
-    card.innerHTML = `
-      <img src="${j.img}" alt="${j.nombre}" onclick="abrirModal(${index})">
-      <div class="joya-content">
-        <h3>${j.nombre}</h3>
-        <p>${j.detalles}</p>
-        <p class="precio">${j.precio}</p>
-        <button onclick="solicitarJoya('${j.nombre}')">Solicitar esta joya</button>
-      </div>
-    `;
-    joyasGrid.appendChild(card);
-  });
+let currentList = joyas.slice(); // lista base (puede filtrarse al buscar)
+let observerImages = null;
+
+/* ====== Funciones de render con lazy (data-src) ====== */
+function createCard(j, index){
+  const card = document.createElement('div');
+  card.className = 'joya-card';
+  card.innerHTML = `
+    <img class="joya-thumb lazy-img" data-src="${j.img}" alt="${escapeHtml(j.nombre)}" data-index="${index}" loading="lazy">
+    <div class="joya-content">
+      <h3>${escapeHtml(j.nombre)}</h3>
+      <p>${escapeHtml(j.detalles)}</p>
+      <div class="precio">${escapeHtml(j.precio)}</div>
+      <button class="btn" data-index="${index}">Solicitar esta joya</button>
+    </div>
+  `;
+  return card;
 }
 
-mostrarJoyas(joyas);
+function renderInitialChunk(){
+  const to = Math.min(renderedCount + CHUNK, currentList.length);
+  for(let i = renderedCount; i < to; i++){
+    const card = createCard(currentList[i], getGlobalIndex(currentList[i].id));
+    grid.appendChild(card);
+  }
+  renderedCount = to;
+  updateInfo();
+  observeLazyImages();
+  updateLoadMoreVisibility();
+}
 
-// ===== BUSCADOR =====
-const buscador = document.getElementById('buscador');
-buscador.addEventListener('input', (e)=>{
-  const filtrado = joyas.filter(j => j.nombre.toLowerCase().includes(e.target.value.toLowerCase()));
-  mostrarJoyas(filtrado);
+/* get index in original joyas array by id */
+function getGlobalIndex(id){
+  return joyas.findIndex(j => j.id === id);
+}
+
+/* actualizar contador */
+function updateInfo(){
+  infoShown.textContent = ( (buscador.value.trim()) ? renderedCount : Math.min(renderedCount, joyas.length) ) + ' de ' + joyas.length;
+}
+
+/* cargar todo (cuando search devuelve coincidencias) */
+function renderAll(list){
+  grid.innerHTML = '';
+  renderedCount = list.length;
+  list.forEach((j, idx) => {
+    const card = createCard(j, getGlobalIndex(j.id));
+    grid.appendChild(card);
+  });
+  updateInfo();
+  observeLazyImages();
+  updateLoadMoreVisibility();
+}
+
+/* limpiar y reset paginado */
+function resetAndRender(){
+  grid.innerHTML = '';
+  renderedCount = 0;
+  renderInitialChunk();
+}
+
+/* boton cargar mas */
+loadMoreBtn.addEventListener('click', () => {
+  renderInitialChunk();
 });
 
-// ===== MODAL / LIGHTBOX =====
+/* mostrar/ocultar boton cargar más */
+function updateLoadMoreVisibility(){
+  if(buscador.value.trim().length > 0){
+    loadMoreBtn.style.display = 'none';
+    return;
+  }
+  loadMoreBtn.style.display = (renderedCount < joyas.length) ? 'inline-block' : 'none';
+}
+
+/* ===== SEARCH ===== */
+buscador.addEventListener('input', (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  if(q === ''){
+    // restaurar paginado
+    currentList = joyas.slice();
+    resetAndRender();
+    return;
+  }
+  // filtrar entre todas las joyas (ignorando paginación)
+  const matches = joyas.filter(j => (j.nombre + ' ' + j.detalles).toLowerCase().includes(q));
+  currentList = matches;
+  renderAll(matches);
+});
+
+/* ====== Lazy loading con IntersectionObserver ====== */
+function observeLazyImages(){
+  // desconectar observer anterior
+  if(observerImages){ observerImages.disconnect(); observerImages = null; }
+  const lazyImgs = document.querySelectorAll('img.lazy-img');
+  if('IntersectionObserver' in window){
+    observerImages = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const img = entry.target;
+          if(img.dataset.src){
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            img.classList.remove('lazy-img');
+          }
+          obs.unobserve(img);
+        }
+      });
+    }, {root:null, threshold:0.1, rootMargin:'150px'});
+    lazyImgs.forEach(img => observerImages.observe(img));
+  } else {
+    // fallback: cargar inmediatamente
+    lazyImgs.forEach(img => { img.src = img.dataset.src; img.removeAttribute('data-src'); img.classList.remove('lazy-img'); });
+  }
+}
+
+/* ====== Eventos de interacción (abrir modal, solicitar) ====== */
+grid.addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn');
+  if(btn){
+    const idx = parseInt(btn.dataset.index,10);
+    const j = joyas[idx];
+    openWhatsApp(j);
+    return;
+  }
+  const img = e.target.closest('img.joya-thumb');
+  if(img && img.dataset.index){
+    const index = parseInt(img.dataset.index,10);
+    openModal(index);
+  }
+});
+
+/* ===== Modal logic ===== */
 const modal = document.getElementById('modal');
 const modalImg = document.getElementById('modalImg');
-const modalCaption = document.getElementById('modalCaption');
-const modalClose = document.querySelector('.modal-close');
-const prev = document.querySelector('.prev');
-const next = document.querySelector('.next');
-const solicitarBtn = document.getElementById('solicitarBtn');
+const modalTitle = document.getElementById('modalTitle');
+const modalDetails = document.getElementById('modalDetails');
+const modalPrice = document.getElementById('modalPrice');
+const modalWhats = document.getElementById('modalWhats');
+const modalSolicitar = document.getElementById('modalSolicitar');
+const modalClose = document.getElementById('modalClose');
+const modalPrev = document.getElementById('modalPrev');
+const modalNext = document.getElementById('modalNext');
 
-let currentIndex = 0;
+let modalIndex = 0;
 
-function abrirModal(index){
-  currentIndex = index;
+function openModal(index){
+  modalIndex = index;
+  const j = joyas[modalIndex];
+  // lazy load modal image
+  modalImg.dataset.src = j.img;
+  modalImg.src = ''; // reset
+  setTimeout(() => { modalImg.src = modalImg.dataset.src; }, 60);
+  modalTitle.textContent = j.nombre;
+  modalDetails.textContent = j.detalles;
+  modalPrice.textContent = j.precio;
+  // whatsapp link
+  const mensaje = `Hola, estoy interesado en la joya ${j.nombre}. Detalles: ${j.detalles}. Precio: ${j.precio}.`;
+  modalWhats.href = `https://wa.me/5350896082?text=${encodeURIComponent(mensaje)}`;
+  modalSolicitar.onclick = () => {
+    copyToClipboard(mensaje);
+    modalSolicitar.textContent = 'Copiado ✓';
+    setTimeout(()=> modalSolicitar.textContent = 'Copiar mensaje', 1500);
+  };
+  showModal();
+}
+
+function showModal(){
   modal.style.display = 'flex';
-  modalImg.src = joyas[index].img;
-  modalCaption.textContent = joyas[index].nombre;
-  solicitarBtn.onclick = ()=> solicitarJoya(joyas[index].nombre);
+  modal.setAttribute('aria-hidden','false');
 }
 
-modalClose.onclick = ()=> modal.style.display = 'none';
-modal.onclick = (e)=> { if(e.target === modal) modal.style.display='none'; }
-
-prev.onclick = ()=>{
-  currentIndex = (currentIndex-1+joyas.length)%joyas.length;
-  abrirModal(currentIndex);
-}
-next.onclick = ()=>{
-  currentIndex = (currentIndex+1)%joyas.length;
-  abrirModal(currentIndex);
+function closeModal(){
+  modal.style.display = 'none';
+  modal.setAttribute('aria-hidden','true');
 }
 
-// ===== WHATSAPP =====
-function solicitarJoya(nombre){
-  const mensaje = `Hola, estoy interesado en la joya ${nombre}.`;
-  window.open(`https://wa.me/5350896082?text=${encodeURIComponent(mensaje)}`,'_blank');
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+
+modalPrev.addEventListener('click', () => {
+  modalIndex = (modalIndex - 1 + joyas.length) % joyas.length;
+  openModal(modalIndex);
+});
+modalNext.addEventListener('click', () => {
+  modalIndex = (modalIndex + 1) % joyas.length;
+  openModal(modalIndex);
+});
+
+/* keyboard */
+document.addEventListener('keydown', (e) => {
+  if(modal.style.display !== 'flex') return;
+  if(e.key === 'ArrowLeft') modalPrev.click();
+  if(e.key === 'ArrowRight') modalNext.click();
+  if(e.key === 'Escape') closeModal();
+});
+
+/* ===== WhatsApp open (from card button) ===== */
+function openWhatsApp(j){
+  const mensaje = `Hola, estoy interesado en la joya ${j.nombre}. Detalles: ${j.detalles}. Precio: ${j.precio}.`;
+  window.open(`https://wa.me/5350896082?text=${encodeURIComponent(mensaje)}`, '_blank');
 }
+
+/* copy helper */
+function copyToClipboard(text){
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).catch(()=>{});
+  } else {
+    const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); } catch(e){} t.remove();
+  }
+}
+
+/* escape html safety helper for templates */
+function escapeHtml(str){
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+/* ==== Inicializar renderizado (paginación) ==== */
+(function init(){
+  // show first chunk
+  currentList = joyas.slice();
+  renderInitialChunk();
+  // accessibility: update shown count properly
+  updateInfo();
+})();
 </script>
 
 </body>
