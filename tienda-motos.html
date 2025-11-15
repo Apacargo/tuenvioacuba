@@ -3,101 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Motos • Apacargo</title>
+<title>Tienda de Motos • Apacargo</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
-    font-size: 1.8em;
-    font-weight: bold;
-  }
-  .container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px;
-  }
-  .card {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s;
-  }
-  .card:hover {
-    transform: scale(1.03);
-  }
-  .card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-  }
-  .card-content {
-    padding: 15px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .card h3 {
-    margin: 0 0 10px;
-    font-size: 1.2em;
-    color: #333;
-  }
-  .card p {
-    flex: 1;
-    margin: 0 0 10px;
-    color: #555;
-    font-size: 0.95em;
-  }
-  .price {
-    font-weight: bold;
-    color: #e60000;
-    margin-bottom: 10px;
-  }
-  .btn-whatsapp {
-    background-color: #25D366;
-    color: #fff;
-    text-decoration: none;
-    padding: 10px;
-    text-align: center;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: background 0.2s;
-  }
-  .btn-whatsapp:hover {
-    background-color: #1ebe5d;
-  }
-  @media(max-width: 600px){
-    header {
-      font-size: 1.4em;
-      padding: 15px 0;
-    }
-    .card img {
-      height: 150px;
-    }
-  }
+  body { font-family: Arial; margin:0; padding:0; background-color:#f4f4f4; }
+  header { background:#333; color:#fff; text-align:center; padding:20px 0; font-size:1.8em; font-weight:bold; }
+  .controls { padding:15px 20px; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+  .controls input, .controls select { padding:8px; border-radius:6px; border:1px solid #ccc; font-size:1em; }
+  .container { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; padding:20px; }
+  .card { background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.15); overflow:hidden; display:flex; flex-direction:column; transition:transform 0.2s; cursor:pointer; }
+  .card:hover { transform:scale(1.03); }
+  .card img { width:100%; height:180px; object-fit:cover; }
+  .card-content { padding:15px; flex:1; display:flex; flex-direction:column; }
+  .card h3 { margin:0 0 10px; font-size:1.2em; color:#333; }
+  .card p { flex:1; margin:0 0 10px; color:#555; font-size:0.95em; }
+  .price { font-weight:bold; color:#e60000; margin-bottom:10px; }
+  .btn-whatsapp { background-color:#25D366; color:#fff; text-decoration:none; padding:10px; text-align:center; border-radius:8px; font-weight:bold; transition:background 0.2s; }
+  .btn-whatsapp:hover { background-color:#1ebe5d; }
+  @media(max-width:600px){ header{font-size:1.4em; padding:15px 0;} .card img{height:150px;} }
+
+  /* Modal */
+  .modal { display:none; position:fixed; z-index:999; padding-top:50px; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.7); }
+  .modal-content { background:#fff; margin:auto; border-radius:12px; padding:20px; max-width:600px; position:relative; }
+  .modal-content img { width:100%; border-radius:12px; margin-bottom:15px; }
+  .close { color:#aaa; position:absolute; top:10px; right:20px; font-size:28px; font-weight:bold; cursor:pointer; }
+  .close:hover { color:#000; }
 </style>
 </head>
 <body>
 
-<header>Motos Disponibles • Apacargo</header>
+<header>Tienda de Motos • Apacargo</header>
 
-<div class="container" id="motosContainer">
-  <!-- Las motos se cargarán aquí dinámicamente -->
+<div class="controls">
+  <input type="text" id="search" placeholder="Buscar moto por nombre...">
+  <select id="filter">
+    <option value="all">Todos los precios</option>
+    <option value="0-1500">Hasta $1500 USD</option>
+    <option value="1500-2500">$1500 - $2500 USD</option>
+    <option value="2500-4000">$2500 - $4000 USD</option>
+    <option value="4000-100000">Más de $4000 USD</option>
+  </select>
+</div>
+
+<div class="container" id="motosContainer"></div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <img id="modal-img" src="" alt="">
+    <h3 id="modal-nombre"></h3>
+    <p id="modal-detalles"></p>
+    <div class="price" id="modal-precio"></div>
+    <a class="btn-whatsapp" id="modal-whatsapp" href="#" target="_blank">Contactar por WhatsApp</a>
+  </div>
 </div>
 
 <script>
-// Array de motos
 const motos = [
   {id:1, nombre:"Kawasaki Eliminator 250", detalles:"Motor: Bicilíndrico en paralelo de 4 tiempos, 249 cc, refrigerado por líquido. Potencia: 40 hp a 12,500 rpm. Torque: 23 Nm a 10,000 rpm. Transmisión: 6 velocidades. Embrague: Asistido y deslizante.", precio:"$4200 USD", img:"images/moto1.jpg"},
   {id:2, nombre:"Honda Rebel 250", detalles:"Motor: Bicilíndrico en paralelo de 4 tiempos, 234 cc, refrigerado por aire y con una potencia máxima de aproximadamente 18.5 CV a 8000 rpm. Transmisión: Caja de cambios manual de 5 velocidades y arranque eléctrico.", precio:"$4200 USD", img:"images/moto2.jpg"},
@@ -131,30 +92,66 @@ const motos = [
   {id:30, nombre:"SCOOTER ELÉCTRICO MISHOZUKI", detalles:"Motor power 1000W · Motor voltaje 72V · Controlador 50A · Tipo de batería lithium ION · Capacidad de batería – 1 batería / 72V 45AH · 5 velocidades.", precio:"$1800 USD", img:"images/moto30.jpg"}
 ];
 
-// Función para abrir WhatsApp
 function openWhats(nombre, precio){
-  const telefono = "+5350896082"; // Cambiar al número del vendedor
+  const telefono = "+5350896082";
   const mensaje = `Hola, estoy interesado en la moto ${nombre} que cuesta ${precio}. ¿Está disponible?`;
-  window.open(`https://api.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(mensaje)}`, "_blank");
+  return `https://api.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(mensaje)}`;
 }
 
-// Generar tarjetas
 const container = document.getElementById("motosContainer");
 
-motos.forEach(moto => {
-  const card = document.createElement("div");
-  card.className = "card";
-  card.innerHTML = `
-    <img src="${moto.img}" alt="${moto.nombre}">
-    <div class="card-content">
-      <h3>${moto.nombre}</h3>
-      <p>${moto.detalles}</p>
-      <div class="price">${moto.precio}</div>
-      <a class="btn-whatsapp" href="javascript:void(0)" onclick="openWhats('${moto.nombre}', '${moto.precio}')">Contactar por WhatsApp</a>
-    </div>
-  `;
-  container.appendChild(card);
-});
+function renderMotos(list){
+  container.innerHTML = "";
+  list.forEach(moto => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img loading="lazy" src="${moto.img}" alt="${moto.nombre}">
+      <div class="card-content">
+        <h3>${moto.nombre}</h3>
+        <p>${moto.detalles.substring(0,100)}...</p>
+        <div class="price">${moto.precio}</div>
+        <a class="btn-whatsapp" href="${openWhats(moto.nombre, moto.precio)}" target="_blank">WhatsApp</a>
+      </div>
+    `;
+    card.querySelector('img').addEventListener('click', () => {
+      document.getElementById('modal-img').src = moto.img;
+      document.getElementById('modal-nombre').textContent = moto.nombre;
+      document.getElementById('modal-detalles').textContent = moto.detalles;
+      document.getElementById('modal-precio').textContent = moto.precio;
+      document.getElementById('modal-whatsapp').href = openWhats(moto.nombre, moto.precio);
+      document.getElementById('modal').style.display = 'block';
+    });
+    container.appendChild(card);
+  });
+}
+
+renderMotos(motos);
+
+// Modal
+const modal = document.getElementById("modal");
+document.querySelector(".close").onclick = () => modal.style.display = "none";
+window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; }
+
+// Buscador y filtro
+document.getElementById("search").addEventListener("input", filterMotos);
+document.getElementById("filter").addEventListener("change", filterMotos);
+
+function filterMotos(){
+  const searchText = document.getElementById("search").value.toLowerCase();
+  const filterValue = document.getElementById("filter").value;
+  
+  let filtered = motos.filter(m => m.nombre.toLowerCase().includes(searchText));
+  
+  if(filterValue !== "all"){
+    const [min,max] = filterValue.split("-").map(Number);
+    filtered = filtered.filter(m => {
+      const priceNum = Number(m.precio.replace(/[^0-9]/g,""));
+      return priceNum >= min && priceNum <= max;
+    });
+  }
+  renderMotos(filtered);
+}
 </script>
 
 </body>
