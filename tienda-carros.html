@@ -1,554 +1,517 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tienda de Carros | Apacargo Tu Envío a Cuba</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: #f2f6fa;
-      font-family: 'Poppins', sans-serif;
-      color: #222;
-      margin: 0;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Apacargo • Tienda de Carros — Colección</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --oro: #d4af37;
+    --oro-claro: #ffd700;
+    --fondo: #060606;
+    --card: #0f0f10;
+    --muted: #cfcfcf;
+    --accent: #004aad;
+    --glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, #040404 0%, #0a0a0a 100%);
+    color: var(--oro);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    min-height:100vh;
+  }
 
-    header {
-      background: linear-gradient(90deg, #004aad, #d4af37);
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 1.6rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
+  header{
+    background: linear-gradient(90deg,var(--accent),var(--oro));
+    color:#fff;
+    padding:18px 16px;
+    text-align:center;
+    font-weight:700;
+    letter-spacing:0.6px;
+    font-size:1.4rem;
+  }
 
-    /* === BUSCADOR === */
-    .buscador {
-      text-align: center;
-      margin: 25px 0;
-    }
+  .container{
+    max-width:1200px;
+    margin:22px auto;
+    padding:18px;
+  }
 
-    .buscador input {
-      width: 85%;
-      max-width: 450px;
-      padding: 12px 20px;
-      border: 2px solid #004aad;
-      border-radius: 25px;
-      outline: none;
-      font-size: 1rem;
-      transition: 0.3s;
-      font-family: 'Poppins', sans-serif;
-    }
+  h1{
+    color:var(--oro);
+    margin:6px 0 12px 0;
+    text-align:center;
+    font-size:1.6rem;
+  }
 
-    .buscador input:focus {
-      border-color: #d4af37;
-      box-shadow: 0 0 6px rgba(212, 175, 55, 0.4);
-    }
+  .controls{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+  }
+  .search-box{ flex:1 1 420px; max-width:720px; }
+  #buscar{
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    border:2px solid rgba(212,175,55,0.12);
+    background: #0b0b0b;
+    color: #fff;
+    font-size:15px;
+    outline:none;
+  }
+  #buscar::placeholder{ color: rgba(255,255,255,0.45); }
 
-    .productos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-      gap: 25px;
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+  .info { color:var(--muted); font-size:14px; }
 
-    .producto {
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      transition: transform 0.3s;
-    }
+  /* GRID */
+  .productos{
+    display:grid;
+    grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+    gap:18px;
+    margin-top:8px;
+  }
 
-    .producto:hover {
-      transform: translateY(-6px);
-    }
+  .producto{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 2px solid rgba(212,175,55,0.12);
+    border-radius:12px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s;
+  }
+  .producto:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.6);
+    border-color: var(--oro);
+  }
 
-    .producto img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
+  .thumb-wrap{
+    width:100%;
+    height:170px;
+    background: linear-gradient(180deg,#050505,#111);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .producto img.thumb{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition: transform .3s ease;
+    cursor:pointer;
+    filter: saturate(0.96) contrast(1.02);
+  }
+  .producto img.thumb:hover{ transform: scale(1.04); }
 
-    .producto img:hover {
-      transform: scale(1.05);
-    }
+  .info-card{
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .info-card h3{
+    margin:0;
+    color:var(--oro);
+    font-size:16px;
+  }
+  .info-card p{
+    margin:0;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.35;
+    min-height:48px;
+  }
+  .precio{
+    margin-top:auto;
+    color:var(--oro-claro);
+    font-weight:800;
+    font-size:15px;
+  }
 
-    .info {
-      padding: 20px;
-      text-align: center;
-    }
+  .actions{
+    margin-top:8px;
+    display:flex;
+    gap:8px;
+  }
+  .btn-whatsapp{
+    flex:1;
+    display:inline-block;
+    text-align:center;
+    padding:10px 12px;
+    background:var(--oro);
+    color:#000;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:700;
+  }
+  .btn-copy{
+    flex:1;
+    padding:10px 12px;
+    border-radius:10px;
+    background:transparent;
+    color:var(--oro);
+    border:2px solid rgba(212,175,55,0.12);
+    cursor:pointer;
+    font-weight:700;
+  }
+  .btn-copy:hover{ border-color:var(--oro); color:var(--oro-claro); }
 
-    .info h3 {
-      color: #004aad;
-      font-size: 1.2rem;
-      margin-bottom: 8px;
-    }
+  /* modal / visor */
+  .visor{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background: rgba(0,0,0,0.9);
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+  }
+  .modal-inner{
+    width:100%;
+    max-width:1100px;
+    display:grid;
+    grid-template-columns: 1fr 380px;
+    gap:18px;
+    align-items:start;
+  }
+  .modal-left{ display:flex; align-items:center; justify-content:center; background:#000; border-radius:10px; padding:8px; }
+  .modal-left img{ max-width:100%; max-height:82vh; object-fit:contain; border-radius:8px; }
+  .modal-right{
+    background: linear-gradient(180deg,#0f0f10,#0b0b0b);
+    border:2px solid rgba(212,175,55,0.12);
+    padding:14px;
+    border-radius:10px;
+    color:#fff;
+    max-height:82vh;
+    overflow:auto;
+  }
+  .modal-right h2{ color:var(--oro); margin:0 0 8px 0; font-size:20px; }
+  .modal-right p{ color:#dcdcdc; margin:6px 0; font-size:14px; line-height:1.45; }
+  .modal-right .precio{ color:var(--oro-claro); font-size:18px; font-weight:800; margin-top:12px; }
+  .modal-actions{ display:flex; gap:8px; margin-top:12px; }
 
-    .info p {
-      color: #555;
-      font-size: 0.95rem;
-      margin-bottom: 10px;
-      min-height: 60px;
-    }
+  .modal-close{
+    position:fixed;
+    right:18px;
+    top:18px;
+    font-size:34px;
+    color:#fff;
+    cursor:pointer;
+    z-index:10010;
+  }
+  .modal-nav{ position:fixed; left:10px; right:10px; top:50%; display:flex; justify-content:space-between; pointer-events:none; }
+  .modal-nav button{ pointer-events:auto; background:transparent; border:none; font-size:40px; color:#fff; cursor:pointer; padding:8px; }
 
-    .precio {
-      font-size: 1.3rem;
-      color: #d4af37;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
+  footer{
+    text-align:center;
+    padding:14px;
+    color:var(--muted);
+    margin-top:26px;
+  }
 
-    .btn-comprar {
-      display: inline-block;
-      background: #d4af37;
-      color: white;
-      padding: 10px 18px;
-      border-radius: 25px;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-
-    .btn-comprar:hover {
-      background: #b9932f;
-    }
-
-    footer {
-      background: #004aad;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      font-size: 0.9rem;
-      margin-top: 50px;
-    }
-
-    @media (max-width: 480px) {
-      header {
-        font-size: 1.3rem;
-        padding: 12px;
-      }
-
-      .buscador input {
-        width: 90%;
-      }
-    }
-
-    /* === VISOR DE IMÁGENES === */
-    .visor {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .visor img {
-      max-width: 90%;
-      max-height: 80%;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
-    }
-
-    .visor span {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      color: white;
-      font-size: 35px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+  @media (max-width:980px){
+    .modal-inner{ grid-template-columns:1fr 320px; }
+  }
+  @media (max-width:720px){
+    .modal-inner{ grid-template-columns:1fr; }
+    .modal-right{ max-height:40vh; }
+    .thumb-wrap{ height:160px; }
+    .productos{ gap:14px; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); }
+  }
+</style>
 </head>
-
 <body>
-  <header>🚘 Tienda de Carros – Apacargo Tu Envío a Cuba</header>
+  <header>🚘 Apacargo — Tienda de Carros</header>
 
-  <!-- Buscador -->
-  <div class="buscador">
-    <input type="text" id="buscar" placeholder="Buscar un modelo de carro...">
+  <div class="container">
+    <h1>Colección Premium de Vehículos</h1>
+
+    <div class="controls">
+      <div class="search-box">
+        <input id="buscar" type="text" placeholder="Buscar por modelo, marca o característica... (ej. 'Tesla', 'BYD', 'eléctrico')">
+      </div>
+      <div class="info">Contacto: <strong style="color:var(--oro-claro)">+53 50896082</strong></div>
+    </div>
+
+    <div class="productos" id="productosGrid">
+      <!-- Productos renderizados por JS (paginado con lazy) -->
+    </div>
+
+    <div style="text-align:center; margin-top:18px;">
+      <button id="loadMore" style="padding:10px 16px; border-radius:10px; background:transparent; border:2px solid rgba(212,175,55,0.12); color:var(--oro); font-weight:700;">Cargar más</button>
+    </div>
   </div>
-  
-  <section class="productos" id="lista-productos">
-    <!-- Carro 1 -->
-    <div class="producto" data-nombre="BYD Dolphin EV">
-      <img src="images/car01.jpg" alt="BYD Dolphin EV">
-      <div class="info">
-        <h3>BYD Dolphin EV</h3>
-        <p>Auto 100% eléctrico con autonomía de 405 km y carga rápida.</p>
-        <div class="precio">$22000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
+
+  <!-- VISOR / MODAL -->
+  <div class="visor" id="visor" role="dialog" aria-hidden="true">
+    <div class="modal-close" id="modalClose" title="Cerrar">&times;</div>
+
+    <div class="modal-nav">
+      <button id="modalPrev" title="Anterior">&#10094;</button>
+      <button id="modalNext" title="Siguiente">&#10095;</button>
     </div>
 
-    <!-- Carro 2 -->
-    <div class="producto" data-nombre="Geely Coolray">
-      <img src="images/car02.jpg" alt="Geely Coolray">
-      <div class="info">
-        <h3>Geely Coolray</h3>
-        <p>SUV moderna con motor turbo y sistema de infoentretenimiento inteligente.</p>
-        <div class="precio">$26000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
+    <div class="modal-inner" role="document">
+      <div class="modal-left">
+        <img id="modalImg" src="" alt="Imagen ampliada">
+      </div>
+      <div class="modal-right">
+        <h2 id="modalTitle">Título</h2>
+        <p id="modalDetails">Detalles...</p>
+        <div class="precio" id="modalPrice">Precio</div>
+        <div class="modal-actions">
+          <a id="modalWhats" class="btn-whatsapp" href="#" target="_blank" rel="noopener">Abrir WhatsApp</a>
+          <button id="modalCopy" class="btn-copy">Copiar mensaje</button>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Carro 3 -->
-    <div class="producto" data-nombre="Chevrolet Onix 2024">
-      <img src="images/car03.jpg" alt="Chevrolet Onix 2024">
-      <div class="info">
-        <h3>Chevrolet Onix 2024</h3>
-        <p>Vehículo de combustión eficiente, ideal para uso familiar o personal.</p>
-        <div class="precio">$23700USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Carro 4 -->
-    <div class="producto" data-nombre="Tesla Model 3">
-      <img src="images/car04.jpg" alt="Tesla Model 3">
-      <div class="info">
-        <h3>Tesla Model 3</h3>
-        <p>Eléctrico premium con rendimiento deportivo y autonomía de hasta 500 km.</p>
-        <div class="precio">$48600USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Carro 5 -->
-    <div class="producto" data-nombre="Toyota Corolla 2023">
-      <img src="images/car05.jpg" alt="Toyota Corolla 2023">
-      <div class="info">
-        <h3>Toyota Corolla 2023</h3>
-        <p>Sedán confiable, motor híbrido gasolina-eléctrico y bajo consumo.</p>
-        <div class="precio">$31000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Carro 6 -->
-    <div class="producto" data-nombre="Kia Picanto 2024">
-      <img src="images/car06.jpg" alt="Kia Picanto 2024">
-      <div class="info">
-        <h3>Kia Picanto 2024</h3>
-        <p>Compacto urbano, bajo consumo y diseño moderno ideal para ciudad.</p>
-        <div class="precio">$17000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Carro 7 -->
-    <div class="producto" data-nombre="MG ZS EV">
-      <img src="images/car07.jpg" alt="MG ZS EV">
-      <div class="info">
-        <h3>MG ZS EV</h3>
-        <p>SUV eléctrica de diseño británico, autonomía de 320 km y cero emisiones.</p>
-        <div class="precio">$32900USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Carro 8 -->
-    <div class="producto" data-nombre="Hyundai Accent 2024">
-      <img src="images/car08.jpg" alt="Hyundai Accent 2024">
-      <div class="info">
-        <h3>Hyundai Accent 2024</h3>
-        <p>Sedán cómodo y eficiente, motor 1.6L y transmisión automática.</p>
-        <div class="precio">$22000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Carro 9 -->
-    <div class="producto" data-nombre="Changan Benni EV">
-      <img src="images/car09.jpg" alt="Changan Benni EV">
-      <div class="info">
-        <h3>Changan Benni EV</h3>
-        <p>Pequeño eléctrico económico con 200 km de autonomía. Ideal para ciudad.</p>
-        <div class="precio">$25000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Carro 10 -->
-    <div class="producto" data-nombre="Nissan Versa 2025">
-      <img src="images/car10.jpg" alt="Nissan Versa 2025">
-      <div class="info">
-        <h3>Nissan Versa 2025</h3>
-        <p> Consumo de combustible económico, respaldado por el estimado de la EPA de 32 mpg en ciudad y 40 mpg en carretera .</p>
-        <div class="precio">$22100USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Carro 11 -->
-    <div class="producto" data-nombre="Mitsubishi Mirage 2024">
-      <img src="images/car11.jpg" alt="Mitsubishi Mirage2024">
-      <div class="info">
-        <h3>Mitsubishi Mirage 2024</h3>
-        <p>Motor de tres cilindros y \(1.2\) litros con una potencia de \(78\) caballos de fuerza, tracción delantera, una transmisión automática CVT y un consumo de combustible eficiente.</p>
-        <div class="precio">$20500USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-    <!-- Carro 12 -->
-    <div class="producto" data-nombre="Renault kwid 2025">
-      <img src="images/car12.jpg" alt="Renault kwid 2025">
-      <div class="info">
-        <h3>Renault kwid 2025</h3>
-        <p>Motor de 1.0 litros, y un conjunto de seguridad que incluye 4 airbags y control electrónico de estabilidad.</p>
-        <div class="precio">$23000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Carro 13 -->
-    <div class="producto" data-nombre="Suzuki Swift 2025">
-      <img src="images/car13.jpg" alt="Suzuki Swift 2025">
-      <div class="info">
-        <h3>Suzuki Swift 2025</h3>
-        <p>Motor eficiente híbrido suave de 1.2 litros con \(82\) hp y un potente motor turbo Boosterjet de 1.4 litros (\(138\) hp) en la versión Sport.</p>
-        <div class="precio">$23000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-    <!-- Carro 14 -->
-    <div class="producto" data-nombre="Hyundai i10">
-      <img src="images/car14.jpg" alt="Hyundai i10">
-      <div class="info">
-        <h3>Hyundai i10</h3>
-        <p>Motor 1.2 MPi: Motor de 1.2 litros y 4 cilindros con 84 CV de potencia y 118 Nm de par motor. Alcanza una velocidad máxima de 171 km/h.</p>
-        <div class="precio">$19600USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-  <!-- Carro 15 -->
-    <div class="producto" data-nombre="Kia Rio">
-      <img src="images/car15.jpg" alt="Kia Rio">
-      <div class="info">
-        <h3>Kia Rio</h3>
-        <p>Motor de 1.6 litros y 4 cilindros con aproximadamente 120 caballos de fuerza.</p>
-        <div class="precio">$20200USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-  
-  <!-- Carro 16 -->
-    <div class="producto" data-nombre="Mazda2">
-      <img src="images/car16.jpg" alt="Mazda2">
-      <div class="info">
-        <h3>Mazda2</h3>
-        <p>Motor Skyactiv-G de 1.5L (aprox. 109 HP) o 2.0L (aprox. 141 HP), con transmisión automática de 6 velocidades.</p>
-        <div class="precio">$2400USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-  <!-- Carro 17 -->
-    <div class="producto" data-nombre="Fiat Argo 2023">
-      <img src="images/car17.jpg" alt="Fiat Argo 2023">
-      <div class="info">
-        <h3>Fiat Argo 2023</h3>
-        <p>Motor: 1.3 litros con 97 caballos de fuerza, 4 cilindros y aceleración de \(0\) a \(100\) km/h en 9.7 segundos.</p>
-        <div class="precio">$18000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-  <!-- Carro 18 -->
-    <div class="producto" data-nombre="Volkswagen Polo 2025">
-      <img src="images/car18.jpg" alt="Volkswagen Polo 2025">
-      <div class="info">
-        <h3>Volkswagen Polo 2025</h3>
-        <p>Motor: 1.0 TSI turboalimentado de 3 cilindros,Potencia: 99 CV ,Torque: 125 lb-pie ,Transmisión: Automática Tiptronic de seis velocidades ,Rendimiento combinado: Hasta 16 km/l.</p>
-        <div class="precio">$30000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-  <!-- Carro 19 -->
-    <div class="producto" data-nombre="Dacia Sandero 2025">
-      <img src="images/car19.jpg" alt="Dacia Sandero 2025">
-      <div class="info">
-        <h3>Dacia Sandero 2025</h3>
-        <p>: Motor 1.0 TCe de 90 CV, que sirve como opción de entrada.</p>
-        <div class="precio">$18000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-  
-  <!-- Carro 20 -->
-    <div class="producto" data-nombre="Peugeot 208">
-      <img src="images/car20.jpg" alt="Peugeot 208">
-      <div class="info">
-        <h3>Peugeot 208</h3>
-        <p>Motor diésel BlueHDi de 1.5 litros, con versiones de 75 y 100 CV.</p>
-        <div class="precio">$22000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-  <!-- Carro 21 -->
-    <div class="producto" data-nombre="Citroen C3-IN">
-      <img src="images/car21.jpg" alt="Citroen C3-IN">
-      <div class="info">
-        <h3>Citroen C3-IN</h3>
-        <p>Motor diésel BlueHDi de 1.5 o 1.6 litros turboalimentado ,potencia: Aproximadamente 100 CV (73.5 kW) a 3750 rpm, torque: Unos 250 Nm a 1750 rpm.</p>
-        <div class="precio">$19700USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-  <!-- Carro 22 -->
-    <div class="producto" data-nombre="Opel Corsa 2024">
-      <img src="images/car22.jpg" alt="Opel Corsa 2024">
-      <div class="info">
-        <h3>Opel Corsa 2024</h3>
-        <p>Compacto con 136 CV en eléctrico, híbrido con eficiencia mejorada y gasolina con 100 CV. Tecnología avanzada y hasta 402 km de autonomía.</p>
-        <div class="precio">$34000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-  <!-- Carro 23 -->
-    <div class="producto" data-nombre="Ford figo 2021">
-      <img src="images/car23.jpg" alt="Ford figo 2021">
-      <div class="info">
-        <h3>Ford figo 2021</h3>
-        <p>Motor de 1.5L con hasta 121 hp y 109 lb-pie de torque, conectividad con pantallas táctiles de hasta 6.5 pulgadas con Apple CarPlay y Android Auto</p>
-        <div class="precio">$15000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-  <!-- Carro 24 -->
-    <div class="producto" data-nombre="Chevrolet Spark">
-      <img src="images/car24.jpg" alt="Chevrolet Spark">
-      <div class="info">
-        <h3>Chevrolet Spark</h3>
-        <p>Motor de 1.4L, cuatro cilindros, que produce 98 caballos de fuerza. .</p>
-        <div class="precio">$18000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-  <!-- Carro 25 -->
-    <div class="producto" data-nombre="Chevrolet Sail">
-      <img src="images/car25.jpg" alt="Chevrolet Sail">
-      <div class="info">
-        <h3>Chevrolet Sail</h3>
-        <p>Motor	1.5, DOHC, cilindros	4 en línea ,válvulas	16 válvulas, potencia (Hp)	98 a 5.800 rpm.</p>
-        <div class="precio">$18000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-  
-  <!-- Carro 26 -->
-    <div class="producto" data-nombre="Toyota Yaris">
-      <img src="images/car26.jpg" alt="Toyota Yaris">
-      <div class="info">
-        <h3>Toyota Yaris</h3>
-        <p>Motor de 1.5L VVT-i de 105 HP y un diseño moderno y aerodinámico.</p>
-        <div class="precio">$21000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-    <!-- Carro 27 -->
-    <div class="producto" data-nombre="SKODA FABIA 2021">
-      <img src="images/car27.jpg" alt="SKODA FABIA 2021">
-      <div class="info">
-        <h3>SKODA FABIA 2021</h3>
-        <p>Motor de gasolina de tres cilindros, que incluyen un 1.0 MPI de 80 CV y versiones turbo TSI de 95, 110 y hasta 150 CV.</p>
-        <div class="precio">$23500USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-  <!-- Carro 28 -->
-    <div class="producto" data-nombre="Hyundai Venue 2025">
-      <img src="images/car28.jpg" alt="Hyundai Venue 2025">
-      <div class="info">
-        <h3>Hyundai Venue 2025</h3>
-        <p> Motor 1.0L turbo de 3 cilindros con 118 HP y 175 Nm de torque transmisión automática de doble embrague de 7 velocidades.</p>
-        <div class="precio">$25000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
- 
-  <!-- Carro 29 -->
-    <div class="producto" data-nombre="Mercedes-benz a-class 2024">
-      <img src="images/car29.jpg" alt="Mercedes-benz a-class 2024">
-      <div class="info">
-        <h3>Mercedes-benz a-class 2024</h3>
-        <p>Motor A-200 de gasolina de 1.3L turboalimentado con 163 CV y 250 Nm de par..</p>
-        <div class="precio">$58000USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-  
-  <!-- Carro 30 -->
-    <div class="producto" data-nombre="MG GT 2024">
-      <img src="images/car30.jpg" alt="MG GT 2024">
-      <div class="info">
-        <h3>MG GT 2024 </h3>
-        <p>Motor. Combustible, Gasolina. Cilindrada, 1490 cc. Potencia, 160/5600 hp/rpm.</p>
-        <div class="precio">$18800USD</div>
-        <a href="https://wa.me/5350896082" class="btn-comprar" target="_blank">Comprar ahora</a>
-      </div>
-    </div>
-   </section>
- 
   <footer>© 2025 Apacargo Tu Envío a Cuba — Todos los derechos reservados.</footer>
 
-  <!-- VISOR PARA AMPLIAR IMÁGENES -->
-  <div class="visor" id="visor">
-    <span id="cerrar">&times;</span>
-    <img id="imagenAmpliada" src="">
-  </div>
+<script>
+/* =================== DATOS: 30 AUTOS (texto original que nos diste) =================== */
+const autos = [
+  {id:1, nombre:"BYD Dolphin EV", detalles:"Auto 100% eléctrico con autonomía de 405 km y carga rápida.", precio:"22000 USD", img:"images/car01.jpg"},
+  {id:2, nombre:"Geely Coolray", detalles:"SUV moderna con motor turbo y sistema de infoentretenimiento inteligente.", precio:"26000 USD", img:"images/car02.jpg"},
+  {id:3, nombre:"Chevrolet Onix 2024", detalles:"Vehículo de combustión eficiente, ideal para uso familiar o personal.", precio:"23700 USD", img:"images/car03.jpg"},
+  {id:4, nombre:"Tesla Model 3", detalles:"Eléctrico premium con rendimiento deportivo y autonomía de hasta 500 km.", precio:"48600 USD", img:"images/car04.jpg"},
+  {id:5, nombre:"Toyota Corolla 2023", detalles:"Sedán confiable, motor híbrido gasolina-eléctrico y bajo consumo.", precio:"31000 USD", img:"images/car05.jpg"},
+  {id:6, nombre:"Kia Picanto 2024", detalles:"Compacto urbano, bajo consumo y diseño moderno ideal para ciudad.", precio:"17000 USD", img:"images/car06.jpg"},
+  {id:7, nombre:"MG ZS EV", detalles:"SUV eléctrica de diseño británico, autonomía de 320 km y cero emisiones.", precio:"32900 USD", img:"images/car07.jpg"},
+  {id:8, nombre:"Hyundai Accent 2024", detalles:"Sedán cómodo y eficiente, motor 1.6L y transmisión automática.", precio:"22000 USD", img:"images/car08.jpg"},
+  {id:9, nombre:"Changan Benni EV", detalles:"Pequeño eléctrico económico con 200 km de autonomía. Ideal para ciudad.", precio:"25000 USD", img:"images/car09.jpg"},
+  {id:10, nombre:"Nissan Versa 2025", detalles:"Consumo de combustible económico, respaldado por estimados de eficiencia.", precio:"22100 USD", img:"images/car10.jpg"},
+  {id:11, nombre:"Mitsubishi Mirage 2024", detalles:"Motor de tres cilindros y 1.2 litros, transmisión CVT y consumo eficiente.", precio:"20500 USD", img:"images/car11.jpg"},
+  {id:12, nombre:"Renault Kwid 2025", detalles:"Motor 1.0 litros, incluye 4 airbags y control electrónico de estabilidad.", precio:"23000 USD", img:"images/car12.jpg"},
+  {id:13, nombre:"Suzuki Swift 2025", detalles:"Motor híbrido suave 1.2L y versión Sport con Boosterjet 1.4L.", precio:"23000 USD", img:"images/car13.jpg"},
+  {id:14, nombre:"Hyundai i10", detalles:"Motor 1.2 MPi con 84 CV y buen comportamiento urbano.", precio:"19600 USD", img:"images/car14.jpg"},
+  {id:15, nombre:"Kia Rio", detalles:"Motor 1.6 L con aproximadamente 120 caballos de fuerza.", precio:"20200 USD", img:"images/car15.jpg"},
+  {id:16, nombre:"Mazda2", detalles:"Motor Skyactiv-G de 1.5L (≈109 HP) con transmisión automática 6 vel.", precio:"2400 USD", img:"images/car16.jpg"},
+  {id:17, nombre:"Fiat Argo 2023", detalles:"Motor 1.3L con 97 CV; manejo ágil y buena economía.", precio:"18000 USD", img:"images/car17.jpg"},
+  {id:18, nombre:"Volkswagen Polo 2025", detalles:"1.0 TSI turbo, 99 CV, transmisión Tiptronic; rendimiento equilibrado.", precio:"30000 USD", img:"images/car18.jpg"},
+  {id:19, nombre:"Dacia Sandero 2025", detalles:"Motor 1.0 TCe de 90 CV; opción de entrada económica y fiable.", precio:"18000 USD", img:"images/car19.jpg"},
+  {id:20, nombre:"Peugeot 208", detalles:"Motor BlueHDi 1.5L; versiones de 75 y 100 CV.", precio:"22000 USD", img:"images/car20.jpg"},
+  {id:21, nombre:"Citroen C3-IN", detalles:"Motor turbo 1.5/1.6L; enfoque práctico y eficiente.", precio:"19700 USD", img:"images/car21.jpg"},
+  {id:22, nombre:"Opel Corsa 2024", detalles:"Opciones eléctrico/híbrido/gasolina; hasta ~402 km (según versión).", precio:"34000 USD", img:"images/car22.jpg"},
+  {id:23, nombre:"Ford Figo 2021", detalles:"Motor 1.5L, hasta 121 hp; conectividad con Apple CarPlay y Android Auto.", precio:"15000 USD", img:"images/car23.jpg"},
+  {id:24, nombre:"Chevrolet Spark", detalles:"Motor 1.4L, cuatro cilindros; económico y funcional para ciudad.", precio:"18000 USD", img:"images/car24.jpg"},
+  {id:25, nombre:"Chevrolet Sail", detalles:"Motor 1.5 DOHC, 98 HP; vehículo robusto y económico.", precio:"18000 USD", img:"images/car25.jpg"},
+  {id:26, nombre:"Toyota Yaris", detalles:"Motor 1.5L VVT-i de 105 HP; diseño moderno y eficiente.", precio:"21000 USD", img:"images/car26.jpg"},
+  {id:27, nombre:"Skoda Fabia 2021", detalles:"Motores 1.0 MPI/TSI; versiones entre 80 y 150 CV.", precio:"23500 USD", img:"images/car27.jpg"},
+  {id:28, nombre:"Hyundai Venue 2025", detalles:"1.0L turbo 118 HP; transmisión DCT de 7 marchas.", precio:"25000 USD", img:"images/car28.jpg"},
+  {id:29, nombre:"Mercedes-benz A-Class 2024", detalles:"A-200 1.3L turbo 163 CV; tecnología y confort premium.", precio:"58000 USD", img:"images/car29.jpg"},
+  {id:30, nombre:"MG GT 2024", detalles:"Combustible Gasolina; 1490 cc; potencia 160 HP (según versión).", precio:"18800 USD", img:"images/car30.jpg"}
+];
 
-  <script>
-    // === FILTRO DE BÚSQUEDA ===
-    const buscador = document.getElementById('buscar');
-    const productos = document.querySelectorAll('.producto');
+/* =========== PAGINACIÓN INICIAL Y RENDER =========== */
+const CHUNK = 12;
+let rendered = 0;
+let currentList = autos.slice();
+const grid = document.getElementById('productosGrid');
+const loadMoreBtn = document.getElementById('loadMore');
+const buscar = document.getElementById('buscar');
+let observer = null;
 
-    buscador.addEventListener('input', () => {
-      const texto = buscador.value.toLowerCase();
-      productos.forEach(prod => {
-        const nombre = prod.dataset.nombre.toLowerCase();
-        prod.style.display = nombre.includes(texto) ? 'block' : 'none';
+function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function createCard(a, idx){
+  const div = document.createElement('div');
+  div.className = 'producto';
+  div.innerHTML = `
+    <div class="thumb-wrap">
+      <img class="thumb lazy" data-src="${escapeHtml(a.img)}" alt="${escapeHtml(a.nombre)}" data-idx="${idx}">
+    </div>
+    <div class="info-card">
+      <h3>${escapeHtml(a.nombre)}</h3>
+      <p>${escapeHtml(a.detalles)}</p>
+      <div class="precio">${escapeHtml(a.precio)}</div>
+      <div class="actions">
+        <a class="btn-whatsapp" href="https://wa.me/5350896082?text=${encodeURIComponent('Hola, estoy interesado en el vehículo: '+a.nombre)}" target="_blank" rel="noopener">WhatsApp</a>
+        <button class="btn-copy" data-idx="${idx}">Copiar</button>
+      </div>
+    </div>
+  `;
+  return div;
+}
+
+function renderChunk(){
+  const to = Math.min(rendered + CHUNK, currentList.length);
+  for(let i = rendered; i < to; i++){
+    const globalIdx = autos.findIndex(x => x.id === currentList[i].id);
+    const card = createCard(currentList[i], globalIdx);
+    grid.appendChild(card);
+  }
+  rendered = to;
+  observeLazy();
+  updateLoadMore();
+}
+
+function renderAll(list){
+  grid.innerHTML = '';
+  rendered = 0;
+  currentList = list.slice();
+  renderChunk(); // render first chunk (or all if shorter)
+}
+
+function updateLoadMore(){
+  loadMoreBtn.style.display = (rendered < currentList.length && buscar.value.trim() === '') ? 'inline-block' : 'none';
+}
+
+/* ========== SEARCH ========== */
+buscar.addEventListener('input', (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  if(q === ''){
+    currentList = autos.slice();
+    grid.innerHTML = '';
+    rendered = 0;
+    renderChunk();
+    return;
+  }
+  // search in nombre + detalles
+  const matches = autos.filter(a => (a.nombre + ' ' + a.detalles).toLowerCase().includes(q));
+  grid.innerHTML = '';
+  currentList = matches;
+  rendered = 0;
+  // render all matches (no load more when searching)
+  for(let i=0;i<matches.length;i++){
+    const idx = autos.findIndex(x => x.id === matches[i].id);
+    grid.appendChild(createCard(matches[i], idx));
+  }
+  observeLazy();
+  updateLoadMore();
+});
+
+/* ========== LAZY IMAGE LOADING ========== */
+function observeLazy(){
+  if(observer){ observer.disconnect(); observer = null; }
+  const lazyImgs = document.querySelectorAll('img.lazy');
+  if('IntersectionObserver' in window){
+    observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const img = entry.target;
+          if(img.dataset.src){
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            img.classList.remove('lazy');
+          }
+          obs.unobserve(img);
+        }
       });
-    });
+    }, {root:null, threshold:0.1, rootMargin:'150px'});
+    lazyImgs.forEach(i => observer.observe(i));
+  } else {
+    lazyImgs.forEach(i => { i.src = i.dataset.src; i.removeAttribute('data-src'); i.classList.remove('lazy'); });
+  }
+}
 
-    // === AMPLIAR IMÁGENES ===
-    const visor = document.getElementById('visor');
-    const imagenAmpliada = document.getElementById('imagenAmpliada');
-    const cerrar = document.getElementById('cerrar');
+/* ========== EVENT DELEGATION: CLICKS EN CARDS ========== */
+grid.addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn-copy');
+  if(btn){
+    const idx = parseInt(btn.dataset.idx,10);
+    const a = autos[idx];
+    const msg = `Hola, estoy interesado en el vehículo ${a.nombre}. ${a.detalles} Precio: ${a.precio}.`;
+    copyText(msg);
+    btn.textContent = 'Copiado ✓';
+    setTimeout(()=> btn.textContent = 'Copiar', 1400);
+    return;
+  }
+  const img = e.target.closest('img.thumb');
+  if(img){
+    const idx = parseInt(img.dataset.idx,10);
+    openModal(idx);
+  }
+});
 
-    document.querySelectorAll('.producto img').forEach(img => {
-      img.addEventListener('click', () => {
-        imagenAmpliada.src = img.src;
-        visor.style.display = 'flex';
-      });
-    });
+/* ========== COPY HELPER ========== */
+function copyText(text){
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).catch(()=>{});
+  } else {
+    const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch(e){} ta.remove();
+  }
+}
 
-    cerrar.addEventListener('click', () => visor.style.display = 'none');
+/* ========== MODAL / VISOR ========== */
+const visor = document.getElementById('visor');
+const modalImg = document.getElementById('modalImg');
+const modalTitle = document.getElementById('modalTitle');
+const modalDetails = document.getElementById('modalDetails');
+const modalPrice = document.getElementById('modalPrice');
+const modalWhats = document.getElementById('modalWhats');
+const modalCopy = document.getElementById('modalCopy');
+const modalClose = document.getElementById('modalClose');
+const modalPrev = document.getElementById('modalPrev');
+const modalNext = document.getElementById('modalNext');
 
-    visor.addEventListener('click', e => {
-      if (e.target === visor) visor.style.display = 'none';
-    });
-  </script>
+let modalIndex = 0;
+
+function openModal(idx){
+  modalIndex = idx;
+  const a = autos[modalIndex];
+  modalImg.src = a.img;
+  modalTitle.textContent = a.nombre;
+  modalDetails.textContent = a.detalles;
+  modalPrice.textContent = a.precio;
+  const mensaje = `Hola, estoy interesado en el vehículo ${a.nombre}. ${a.detalles} Precio: ${a.precio}.`;
+  modalWhats.href = `https://wa.me/5350896082?text=${encodeURIComponent(mensaje)}`;
+  modalCopy.onclick = () => { copyText(mensaje); modalCopy.textContent = 'Copiado ✓'; setTimeout(()=> modalCopy.textContent = 'Copiar mensaje',1500); };
+  showModal();
+}
+
+function showModal(){ visor.style.display = 'flex'; visor.setAttribute('aria-hidden','false'); }
+function closeModal(){ visor.style.display = 'none'; visor.setAttribute('aria-hidden','true'); }
+
+modalClose.addEventListener('click', closeModal);
+visor.addEventListener('click', (e)=> { if(e.target === visor) closeModal(); });
+
+modalPrev.addEventListener('click', ()=> {
+  modalIndex = (modalIndex - 1 + autos.length) % autos.length;
+  openModal(modalIndex);
+});
+modalNext.addEventListener('click', ()=> {
+  modalIndex = (modalIndex + 1) % autos.length;
+  openModal(modalIndex);
+});
+document.addEventListener('keydown', (e)=> {
+  if(visor.style.display !== 'flex') return;
+  if(e.key === 'ArrowLeft') modalPrev.click();
+  if(e.key === 'ArrowRight') modalNext.click();
+  if(e.key === 'Escape') closeModal();
+});
+
+/* ========== INICIALIZAR ========== */
+(function init(){
+  // render first chunk
+  renderChunk();
+
+  // load more
+  loadMoreBtn.addEventListener('click', () => {
+    renderChunk();
+  });
+
+  // enhance clicks on dynamically created WhatsApp links in card (delegation not necessary since anchor is direct)
+  // Observe that card images have data-idx set to global index in createCard
+
+  // ensure lazy observer runs on initial items
+  observeLazy();
+})();
+</script>
 </body>
 </html>
