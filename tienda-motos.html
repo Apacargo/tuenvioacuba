@@ -1,672 +1,161 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tienda de Motos | Apacargo</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
+<title>Motos • Apacargo</title>
 <style>
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #f2f6fa;
-  margin: 0;
-  color: #222;
-}
-
-header {
-  background: linear-gradient(90deg, #001f4d, #d4af37);
-  color: #fff;
-  padding: 15px;
-  text-align: center;
-  font-size: 1.6rem;
-  letter-spacing: 1px;
-  font-weight: 600;
-}
-
-header img {
-  height: 72px;
-  display: block;
-  margin: 0 auto 8px;
-}
-
-header .subtitulo {
-  font-weight: 700;
-  color: #d4af37;
-  font-size: 18px;
-}
-
-/* Buscador */
-.buscador {
-  text-align: center;
-  margin: 25px 0;
-}
-
-.buscador input {
-  width: 85%;
-  max-width: 450px;
-  padding: 12px 20px;
-  border: 2px solid #001f4d;
-  border-radius: 25px;
-  outline: none;
-  font-size: 1rem;
-  transition: 0.3s;
-  font-family: 'Poppins', sans-serif;
-}
-
-.buscador input:focus {
-  border-color: #d4af37;
-  box-shadow: 0 0 6px rgba(212, 175, 55, 0.4);
-}
-
-/* Contenedor de motos */
-.moto-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 30px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.moto-card {
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
-  overflow: hidden;
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
-.moto-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.18);
-}
-
-.moto-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.3s;
-}
-
-.moto-card img:hover {
-  transform: scale(1.08);
-}
-
-.moto-card .body {
-  padding: 16px;
-}
-
-.moto-card h3 {
-  margin: 10px 0 6px;
-  font-size: 1.2rem;
-  color: #001f4d;
-}
-
-.moto-card p.desc {
-  color: #555;
-  font-size: 0.95rem;
-  margin: 0 0 12px;
-  min-height: 60px;
-  text-align: left;
-}
-
-.moto-card .price {
-  font-weight: bold;
-  color: #d4af37;
-  font-size: 1.1rem;
-  margin-bottom: 12px;
-}
-
-.buy-btn {
-  background-color: #d4af37;
-  color: white;
-  padding: 10px 18px;
-  border-radius: 25px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.buy-btn:hover {
-  background-color: #b6912c;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 15px;
-  background: #001f4d;
-  color: white;
-  margin-top: 40px;
-  font-size: 0.9rem;
-}
-
-/* Botón WhatsApp fijo */
-#whatsapp-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #25D366;
-  color: white;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 1000;
-  transition: transform 0.2s;
-}
-
-#whatsapp-btn:hover {
-  transform: scale(1.1);
-}
-
-/* Modal */
-#modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.7);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
-  padding: 20px;
-}
-
-#modal .modal-content {
-  background: white;
-  border-radius: 15px;
-  max-width: 600px;
-  width: 100%;
-  overflow: hidden;
-  text-align: center;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-#modal .modal-content img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-}
-
-#modal .modal-body {
-  padding: 20px;
-}
-
-#modal .close {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 30px;
-  font-weight: bold;
-  color: #333;
-  cursor: pointer;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9);}
-  to { opacity: 1; transform: scale(1);}
-}
-
-/* Responsivo */
-@media (max-width: 480px) {
-  header { font-size: 1.3rem; padding: 12px; }
-  .moto-card img { height: 160px; }
-  #modal .modal-content img { height: 220px; }
-  .buscador input { width: 90%; }
-}
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  .card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+  }
+  .card:hover {
+    transform: scale(1.03);
+  }
+  .card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  .card-content {
+    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card h3 {
+    margin: 0 0 10px;
+    font-size: 1.2em;
+    color: #333;
+  }
+  .card p {
+    flex: 1;
+    margin: 0 0 10px;
+    color: #555;
+    font-size: 0.95em;
+  }
+  .price {
+    font-weight: bold;
+    color: #e60000;
+    margin-bottom: 10px;
+  }
+  .btn-whatsapp {
+    background-color: #25D366;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  .btn-whatsapp:hover {
+    background-color: #1ebe5d;
+  }
+  @media(max-width: 600px){
+    header {
+      font-size: 1.4em;
+      padding: 15px 0;
+    }
+    .card img {
+      height: 150px;
+    }
+  }
 </style>
 </head>
-
 <body>
-<header>
-  <img src="images/logo.png" alt="Apacargo Logo">
-  <div class="subtitulo">Motos Eléctricas y de Combustión</div>
-</header>
 
-<div class="buscador">
-  <input type="text" id="buscar" placeholder="Buscar una moto...">
-</div>
+<header>Motos Disponibles • Apacargo</header>
 
-<main class="moto-container" id="lista-motos">
-  <!-- ====== MOTO 1 ====== -->
-    <div class="moto-card" data-nombre="Kawasaki Eliminator 250">
-      <img src="images/moto1.jpg" alt="Kawasaki Eliminator 250">
-      <div class="body">
-        <h3>Kawasaki Eliminator 250</h3>
-        <p class="desc">Motor: Bicilíndrico en paralelo de 4 tiempos, 249 cc, refrigerado por líquido. Potencia: 40 hp a 12,500 rpm. Torque: 23 Nm a 10,000 rpm.
-                               Transmisión: 6 velocidades. Embrague: Asistido y deslizante.</p>
-        <div class="price">$4200 USD</div>
-        <a class="buy-btn" href="#" data-name="Kawasaki Eliminator 250" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 2 ====== -->
-    <div class="moto-card" data-nombre="Honda Rebel 250">
-      <img src="images/moto2.jpg" alt="Honda Rebel 250">
-      <div class="body">
-        <h3>Honda Rebel 250</h3>
-        <p class="desc">Motor: Bicilíndrico en paralelo de 4 tiempos, 234 cc, refrigerado por aire y con una potencia máxima de aproximadamente 18.5 CV a 8000 rpm.
-                        Transmisión: Caja de cambios manual de 5 velocidades y arranque eléctrico.</p>
-        <div class="price">$4200 USD</div>
-        <a class="buy-btn" href="#" data-name="Honda Rebel 250" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 3 ====== -->
-    <div class="moto-card" data-nombre="Suzuki GSX250R">
-      <img src="images/moto3.jpg" alt="Suzuki GSX250R">
-      <div class="body">
-        <h3>Suzuki GSX250R</h3>
-        <p class="desc">Motor: Bicilíndrico en paralelo, 4 tiempos, SOHC, refrigerado por líquido. Cilindrada: 248 cc. Sistema de combustible: Inyección electrónica con SDTV.
-    Potencia: 25 hp a 8,000 rpm. Torque: 23.5 Nm a 6,500 rpm. Relación de compresión: 11.5:1.</p>
-        <div class="price">$3800 USD</div>
-        <a class="buy-btn" href="#" data-name="Suzuki GSX250R" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 4 ====== -->
-    <div class="moto-card" data-nombre="Suzuki AX4">
-      <img src="images/moto4.jpg" alt="Suzuki AX4">
-      <div class="body">
-        <h3>Suzuki AX4</h3>
-        <p class="desc">Motor: Monocilíndrico de 4 tiempos, enfriado por aire, con sistema SOHC y cilindrada de 113 cc (o 115 cc en modelos 2025).
-                        Potencia: 7.1 caballos de fuerza a 7500 rpm y 8.3 Nm de torque a 5500 rpm.</p>
-        <div class="price">$1800 USD</div>
-        <a class="buy-btn" href="#" data-name="Suzuki AX4" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 5 ====== -->
-    <div class="moto-card" data-nombre="Mishozuki Racing 45AH">
-      <img src="images/moto5.jpg" alt="Mishozuki Racing 45AH">
-      <div class="body">
-        <h3>Mishozuki Racing 45AH</h3>
-        <p class="desc">Motor: Eléctrico de \(1000W\).Batería: Una batería de litio de \(72V\) y \(45AH\).Autonomía: Hasta \(130\) km por carga.
-                        Velocidades: 4 velocidades y marcha atrás.Frenos: Doble freno de disco delantero y freno de disco trasero.Controlador: \(50A\)..</p>
-        <div class="price">$1300 USD</div>
-        <a class="buy-btn" href="#" data-name="Mishozuki Racing 45AH" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 6 ====== -->
-    <div class="moto-card" data-nombre="Suzuki GN 125 F">
-      <img src="images/moto6.jpg" alt="Suzuki GN 125 F">
-      <div class="body">
-        <h3>Suzuki GN 125 F</h3>
-        <p class="desc">Motor: Monocilíndrico de 124 cc, 4 tiempos, SOHC, refrigerado por aire.Potencia: 10.4 HP a 8500 RPM (o hasta 12.5 HP en el modelo H).
-                        Torque: 9.2 Nm a 7000 RPM.Transmisión: 5 velocidades mecánicas con cadena.Arranque: Eléctrico..</p>
-        <div class="price">$2000 USD</div>
-        <a class="buy-btn" href="#" data-name="Suzuki GN 125 F" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 7 ====== -->
-    <div class="moto-card" data-nombre="SCOOTER ELÉCTRICO MISHOZUKI NEW BIG SHARK-2">
-      <img src="images/moto7.jpg" alt="SCOOTER ELÉCTRICO MISHOZUKI NEW BIG SHARK-2">
-      <div class="body">
-        <h3>SCOOTER ELÉCTRICO MISHOZUKI NEW BIG SHARK-2</h3>
-        <p class="desc">Motor y rendimiento:Motor de \(1000W\).Voltaje del motor de \(72V\).Controlador de \(28A\).Incluye función de reversa.
-                       Batería:Tipo de batería: Litio.Capacidad: \(1\) batería de \(72V\) \(28AH\).</p>
-        <div class="price">$1300 USD</div>
-        <a class="buy-btn" href="#" data-name="SCOOTER ELÉCTRICO MISHOZUKI NEW BIG SHARK-2" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 8 ====== -->
-    <div class="moto-card" data-nombre="Mishozuki PO4 BUHO TRANSFORMER">
-      <img src="images/moto8.jpg" alt="Mishozuki PO4 BUHO TRANSFORMER">
-      <div class="body">
-        <h3>Mishozuki PO4 BUHO TRANSFORMER</h3>
-        <p class="desc">Motor y batería:Motor de \(1000W\).Voltaje del motor: \(72V\).
-          Batería de litio (\(PO4\)) de \(72V\) y \(40Ah\).Rendimiento:Autonomía de hasta \(100km\) con una sola carga.</p>
-        <div class="price">$1800 USD</div>
-        <a class="buy-btn" href="#" data-name="Mishozuki PO4 BUHO TRANSFORMER" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 9 ====== -->
-    <div class="moto-card" data-nombre="ZITMUV Z-ODÍN PRO 125e">
-      <img src="images/moto9.jpg" alt="ZITMUV Z-ODÍN PRO 125e">
-      <div class="body">
-        <h3>ZITMUV Z-ODÍN PRO 125e</h3>
-        <p class="desc">Motor: Potente motor eléctrico sin escobillas (brushless) de 10.000W en la rueda trasera.
-Batería: Batería de litio de 72V y 120 Ah con 1500 ciclos de carga.
-Autonomía: Hasta 230 km con una sola carga, dependiendo del modo de conducción y el peso del usuario.Velocidad máxima: 125 km/h.
-Diseño: Estilo naked y robusto, con asiento doble y capacidad para dos ocupantes.</p>
-        <div class="price">$3500 USD</div>
-        <a class="buy-btn" href="#" data-name="ZITMUV Z-ODÍN PRO 125e" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 10 ====== -->
-    <div class="moto-card" data-nombre="Suzuki Gixxer 250">
-      <img src="images/moto10.jpg" alt="Suzuki Gixxer 250">
-      <div class="body">
-        <h3>Suzuki Gixxer 250</h3>
-        <p class="desc">Motor: Monocilíndrico de 4 tiempos, 4 válvulas, SOHC, refrigerado por aceite.Cilindrada: 249 cm³.Potencia: Aproximadamente 26,1 CV (19,5 kW).
-Torque: 22,6 Nm a 7500 rpm.Sistema de refrigeración: SOCS (Suzuki Oil Cooling System).Sistema de combustible: Inyección electrónica.Transmisión: 6 velocidade.</p>
-        <div class="price">$2400 USD</div>
-        <a class="buy-btn" href="#" data-name="Suzuki Gixxer 250" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-   
-    <!-- ====== MOTO 11 ====== -->
-    <div class="moto-card" data-nombre="Bajaj Dominar 250">
-      <img src="images/moto11.jpg" alt="Bajaj Dominar 250">
-      <div class="body">
-        <h3>Bajaj Dominar 250</h3>
-        <p class="desc">Cilindrada: \(248.77\) cc.Potencia: 27 CV a 8500 rpm.Torque máximo: \(23.5\) Nm a 6500 rpm.Tipo de motor: Monocilíndrico, 4 tiempos, DOHC (doble árbol de levas a la cabeza), 4 válvulas.
-                        Refrigeración: Líquida.Transmisión: 6 velocidades con embrague anti-rebote y slipper clutch.Alimentación: Inyección electrónica. </p>
-        <div class="price">$2400 USD</div>
-        <a class="buy-btn" href="#" data-name="Bajaj Dominar 250" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-  
-    <!-- ====== MOTO 12 ====== -->
-    <div class="moto-card" data-nombre="Bajaj Pulsar NS200">
-      <img src="images/moto12.jpg" alt="Bajaj Pulsar NS200">
-      <div class="body">
-        <h3>Bajaj Pulsar NS200</h3>
-        <p class="desc">Motor: Monocilíndrico de 199.5 cc, 4 tiempos, 4 válvulas, con tecnología DTS-i de triple bujía y enfriado por líquido.
-                        Potencia: Aproximadamente 24.5 HP a 9,750 RPM.Torque: 18.74 Nm a 8,000 RPM.Transmisión: Caja de 6 velocidades.Velocidad máxima: Alrededor de 136 km/h.</p>
-        <div class="price">$2000 USD</div>
-        <a class="buy-btn" href="#" data-name="Bajaj Pulsar NS200" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-  
-    <!-- ====== MOTO 13 ====== -->
-    <div class="moto-card" data-nombre="Benelli TNT 25">
-      <img src="images/moto13.jpg" alt="Benelli TNT 25">
-      <div class="body">
-        <h3>Benelli TNT 25</h3>
-        <p class="desc">Cilindrada: 249 cc Potencia: Aproximadamente 25 hp a 9,250 rpm Torque: 21 Nm a 8,000 rpm Sistema de combustible: Inyección electrónica
-                        Refrigeración: Líquida Transmisión: 6 velocidades .</p>
-        <div class="price">$2400 USD</div>
-        <a class="buy-btn" href="#" data-name="Benelli TNT 25" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
- 
-    <!-- ====== MOTO 14 ====== -->
-    <div class="moto-card" data-nombre="CFMoto 250NK">
-      <img src="images/moto14.jpg" alt="CFMoto 250NK">
-      <div class="body">
-        <h3>CFMoto 250NK</h3>
-        <p class="desc">Motor: Monocilíndrico, 4 tiempos, refrigeración líquida, 4 válvulas, DOHC. Cilindrada:249cc.Potencia:27.5hp a 9750rpm.
-                        Torque:22Nm a 7500rpm.Transmisión: 6 velocidades.</p>
-        <div class="price">$2600 USD</div>
-        <a class="buy-btn" href="#" data-name="CFMoto 250NK" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
- 
-    <!-- ====== MOTO 15 ====== -->
-    <div class="moto-card" data-nombre="Keeway RKR 250">
-      <img src="images/moto15.jpg" alt="Keeway RKR 250">
-      <div class="body">
-        <h3>Keeway RKR 250</h3>
-        <p class="desc">Tipo de motor: Monocilíndrico de 4 tiempos, SOHC, 4 válvulas.Cilindrada: 249.4 cc.Potencia: Aproximadamente 22.8 HP a 8,500 rpm.Torque: 21 Nm a 7,000 rpm
-                        Transmisión: 6 velocidades.Refrigeración: Aire .</p>
-        <div class="price">$2600 USD</div>
-        <a class="buy-btn" href="#" data-name="Keeway RKR 250" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
- 
-    <!-- ====== MOTO 17 ====== -->
-    <div class="moto-card" data-nombre="Keeway K-Light 250V">
-      <img src="images/moto17.jpg" alt="Keeway K-Light 250V">
-      <div class="body">
-        <h3>Keeway K-Light 250V</h3>
-        <p class="desc">Tipo de motor: Bicilíndrico en V, 4 tiempos, 4 válvulas, refrigerado por aire.Cilindrada: \(249.9\) cc.Potencia máxima: \(13.5\) kW (aprox. \(18.4\) CV) a \(8500\) rpm.Torque máximo: \(16\) Nm a \(7500\) rpm.
-                        Transmisión: 5 velocidades.Accionamiento: Impulsión por correa trapezoidal.</p>
-        <div class="price">$2600 USD</div>
-        <a class="buy-btn" href="#" data-name="Keeway K-Light 250V" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
- 
-<!-- ====== MOTO 18 ====== -->
-    <div class="moto-card" data-nombre="Keeway SR250">
-      <img src="images/moto18.jpg" alt="Keeway SR250">
-      <div class="body">
-        <h3>Keeway SR250</h3>
-        <p class="desc">Cilindrada: 223 cc.Potencia: 16 CV (17 PS) a 7500 rpm.Par motor: 16 Nm a 6500 rpm.Tipo de motor: Monocilíndrico, 4 tiempos, refrigerado por aire
-                        Transmisión: 5 velocidades manual.Velocidad máxima: 120 km/h.Consumo: 40 km/l .</p>
-        <div class="price">$2400 USD</div>
-        <a class="buy-btn" href="#" data-name="Keeway SR250" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 19 ====== -->
-    <div class="moto-card" data-nombre="CFMoto CFLite 250">
-      <img src="images/moto19.jpg" alt="CFMoto CFLite 250">
-      <div class="body">
-        <h3>CFMoto CFLite 250</h3>
-        <p class="desc">Tipo de motor: Monocilíndrico, 4 tiempos, 4 válvulas, DOHC, refrigeración líquida.Cilindrada:249cc.
-                        Potencia: Aproximadamente 27.4hp a 9750rpm.Torque:22Nm a 7500rpm.Transmisión: 6 velocidades. </p>
-        <div class="price">$2400 USD</div>
-        <a class="buy-btn" href="#" data-name="CFMoto CFLite 250" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 20 ====== -->
-    <div class="moto-card" data-nombre="Zontes 125">
-      <img src="images/moto20.jpg" alt="Zontes 125">
-      <div class="body">
-        <h3>Zontes 125</h3>
-        <p class="desc">Tipo: Monocilíndrico, 4 válvulas, refrigeración líquida.Cilindrada: 124,7 o 125 cc, según el modelo.Potencia: Aproximadamente 14,7 CV a 9.000 rpm, situándose en el límite legal de la categoría.
-                        Par máximo: 13 Nm a 7.000 rpm.Alimentación: Inyección electrónica Bosch.Embrague: Antirrebote en algunos modelos, que mejora la conducción al reducir marchas.</p>
-        <div class="price">$2000 USD</div>
-        <a class="buy-btn" href="#" data-name="Zontes 125" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
- 
-    <!-- ====== MOTO 21 ====== -->
-    <div class="moto-card" data-nombre="UM 200cc">
-      <img src="images/moto21.jpg" alt="UM 200cc">
-      <div class="body">
-        <h3>UM 200cc</h3>
-        <p class="desc">Cilindrada: Generalmente entre 200 cc.Tipo de motor: Monocilíndrico, con distribución por varilla en algunos modelos.Potencia: Varia entre 13.5 HP y 15 HP, dependiendo del modelo.
-                        Sistema de combustible: Carburador.Refrigeración: Por aire.Transmisión: Manual de 5 velocidades.</p>
-        <div class="price">$2100 USD</div>
-        <a class="buy-btn" href="#" data-name="UM 200cc" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 22 ====== -->
-    <div class="moto-card" data-nombre="Lifan KPR 200">
-      <img src="images/moto22.jpg" alt="Lifan KPR 200">
-      <div class="body">
-        <h3>Lifan KPR 200</h3>
-      <p class="desc">Cilindrada: \(198.1\) ccTipo de motor: Monocilíndrico, 4 tiempos, refrigerado por líquidoPotencia: \(16.8\) HP a \(8000\) RPMTorque: \(17.0\) Nm a \(6500\) rpm
-           Sistema de alimentación: Inyección electrónica (EFI)
-           Transmisión: Manual de 6 velocidadesVelocidad máxima: Aproximadamente \(130\) km/h.</p>
-        <div class="price">$2200 USD</div>
-        <a class="buy-btn" href="#" data-name="Lifan KPR 200" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 23 ====== -->
-    <div class="moto-card" data-nombre="QJMotor SRK125R">
-      <img src="images/moto23.jpg" alt="QJMotor SRK125R">
-      <div class="body">
-        <h3>QJMotor SRK125R</h3>
-        <p class="desc">Motor: Monocilíndrico de 125 cc, refrigerado por líquido.Potencia: 15 CV (11 kW).Alimentación: Inyección electrónica.
-          Transmisión: 6 velocidades.Certificación: Euro 5+.Frenos: Discos tipo wave de 260 mm (delantero) y 240 mm (trasero), ambos con ABS..</p>
-        <div class="price">$2400 USD</div>
-        <a class="buy-btn" href="#" data-name="QJMotor SRK125R" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 24 ====== -->
-    <div class="moto-card" data-nombre="Bajaj Pulsar 150">
-      <img src="images/moto24.jpg" alt="Bajaj Pulsar 150">
-      <div class="body">
-        <h3>Bajaj Pulsar 150</h3>
-        <p class="desc">Tipo de motor: Monocilíndrico de 4 tiempos, con tecnología DTS-i, enfriado por aire.Cilindrada: \(149.5\) cc.
-          Potencia máxima: Alrededor de \(14.5\) HP @ 8,500 RPM.Torque máximo: Aproximadamente \(13.5\) Nm @ 6,000 RPM.
-          Arranque: Eléctrico y de patada.Transmisión: 5 velocidades.</p>
-        <div class="price">$2000 USD</div>
-        <a class="buy-btn" href="#" data-name="Bajaj Pulsar 150" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-
-    <!-- ====== MOTO 25 ====== -->
-    <div class="moto-card" data-nombre="Suzuki Gixxer 155">
-      <img src="images/moto25.jpg" alt="Suzuki Gixxer 155">
-      <div class="body">
-        <h3>Suzuki Gixxer 155</h3>
-        <p class="desc">Motor:Cilindrada: 155 cc.Tipo: Monocilíndrico, 4 tiempos, enfriado por aire.Sistema de combustible: Inyección electrónica en algunos modelos recientes, y carburador en otros.
-    Potencia: Aproximadamente 14.8 HP a 8000 rpm Torque máximo: Alrededor de 13.8 Nm a 6000 rpm.Transmisión: 5 velocidades.</p>
-        <div class="price">$2000 USD</div>
-        <a class="buy-btn" href="#" data-name="Suzuki Gixxer 155" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
- 
-    <!-- ====== MOTO 26 ====== -->
-    <div class="moto-card" data-nombre="Benelli PE250">
-      <img src="images/moto26.jpg" alt="Benelli PE250">
-      <div class="body">
-        <h3>Benelli PE250</h3>
-        <p class="desc">Motor: Monocilíndrico de 4 tiempos, DOHC, con refrigeración líquida.Cilindrada: 249 cc.Potencia: 25.5 CV (19 kW) a 9250 rpm.
-             Torque: 21 Nm a 8000 rpm.Relación de compresión: 11.2:1.Sistema de combustible: Inyección electrónica.Transmisión: 6 velocidades.</p>
-        <div class="price">$2650 USD</div>
-        <a class="buy-btn" href="#" data-name="Benelli PE250" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
- 
-    <!-- ====== MOTO 27 ====== -->
-    <div class="moto-card" data-nombre="Kawasaki z125">
-      <img src="images/moto27.jpg" alt="Kawasaki z125">
-      <div class="body">
-        <h3>Kawasaki z125</h3>
-        <p class="desc">Motor: Monocilíndrico de 4 tiempos, refrigeración líquida, con una cilindrada de 125 cm³.Potencia: Aproximadamente 15 CV a 10,000 rpm.
-             Distribución: Doble árbol de levas en culata (DOHC) con 4 válvulas.Combustible: Inyección electrónica.Embrague: Caja de cambios de 6 velocidades.</p>
-        <div class="price">$2590 USD</div>
-        <a class="buy-btn" href="#" data-name="Kawasaki z125" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-    
-    <!-- ====== MOTO 28 ====== -->
-    <div class="moto-card" data-nombre="Brixton Cromwell 250">
-      <img src="images/moto28.jpg" alt="Brixton Cromwell 250">
-      <div class="body">
-        <h3>Brixton Cromwell 250</h3>
-        <p class="desc">Motor: Monocilíndrico de 4 tiempos, refrigerado por aire.Cilindrada: 249 cc.Potencia: 17 CV (aprox. 12.6 kW) a 7500 rpm.
-               Par máximo: 16.5 Nm a 6500 rpm.Alimentación: Inyección electrónica (EFI).Arranque: Eléctrico (ECU).Transmisión: Manual de 5 velocidades.</p>
-        <div class="price">$2900 USD</div>
-        <a class="buy-btn" href="#" data-name="Brixton Cromwell 250" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
- 
-    <!-- ====== MOTO 29 ====== -->
-    <div class="moto-card" data-nombre="HONDA ELITE 125">
-      <img src="images/moto29.jpg" alt="HONDA ELITE 125">
-      <div class="body">
-        <h3>HONDA ELITE 125</h3>
-        <p class="desc">Motor:Tipo: 4 tiempos, 2 válvulas, monocilíndrico, OHC, refrigerado por aire.Cilindrada: 124 cc.Alimentación: Inyección electrónica PGM-FI.
-              Potencia: Aproximadamente 8.17 HP a 6,250 RPM.Torque: 10.4 Nm a 5,000 RPM.Tecnología: eSP.Transmisión: Automática tipo V-MATIC (por banda)..</p>
-        <div class="price">$2200 USD</div>
-        <a class="buy-btn" href="#" data-name="HONDA ELITE 125" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
- 
-    <!-- ====== MOTO 30 ====== -->
-    <div class="moto-card" data-nombre="SCOOTER ELÉCTRICO MISHOZUKI">
-      <img src="images/moto30.jpg" alt="SCOOTER ELÉCTRICO MISHOZUKI">
-      <div class="body">
-        <h3>SCOOTER ELÉCTRICO MISHOZUKI</h3>
-        <p class="desc">Motor power 1000W · Motor voltaje 72V · Controlador 50A · Tipo de batería lithium ION · Capacidad de batería – 1 batería / 72V 45AH · 5 velocidades.</p>
-        <div class="price">$1800 USD</div>
-        <a class="buy-btn" href="#" data-name="SCOOTER ELÉCTRICO MISHOZUKI" onclick="openWhats(event)">Comprar</a>
-      </div>
-    </div>
-   </main>
-
-<footer>
-  © 2025 Apacargo - Todos los derechos reservados
-</footer>
-
-<!-- Botón WhatsApp fijo -->
-<a href="https://wa.me/5350896082" target="_blank" id="whatsapp-btn">📱</a>
-
-<!-- Modal -->
-<div id="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <img src="" alt="Moto" id="modal-img">
-    <div class="modal-body">
-      <h3 id="modal-title"></h3>
-      <p id="modal-desc"></p>
-      <div class="price" id="modal-price"></div>
-      <a href="#" class="buy-btn" id="modal-buy">Comprar</a>
-    </div>
-  </div>
+<div class="container" id="motosContainer">
+  <!-- Las motos se cargarán aquí dinámicamente -->
 </div>
 
 <script>
-const WHATS_NUMBER = '5350896082';
+// Array de motos
+const motos = [
+  {id:1, nombre:"Kawasaki Eliminator 250", detalles:"Motor: Bicilíndrico en paralelo de 4 tiempos, 249 cc, refrigerado por líquido. Potencia: 40 hp a 12,500 rpm. Torque: 23 Nm a 10,000 rpm. Transmisión: 6 velocidades. Embrague: Asistido y deslizante.", precio:"$4200 USD", img:"images/moto1.jpg"},
+  {id:2, nombre:"Honda Rebel 250", detalles:"Motor: Bicilíndrico en paralelo de 4 tiempos, 234 cc, refrigerado por aire y con una potencia máxima de aproximadamente 18.5 CV a 8000 rpm. Transmisión: Caja de cambios manual de 5 velocidades y arranque eléctrico.", precio:"$4200 USD", img:"images/moto2.jpg"},
+  {id:3, nombre:"Suzuki GSX250R", detalles:"Motor: Bicilíndrico en paralelo, 4 tiempos, SOHC, refrigerado por líquido. Cilindrada: 248 cc. Sistema de combustible: Inyección electrónica con SDTV. Potencia: 25 hp a 8,000 rpm. Torque: 23.5 Nm a 6,500 rpm. Relación de compresión: 11.5:1.", precio:"$3800 USD", img:"images/moto3.jpg"},
+  {id:4, nombre:"Suzuki AX4", detalles:"Motor: Monocilíndrico de 4 tiempos, enfriado por aire, con sistema SOHC y cilindrada de 113 cc (o 115 cc en modelos 2025). Potencia: 7.1 caballos de fuerza a 7500 rpm y 8.3 Nm de torque a 5500 rpm.", precio:"$1800 USD", img:"images/moto4.jpg"},
+  {id:5, nombre:"Mishozuki Racing 45AH", detalles:"Motor: Eléctrico de 1000W. Batería: Una batería de litio de 72V y 45AH. Autonomía: Hasta 130 km por carga. Velocidades: 4 velocidades y marcha atrás. Frenos: Doble freno de disco delantero y freno de disco trasero. Controlador: 50A.", precio:"$1300 USD", img:"images/moto5.jpg"},
+  {id:6, nombre:"Suzuki GN 125 F", detalles:"Motor: Monocilíndrico de 124 cc, 4 tiempos, SOHC, refrigerado por aire. Potencia: 10.4 HP a 8500 RPM (o hasta 12.5 HP en el modelo H). Torque: 9.2 Nm a 7000 RPM. Transmisión: 5 velocidades mecánicas con cadena. Arranque: Eléctrico.", precio:"$2000 USD", img:"images/moto6.jpg"},
+  {id:7, nombre:"SCOOTER ELÉCTRICO MISHOZUKI NEW BIG SHARK-2", detalles:"Motor y rendimiento: Motor de 1000W. Voltaje del motor de 72V. Controlador de 28A. Incluye función de reversa. Batería: Tipo de batería: Litio. Capacidad: 1 batería de 72V 28AH.", precio:"$1300 USD", img:"images/moto7.jpg"},
+  {id:8, nombre:"Mishozuki PO4 BUHO TRANSFORMER", detalles:"Motor y batería: Motor de 1000W. Voltaje del motor: 72V. Batería de litio (PO4) de 72V y 40Ah. Rendimiento: Autonomía de hasta 100km con una sola carga.", precio:"$1800 USD", img:"images/moto8.jpg"},
+  {id:9, nombre:"ZITMUV Z-ODÍN PRO 125e", detalles:"Motor: Potente motor eléctrico sin escobillas (brushless) de 10.000W en la rueda trasera. Batería: Batería de litio de 72V y 120 Ah con 1500 ciclos de carga. Autonomía: Hasta 230 km con una sola carga, dependiendo del modo de conducción y el peso del usuario. Velocidad máxima: 125 km/h. Diseño: Estilo naked y robusto, con asiento doble y capacidad para dos ocupantes.", precio:"$3500 USD", img:"images/moto9.jpg"},
+  {id:10, nombre:"Suzuki Gixxer 250", detalles:"Motor: Monocilíndrico de 4 tiempos, 4 válvulas, SOHC, refrigerado por aceite. Cilindrada: 249 cm³. Potencia: Aproximadamente 26,1 CV (19,5 kW). Torque: 22,6 Nm a 7500 rpm. Sistema de refrigeración: SOCS (Suzuki Oil Cooling System). Sistema de combustible: Inyección electrónica. Transmisión: 6 velocidades.", precio:"$2400 USD", img:"images/moto10.jpg"},
+  {id:11, nombre:"Bajaj Dominar 250", detalles:"Cilindrada: 248.77 cc. Potencia: 27 CV a 8500 rpm. Torque máximo: 23.5 Nm a 6500 rpm. Tipo de motor: Monocilíndrico, 4 tiempos, DOHC, 4 válvulas. Refrigeración: Líquida. Transmisión: 6 velocidades con embrague anti-rebote y slipper clutch. Alimentación: Inyección electrónica.", precio:"$2400 USD", img:"images/moto11.jpg"},
+  {id:12, nombre:"Bajaj Pulsar NS200", detalles:"Motor: Monocilíndrico de 199.5 cc, 4 tiempos, 4 válvulas, con tecnología DTS-i de triple bujía y enfriado por líquido. Potencia: Aproximadamente 24.5 HP a 9,750 RPM. Torque: 18.74 Nm a 8,000 RPM. Transmisión: Caja de 6 velocidades. Velocidad máxima: Alrededor de 136 km/h.", precio:"$2000 USD", img:"images/moto12.jpg"},
+  {id:13, nombre:"Benelli TNT 25", detalles:"Cilindrada: 249 cc. Potencia: Aproximadamente 25 hp a 9,250 rpm. Torque: 21 Nm a 8,000 rpm. Sistema de combustible: Inyección electrónica. Refrigeración: Líquida. Transmisión: 6 velocidades.", precio:"$2400 USD", img:"images/moto13.jpg"},
+  {id:14, nombre:"CFMoto 250NK", detalles:"Motor: Monocilíndrico, 4 tiempos, refrigeración líquida, 4 válvulas, DOHC. Cilindrada:249cc. Potencia:27.5hp a 9750rpm. Torque:22Nm a 7500rpm. Transmisión: 6 velocidades.", precio:"$2600 USD", img:"images/moto14.jpg"},
+  {id:15, nombre:"Keeway RKR 250", detalles:"Tipo de motor: Monocilíndrico de 4 tiempos, SOHC, 4 válvulas. Cilindrada: 249.4 cc. Potencia: Aproximadamente 22.8 HP a 8,500 rpm. Torque: 21 Nm a 7,000 rpm. Transmisión: 6 velocidades. Refrigeración: Aire.", precio:"$2600 USD", img:"images/moto15.jpg"},
+  {id:16, nombre:"Keeway RKR 150", detalles:"Descripción pendiente.", precio:"$2200 USD", img:"images/moto16.jpg"},
+  {id:17, nombre:"Keeway K-Light 250V", detalles:"Tipo de motor: Bicilíndrico en V, 4 tiempos, 4 válvulas, refrigerado por aire. Cilindrada: 249.9 cc. Potencia máxima: 13.5 kW (aprox. 18.4 CV) a 8500 rpm. Torque máximo: 16 Nm a 7500 rpm. Transmisión: 5 velocidades. Accionamiento: Impulsión por correa trapezoidal.", precio:"$2600 USD", img:"images/moto17.jpg"},
+  {id:18, nombre:"Keeway SR250", detalles:"Cilindrada: 223 cc. Potencia: 16 CV (17 PS) a 7500 rpm. Par motor: 16 Nm a 6500 rpm. Tipo de motor: Monocilíndrico, 4 tiempos, refrigerado por aire. Transmisión: 5 velocidades manual. Velocidad máxima: 120 km/h. Consumo: 40 km/l.", precio:"$2400 USD", img:"images/moto18.jpg"},
+  {id:19, nombre:"CFMoto CFLite 250", detalles:"Tipo de motor: Monocilíndrico, 4 tiempos, 4 válvulas, DOHC, refrigeración líquida. Cilindrada:249cc. Potencia: Aproximadamente 27.4hp a 9750rpm. Torque:22Nm a 7500rpm. Transmisión: 6 velocidades.", precio:"$2400 USD", img:"images/moto19.jpg"},
+  {id:20, nombre:"Zontes 125", detalles:"Tipo: Monocilíndrico, 4 válvulas, refrigeración líquida. Cilindrada: 124,7 o 125 cc, según el modelo. Potencia: Aproximadamente 14,7 CV a 9.000 rpm, situándose en el límite legal de la categoría. Par máximo: 13 Nm a 7.000 rpm. Alimentación: Inyección electrónica Bosch. Embrague: Antirrebote en algunos modelos, que mejora la conducción al reducir marchas.", precio:"$2000 USD", img:"images/moto20.jpg"},
+  {id:21, nombre:"UM 200cc", detalles:"Cilindrada: Generalmente entre 200 cc. Tipo de motor: Monocilíndrico, con distribución por varilla en algunos modelos. Potencia: Varia entre 13.5 HP y 15 HP, dependiendo del modelo. Sistema de combustible: Carburador. Refrigeración: Por aire. Transmisión: Manual de 5 velocidades.", precio:"$2100 USD", img:"images/moto21.jpg"},
+  {id:22, nombre:"Lifan KPR 200", detalles:"Cilindrada: 198.1 cc. Tipo de motor: Monocilíndrico, 4 tiempos, refrigerado por líquido. Potencia: 16.8 HP a 8000 RPM. Torque: 17.0 Nm a 6500 rpm. Sistema de alimentación: Inyección electrónica (EFI). Transmisión: Manual de 6 velocidades. Velocidad máxima: Aproximadamente 130 km/h.", precio:"$2200 USD", img:"images/moto22.jpg"},
+  {id:23, nombre:"QJMotor SRK125R", detalles:"Motor: Monocilíndrico de 125 cc, refrigerado por líquido. Potencia: 15 CV (11 kW). Alimentación: Inyección electrónica. Transmisión: 6 velocidades. Certificación: Euro 5+. Frenos: Discos tipo wave de 260 mm (delantero) y 240 mm (trasero), ambos con ABS.", precio:"$2400 USD", img:"images/moto23.jpg"},
+  {id:24, nombre:"Bajaj Pulsar 150", detalles:"Tipo de motor: Monocilíndrico de 4 tiempos, con tecnología DTS-i, enfriado por aire. Cilindrada: 149.5 cc. Potencia máxima: Alrededor de 14.5 HP @ 8,500 RPM. Torque máximo: Aproximadamente 13.5 Nm @ 6,000 RPM. Arranque: Eléctrico y de patada. Transmisión: 5 velocidades.", precio:"$2000 USD", img:"images/moto24.jpg"},
+  {id:25, nombre:"Suzuki Gixxer 155", detalles:"Motor: Cilindrada: 155 cc. Tipo: Monocilíndrico, 4 tiempos, enfriado por aire. Sistema de combustible: Inyección electrónica en algunos modelos recientes, y carburador en otros. Potencia: Aproximadamente 14.8 HP a 8000 rpm. Torque máximo: Alrededor de 13.8 Nm a 6000 rpm. Transmisión: 5 velocidades.", precio:"$2000 USD", img:"images/moto25.jpg"},
+  {id:26, nombre:"Benelli PE250", detalles:"Motor: Monocilíndrico de 4 tiempos, DOHC, con refrigeración líquida. Cilindrada: 249 cc. Potencia: 25.5 CV (19 kW) a 9250 rpm. Torque: 21 Nm a 8000 rpm. Relación de compresión: 11.2:1. Sistema de combustible: Inyección electrónica. Transmisión: 6 velocidades.", precio:"$2650 USD", img:"images/moto26.jpg"},
+  {id:27, nombre:"Kawasaki z125", detalles:"Motor: Monocilíndrico de 4 tiempos, refrigeración líquida, con una cilindrada de 125 cm³. Potencia: Aproximadamente 15 CV a 10,000 rpm. Distribución: Doble árbol de levas en culata (DOHC) con 4 válvulas. Combustible: Inyección electrónica. Embrague: Caja de cambios de 6 velocidades.", precio:"$2590 USD", img:"images/moto27.jpg"},
+  {id:28, nombre:"Brixton Cromwell 250", detalles:"Motor: Monocilíndrico de 4 tiempos, refrigerado por aire. Cilindrada: 249 cc. Potencia: 17 CV (aprox. 12.6 kW) a 7500 rpm. Par máximo: 16.5 Nm a 6500 rpm. Alimentación: Inyección electrónica (EFI). Arranque: Eléctrico (ECU). Transmisión: Manual de 5 velocidades.", precio:"$2900 USD", img:"images/moto28.jpg"},
+  {id:29, nombre:"HONDA ELITE 125", detalles:"Motor: Tipo: 4 tiempos, 2 válvulas, monocilíndrico, OHC, refrigerado por aire. Cilindrada: 124 cc. Alimentación: Inyección electrónica PGM-FI. Potencia: Aproximadamente 8.17 HP a 6,250 RPM. Torque: 10.4 Nm a 5,000 RPM. Tecnología: eSP. Transmisión: Automática tipo V-MATIC (por banda).", precio:"$2200 USD", img:"images/moto29.jpg"},
+  {id:30, nombre:"SCOOTER ELÉCTRICO MISHOZUKI", detalles:"Motor power 1000W · Motor voltaje 72V · Controlador 50A · Tipo de batería lithium ION · Capacidad de batería – 1 batería / 72V 45AH · 5 velocidades.", precio:"$1800 USD", img:"images/moto30.jpg"}
+];
 
-// Botón comprar WhatsApp
-function openWhats(e) {
-  e.preventDefault();
-  const name = e.currentTarget.getAttribute('data-name');
-  const text = encodeURIComponent(`Hola, estoy interesado en la ${name}. Quisiera más información o disponibilidad.`);
-  window.open(`https://wa.me/${WHATS_NUMBER}?text=${text}`, '_blank');
+// Función para abrir WhatsApp
+function openWhats(nombre, precio){
+  const telefono = "+5350896082"; // Cambiar al número del vendedor
+  const mensaje = `Hola, estoy interesado en la moto ${nombre} que cuesta ${precio}. ¿Está disponible?`;
+  window.open(`https://api.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
-// Buscador dinámico
-const buscador = document.getElementById('buscar');
-const motos = document.querySelectorAll('.moto-card');
+// Generar tarjetas
+const container = document.getElementById("motosContainer");
 
-buscador.addEventListener('input', () => {
-  const texto = buscador.value.toLowerCase();
-  motos.forEach(moto => {
-    const nombre = moto.dataset.nombre.toLowerCase();
-    moto.style.display = nombre.includes(texto) ? 'flex' : 'none';
-  });
-});
-
-// Modal
-const modal = document.getElementById('modal');
-const modalImg = document.getElementById('modal-img');
-const modalTitle = document.getElementById('modal-title');
-const modalDesc = document.getElementById('modal-desc');
-const modalPrice = document.getElementById('modal-price');
-const modalBuy = document.getElementById('modal-buy');
-const closeModal = document.querySelector('#modal .close');
-
-motos.forEach(card => {
-  card.addEventListener('click', () => {
-    modal.style.display = 'flex';
-    modalImg.src = card.querySelector('img').src;
-    modalTitle.textContent = card.querySelector('h3').textContent;
-    modalDesc.textContent = card.querySelector('p.desc').textContent;
-    modalPrice.textContent = card.querySelector('.price').textContent;
-    modalBuy.onclick = (e) => {
-      e.stopPropagation();
-      openWhats({currentTarget: modalBuy});
-    };
-    modalBuy.setAttribute('data-name', card.dataset.nombre);
-  });
-});
-
-closeModal.addEventListener('click', () => modal.style.display = 'none');
-modal.addEventListener('click', e => {
-  if(e.target === modal) modal.style.display = 'none';
+motos.forEach(moto => {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <img src="${moto.img}" alt="${moto.nombre}">
+    <div class="card-content">
+      <h3>${moto.nombre}</h3>
+      <p>${moto.detalles}</p>
+      <div class="price">${moto.precio}</div>
+      <a class="btn-whatsapp" href="javascript:void(0)" onclick="openWhats('${moto.nombre}', '${moto.precio}')">Contactar por WhatsApp</a>
+    </div>
+  `;
+  container.appendChild(card);
 });
 </script>
+
 </body>
 </html>
