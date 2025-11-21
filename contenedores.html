@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Venta de Contenedores • Apacargo</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
 body {
     margin: 0;
@@ -32,6 +31,7 @@ header {
     padding: 20px;
 }
 
+/* CARD */
 .card {
     background: white;
     border-radius: 12px;
@@ -41,9 +41,7 @@ header {
     cursor: pointer;
     transition: transform 0.25s;
 }
-.card:hover {
-    transform: scale(1.03);
-}
+.card:hover { transform: scale(1.03); }
 
 .card img {
     width: 100%;
@@ -125,10 +123,8 @@ header {
     font-weight: 600;
     text-decoration: none;
 }
-
 </style>
 </head>
-
 <body>
 
 <header>Venta de Contenedores • Apacargo</header>
@@ -150,21 +146,21 @@ header {
 <script>
 // ===================== DATOS DE CONTENEDORES =====================
 const contenedores = [
-    {id:1, nombre:"Contenedor de Pollo 40ft", detalles:"Contenedor de 40 pies con 54000 libras de pollo en cajas de 40 libras.Total de cajas 1350.Prepago en el exterior", precio:"31 000 USD", img:"images/contenedor1.jpg"},
-    {id:2, nombre:"Contenedor de Aceite 40ft", detalles:"Contenedor 31500 unidades (2100 cajas)Caja de 12 pomos.Contenido: 900mL.", precio:"29 360 USD", img:"images/contenedor2.jpg"},
-    {id:3, nombre:"Contenedor de Harina 40ft", detalles:"Contenedor de 40 pies con 1040 sacos de 25kg de harina turka calidad premium .", precio:"22 000 USD", img:"images/contenedor3.jpg"},
-    {id:4, nombre:"Contenedor de Azucar", detalles:"Azúcar Refino Contenedor de 20 PIES 25.75 Toneladas/ en 515 SACOS DE 50 KG.", precio:"17 200 USD", img:"images/contenedor4.jpg"},
-    {id:5, nombre:"Contenedor de Manteca", detalles:"Contenedor de manteca 15 kg.Contenedor de 20 pies trae 1100 cajas de 15 Kg.Marca:los 3 chanchitos.", precio:"23 000 USD", img:"images/contenedor5.jpg"}
+    {id:1, nombre:"Contenedor de Pollo 40ft", detalles:"Contenedor de 40 pies con 54000 libras de pollo en cajas de 40 libras. Total de cajas 1350. Prepago en el exterior", precio:"31 000 USD", img:"images/contenedor1.jpg"},
+    {id:2, nombre:"Contenedor de Aceite 40ft", detalles:"Contenedor 31500 unidades (2100 cajas) Caja de 12 pomos. Contenido: 900mL.", precio:"29 360 USD", img:"images/contenedor2.jpg"},
+    {id:3, nombre:"Contenedor de Harina 40ft", detalles:"Contenedor de 40 pies con 1040 sacos de 25kg de harina turka calidad premium.", precio:"22 000 USD", img:"images/contenedor3.jpg"},
+    {id:4, nombre:"Contenedor de Azúcar", detalles:"Azúcar Refino Contenedor de 20 pies 25.75 toneladas en 515 sacos de 50 kg.", precio:"17 200 USD", img:"images/contenedor4.jpg"},
+    {id:5, nombre:"Contenedor de Manteca", detalles:"Contenedor de manteca 15 kg. Contenedor de 20 pies trae 1100 cajas de 15 Kg. Marca: Los 3 Chanchitos.", precio:"23 000 USD", img:"images/contenedor5.jpg"}
+    // Puedes añadir aquí los contenedores 6 al 50 siguiendo el mismo formato
 ];
 
 // RENDER
 const list = document.getElementById("contenedor-list");
-
 contenedores.forEach(item => {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-        <img loading="lazy" src="${item.img}">
+        <img loading="lazy" src="${item.img}" alt="${item.nombre}">
         <div class="card-info">
             <div class="card-title">${item.nombre}</div>
             <div class="card-details">${item.detalles}</div>
@@ -189,7 +185,6 @@ function openModal(item) {
 function closeModal() {
     document.getElementById("modal").style.display = "none";
 }
-
 </script>
 
 </body>
