@@ -243,7 +243,7 @@
       <div class="search-box">
         <input id="buscar" type="text" placeholder="Buscar por modelo, marca o característica... (ej. 'Tesla', 'BYD', 'eléctrico')">
       </div>
-      <div class="info">Contacto: <strong style="color:var(--oro-claro)">+53 50896082</strong></div>
+      <div class="info">Contacto: <strong style="color:var(--oro-claro)">+14473095580</strong></div>
     </div>
 
     <div class="productos" id="productosGrid">
@@ -340,7 +340,7 @@ function createCard(a, idx){
       <p>${escapeHtml(a.detalles)}</p>
       <div class="precio">${escapeHtml(a.precio)}</div>
       <div class="actions">
-        <a class="btn-whatsapp" href="https://wa.me/5350896082?text=${encodeURIComponent('Hola, estoy interesado en el vehículo: '+a.nombre)}" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn-whatsapp" href="https://wa.me/14473095580?text=${encodeURIComponent('Hola, estoy interesado en el vehículo: '+a.nombre)}" target="_blank" rel="noopener">WhatsApp</a>
         <button class="btn-copy" data-idx="${idx}">Copiar</button>
       </div>
     </div>
@@ -470,7 +470,7 @@ function openModal(idx){
   modalDetails.textContent = a.detalles;
   modalPrice.textContent = a.precio;
   const mensaje = `Hola, estoy interesado en el vehículo ${a.nombre}. ${a.detalles} Precio: ${a.precio}.`;
-  modalWhats.href = `https://wa.me/5350896082?text=${encodeURIComponent(mensaje)}`;
+  modalWhats.href = `https://wa.me/14473095580?text=${encodeURIComponent(mensaje)}`;
   modalCopy.onclick = () => { copyText(mensaje); modalCopy.textContent = 'Copiado ✓'; setTimeout(()=> modalCopy.textContent = 'Copiar mensaje',1500); };
   showModal();
 }
