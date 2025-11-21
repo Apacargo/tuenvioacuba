@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venta de Contenedores • Apacargo</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f4f6f9;
+}
+
+/* HEADER */
+header {
+    background: #0a1a2a;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 4px solid #d4af37;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* GRID */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    overflow: hidden;
+    border: 2px solid #d4af37;
+    cursor: pointer;
+    transition: transform 0.25s;
+}
+.card:hover {
+    transform: scale(1.03);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* CARD TEXT */
+.card-info {
+    padding: 15px;
+}
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0a1a2a;
+}
+.card-details {
+    margin-top: 6px;
+    color: #333;
+    font-size: 14px;
+}
+.card-price {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #d4af37;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    max-width: 450px;
+    width: 90%;
+    padding: 20px;
+    position: relative;
+    border: 3px solid #d4af37;
+    animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.8);}
+    to {opacity: 1; transform: scale(1);}
+}
+
+.modal img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #333;
+}
+
+/* WHATSAPP BUTTON */
+.btn-whatsapp {
+    display: block;
+    width: 100%;
+    background: #25d366;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    border-radius: 10px;
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>Venta de Contenedores • Apacargo</header>
+
+<div class="container" id="contenedor-list"></div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modal-img">
+        <h2 id="modal-title"></h2>
+        <p id="modal-details"></p>
+        <h3 id="modal-price"></h3>
+        <a id="modal-whatsapp" class="btn-whatsapp" target="_blank">Contactar por WhatsApp</a>
+    </div>
+</div>
+
+<script>
+// ===================== DATOS DE CONTENEDORES =====================
+const contenedores = [
+    {id:1, nombre:"Contenedor de Pollo 40ft", detalles:"Pollo congelado de exportación. Ideal para negocios y distribución masiva.", precio:"36 000 USD", img:"images/contenedor1.jpg"},
+    {id:2, nombre:"Contenedor de Aceite 20ft", detalles:"Aceite vegetal refinado. En botellas de 1L y 5L.", precio:"29 000 USD", img:"images/contenedor2.jpg"},
+    {id:3, nombre:"Contenedor de Harina 40ft", detalles:"Harina de trigo premium. Sacos industriales de 25kg y 50kg.", precio:"33 000 USD", img:"images/contenedor3.jpg"},
+    {id:4, nombre:"Contenedor de Confituras", detalles:"Galletas, caramelos, jugos, chocolates y surtidos variados.", precio:"31 500 USD", img:"images/contenedor4.jpg"},
+    {id:5, nombre:"Contenedor Mixto", detalles:"Combinación de alimentos secos, enlatados, bebidas y aseo.", precio:"34 000 USD", img:"images/contenedor5.jpg"}
+];
+
+// RENDER
+const list = document.getElementById("contenedor-list");
+
+contenedores.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+        <img loading="lazy" src="${item.img}">
+        <div class="card-info">
+            <div class="card-title">${item.nombre}</div>
+            <div class="card-details">${item.detalles}</div>
+            <div class="card-price">${item.precio}</div>
+        </div>
+    `;
+    card.onclick = () => openModal(item);
+    list.appendChild(card);
+});
+
+// MODAL
+function openModal(item) {
+    document.getElementById("modal-img").src = item.img;
+    document.getElementById("modal-title").textContent = item.nombre;
+    document.getElementById("modal-details").textContent = item.detalles;
+    document.getElementById("modal-price").textContent = item.precio;
+    document.getElementById("modal-whatsapp").href =
+        `https://wa.me/14473095580?text=Hola,%20quiero%20información%20sobre:%20${item.nombre}`;
+    document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
