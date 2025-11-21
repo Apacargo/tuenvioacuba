@@ -5,17 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Venta de Contenedores • Apacargo</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background: #f4f6f9;
+    background: #111; /* negro */
+    color: #fff;
 }
 
 /* HEADER */
 header {
     background: #0a1a2a;
-    color: white;
+    color: #d4af37; /* dorado */
     padding: 20px;
     text-align: center;
     border-bottom: 4px solid #d4af37;
@@ -33,16 +35,17 @@ header {
 
 /* CARD */
 .card {
-    background: white;
+    background: #1a1a1a;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     overflow: hidden;
-    border: 2px solid #0a1a2a; /* borde negro */
+    border: 2px solid #d4af37;
     cursor: pointer;
     transition: transform 0.25s;
 }
-.card:hover { transform: scale(1.03); }
-
+.card:hover {
+    transform: scale(1.03);
+}
 .card img {
     width: 100%;
     height: 200px;
@@ -56,32 +59,30 @@ header {
 .card-title {
     font-size: 18px;
     font-weight: 600;
-    color: #0a1a2a;
+    color: #d4af37;
 }
 .card-details {
     margin-top: 6px;
-    color: #333;
+    color: #fff;
     font-size: 14px;
 }
 .card-price {
     margin-top: 10px;
     font-size: 18px;
     font-weight: 600;
-    color: #d4af37; /* dorado */
+    color: #d4af37;
 }
-
-/* BOTON COMPRAR */
 .buy-btn {
     display: block;
     width: 100%;
+    background: #d4af37;
+    color: #111;
     text-align: center;
-    background: #0a1a2a;
-    color: #d4af37;
-    padding: 12px;
-    margin-top: 10px;
+    padding: 10px;
     border-radius: 8px;
-    font-weight: 600;
+    margin-top: 10px;
     text-decoration: none;
+    font-weight: 600;
 }
 
 /* MODAL */
@@ -89,28 +90,26 @@ header {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.9);
     justify-content: center;
     align-items: center;
     padding: 20px;
 }
 .modal-content {
-    background: white;
+    background: #111;
     border-radius: 15px;
     max-width: 450px;
     width: 90%;
     padding: 20px;
     position: relative;
     border: 3px solid #d4af37;
-    animation: fadeIn 0.3s ease;
-}
-@keyframes fadeIn {
-    from {opacity: 0; transform: scale(0.8);}
-    to {opacity: 1; transform: scale(1);}
 }
 .modal img {
     width: 100%;
     border-radius: 10px;
+}
+.modal h2, .modal p, .modal h3 {
+    color: #fff;
 }
 .close {
     position: absolute;
@@ -118,23 +117,11 @@ header {
     right: 15px;
     font-size: 28px;
     cursor: pointer;
-    color: #333;
-}
-.btn-whatsapp {
-    display: block;
-    width: 100%;
-    background: #25d366;
-    color: white;
-    padding: 12px;
-    text-align: center;
-    border-radius: 10px;
-    margin-top: 12px;
-    font-size: 18px;
-    font-weight: 600;
-    text-decoration: none;
+    color: #d4af37;
 }
 </style>
 </head>
+
 <body>
 
 <header>Venta de Contenedores • Apacargo</header>
@@ -149,7 +136,7 @@ header {
         <h2 id="modal-title"></h2>
         <p id="modal-details"></p>
         <h3 id="modal-price"></h3>
-        <a id="modal-whatsapp" class="btn-whatsapp" target="_blank">Contactar por WhatsApp</a>
+        <a id="modal-whatsapp" class="buy-btn" target="_blank">Contactar por WhatsApp</a>
     </div>
 </div>
 
@@ -157,32 +144,38 @@ header {
 // ===================== DATOS DE CONTENEDORES =====================
 const contenedores = [
     {id:1, nombre:"Contenedor de Pollo 40ft", detalles:"Contenedor de 40 pies con 54000 libras de pollo en cajas de 40 libras. Total de cajas 1350. Prepago en el exterior", precio:"31 000 USD", img:"images/contenedor1.jpg"},
-    {id:2, nombre:"Contenedor de Aceite 40ft", detalles:"Contenedor 31500 unidades (2100 cajas) Caja de 12 pomos. Contenido: 900mL.", precio:"29 360 USD", img:"images/contenedor2.jpg"},
+    {id:2, nombre:"Contenedor de Aceite 40ft", detalles:"Contenedor 31500 unidades (2100 cajas). Caja de 12 pomos. Contenido: 900mL.", precio:"29 360 USD", img:"images/contenedor2.jpg"},
     {id:3, nombre:"Contenedor de Harina 40ft", detalles:"Contenedor de 40 pies con 1040 sacos de 25kg de harina turka calidad premium.", precio:"22 000 USD", img:"images/contenedor3.jpg"},
-    {id:4, nombre:"Contenedor de Azúcar", detalles:"Azúcar Refino Contenedor de 20 pies 25.75 toneladas en 515 sacos de 50 kg.", precio:"17 200 USD", img:"images/contenedor4.jpg"},
-    {id:5, nombre:"Contenedor de Manteca", detalles:"Contenedor de manteca 15 kg. Contenedor de 20 pies trae 1100 cajas de 15 Kg. Marca: Los 3 Chanchitos.", precio:"23 000 USD", img:"images/contenedor5.jpg"}
+    {id:4, nombre:"Contenedor de Azucar", detalles:"Azúcar Refino Contenedor de 20 PIES 25.75 Toneladas / 515 SACOS DE 50 KG.", precio:"17 200 USD", img:"images/contenedor4.jpg"},
+    {id:5, nombre:"Contenedor de Manteca", detalles:"Contenedor de manteca 15 kg. Contenedor de 20 pies trae 1100 cajas de 15 Kg. Marca: los 3 chanchitos.", precio:"23 000 USD", img:"images/contenedor5.jpg"},
+    {id:6, nombre:"Contenedor de Confituras 40ft", detalles:"Contenedor con 1200 cajas de confituras surtidas de 1 kg cada una.", precio:"25 000 USD", img:"images/contenedor6.jpg"},
+    {id:7, nombre:"Contenedor de Leche 40ft", detalles:"Contenedor con 1000 cajas de leche en polvo de 25 kg cada una.", precio:"28 500 USD", img:"images/contenedor7.jpg"},
+    {id:8, nombre:"Contenedor de Yogurt 20ft", detalles:"Contenedor de 20 pies con 800 cajas de yogurt de 12 unidades cada una.", precio:"15 500 USD", img:"images/contenedor8.jpg"},
+    {id:9, nombre:"Contenedor de Galletas 40ft", detalles:"Contenedor de 40 pies con 2000 cajas de galletas surtidas.", precio:"24 000 USD", img:"images/contenedor9.jpg"},
+    {id:10, nombre:"Contenedor de Café 40ft", detalles:"Contenedor con 1500 sacos de café tostado de 60 kg cada uno.", precio:"32 000 USD", img:"images/contenedor10.jpg"}
 ];
 
 // RENDER
 const list = document.getElementById("contenedor-list");
+
 contenedores.forEach(item => {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-        <img loading="lazy" src="${item.img}" alt="${item.nombre}">
+        <img loading="lazy" src="${item.img}">
         <div class="card-info">
             <div class="card-title">${item.nombre}</div>
             <div class="card-details">${item.detalles}</div>
             <div class="card-price">${item.precio}</div>
-            <a class="buy-btn" href="#" onclick="openModal(${item.id})">Comprar</a>
+            <a class="buy-btn" href="https://wa.me/14473095580?text=Hola,%20quiero%20información%20sobre:%20${encodeURIComponent(item.nombre)}" target="_blank">Comprar</a>
         </div>
     `;
+    card.onclick = () => openModal(item);
     list.appendChild(card);
 });
 
 // MODAL
-function openModal(id) {
-    const item = contenedores.find(c => c.id === id);
+function openModal(item) {
     document.getElementById("modal-img").src = item.img;
     document.getElementById("modal-title").textContent = item.nombre;
     document.getElementById("modal-details").textContent = item.detalles;
