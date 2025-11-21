@@ -37,7 +37,7 @@ header {
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.12);
     overflow: hidden;
-    border: 2px solid #d4af37;
+    border: 2px solid #0a1a2a; /* borde negro */
     cursor: pointer;
     transition: transform 0.25s;
 }
@@ -67,7 +67,21 @@ header {
     margin-top: 10px;
     font-size: 18px;
     font-weight: 600;
+    color: #d4af37; /* dorado */
+}
+
+/* BOTON COMPRAR */
+.buy-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #0a1a2a;
     color: #d4af37;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
 }
 
 /* MODAL */
@@ -94,12 +108,10 @@ header {
     from {opacity: 0; transform: scale(0.8);}
     to {opacity: 1; transform: scale(1);}
 }
-
 .modal img {
     width: 100%;
     border-radius: 10px;
 }
-
 .close {
     position: absolute;
     top: 8px;
@@ -108,8 +120,6 @@ header {
     cursor: pointer;
     color: #333;
 }
-
-/* WHATSAPP BUTTON */
 .btn-whatsapp {
     display: block;
     width: 100%;
@@ -151,7 +161,6 @@ const contenedores = [
     {id:3, nombre:"Contenedor de Harina 40ft", detalles:"Contenedor de 40 pies con 1040 sacos de 25kg de harina turka calidad premium.", precio:"22 000 USD", img:"images/contenedor3.jpg"},
     {id:4, nombre:"Contenedor de Azúcar", detalles:"Azúcar Refino Contenedor de 20 pies 25.75 toneladas en 515 sacos de 50 kg.", precio:"17 200 USD", img:"images/contenedor4.jpg"},
     {id:5, nombre:"Contenedor de Manteca", detalles:"Contenedor de manteca 15 kg. Contenedor de 20 pies trae 1100 cajas de 15 Kg. Marca: Los 3 Chanchitos.", precio:"23 000 USD", img:"images/contenedor5.jpg"}
-    // Puedes añadir aquí los contenedores 6 al 50 siguiendo el mismo formato
 ];
 
 // RENDER
@@ -165,20 +174,21 @@ contenedores.forEach(item => {
             <div class="card-title">${item.nombre}</div>
             <div class="card-details">${item.detalles}</div>
             <div class="card-price">${item.precio}</div>
+            <a class="buy-btn" href="#" onclick="openModal(${item.id})">Comprar</a>
         </div>
     `;
-    card.onclick = () => openModal(item);
     list.appendChild(card);
 });
 
 // MODAL
-function openModal(item) {
+function openModal(id) {
+    const item = contenedores.find(c => c.id === id);
     document.getElementById("modal-img").src = item.img;
     document.getElementById("modal-title").textContent = item.nombre;
     document.getElementById("modal-details").textContent = item.detalles;
     document.getElementById("modal-price").textContent = item.precio;
     document.getElementById("modal-whatsapp").href =
-        `https://wa.me/14473095580?text=Hola,%20quiero%20información%20sobre:%20${item.nombre}`;
+        `https://wa.me/14473095580?text=Hola,%20quiero%20información%20sobre:%20${encodeURIComponent(item.nombre)}`;
     document.getElementById("modal").style.display = "flex";
 }
 
