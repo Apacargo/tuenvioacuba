@@ -422,7 +422,7 @@ function openModal(index){
   modalPrice.textContent = j.precio;
   // whatsapp link
   const mensaje = `Hola, estoy interesado en la joya ${j.nombre}. Detalles: ${j.detalles}. Precio: ${j.precio}.`;
-  modalWhats.href = `https://wa.me/5350896082?text=${encodeURIComponent(mensaje)}`;
+  modalWhats.href = `https://wa.me/14473095580?text=${encodeURIComponent(mensaje)}`;
   modalSolicitar.onclick = () => {
     copyToClipboard(mensaje);
     modalSolicitar.textContent = 'Copiado ✓';
@@ -464,7 +464,7 @@ document.addEventListener('keydown', (e) => {
 /* ===== WhatsApp open (from card button) ===== */
 function openWhatsApp(j){
   const mensaje = `Hola, estoy interesado en la joya ${j.nombre}. Detalles: ${j.detalles}. Precio: ${j.precio}.`;
-  window.open(`https://wa.me/5350896082?text=${encodeURIComponent(mensaje)}`, '_blank');
+  window.open(`https://wa.me/14473095580?text=${encodeURIComponent(mensaje)}`, '_blank');
 }
 
 /* copy helper */
