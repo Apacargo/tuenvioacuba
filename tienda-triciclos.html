@@ -22,7 +22,24 @@ body {
   color: var(--text);
 }
 
-/* HEADER */
+.btn-volver {
+  display: inline-block;
+  background-color: #000;
+  color: #fff; /* TEXTO BLANCO */
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  border: 2px solid #d4af37; /* DORADO */
+  transition: 0.3s;
+}
+.btn-volver:hover {
+  background-color: #d4af37; /* DORADO */
+  color: #000; /* TEXTO NEGRO AL PASAR MOUSE */
+}
+
+  /* HEADER */
 header {
   background: #000;
   padding: 20px;
@@ -156,6 +173,8 @@ header h1 {
   <input type="text" id="searchInput" placeholder="Buscar triciclo..." onkeyup="buscar()">
 </div>
 
+  <a href="index.html" class="btn-volver">⬅ Volver al Inicio</a>
+  
 <div class="grid" id="grid"></div>
 
 <!-- MODAL -->
