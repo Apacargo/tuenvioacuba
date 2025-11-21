@@ -7,25 +7,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
+/* ================== GENERAL ================== */
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background: #111; /* negro */
+    background: #111;
     color: #fff;
 }
 
-/* HEADER */
+/* ================== HEADER ================== */
 header {
-    background: #0a1a2a;
-    color: #d4af37; /* dorado */
-    padding: 20px;
+    background: #000;
+    color: #d4af37;
+    padding: 15px;
     text-align: center;
-    border-bottom: 4px solid #d4af37;
     font-size: 22px;
     font-weight: 600;
+    border-bottom: 3px solid #d4af37;
 }
 
-/* GRID */
+/* ================== GRID CARDS ================== */
 .container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -33,26 +34,25 @@ header {
     padding: 20px;
 }
 
-/* CARD */
 .card {
     background: #1a1a1a;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    overflow: hidden;
     border: 2px solid #d4af37;
-    cursor: pointer;
+    border-radius: 12px;
+    overflow: hidden;
     transition: transform 0.25s;
+    cursor: pointer;
 }
 .card:hover {
     transform: scale(1.03);
 }
+
 .card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
 
-/* CARD TEXT */
+/* TEXTOS DE TARJETA */
 .card-info {
     padding: 15px;
 }
@@ -63,7 +63,6 @@ header {
 }
 .card-details {
     margin-top: 6px;
-    color: #fff;
     font-size: 14px;
 }
 .card-price {
@@ -72,52 +71,81 @@ header {
     font-weight: 600;
     color: #d4af37;
 }
+
+/* BOTÓN COMPRAR */
 .buy-btn {
     display: block;
     width: 100%;
     background: #d4af37;
     color: #111;
-    text-align: center;
     padding: 10px;
     border-radius: 8px;
-    margin-top: 10px;
+    text-align: center;
+    margin-top: 12px;
     text-decoration: none;
     font-weight: 600;
 }
 
-/* MODAL */
+/* ================== MODAL ================== */
 .modal {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.95);
     justify-content: center;
     align-items: center;
     padding: 20px;
+    z-index: 9999;
 }
+
 .modal-content {
-    background: #111;
-    border-radius: 15px;
-    max-width: 450px;
-    width: 90%;
+    background: #000;
+    border-radius: 12px;
     padding: 20px;
-    position: relative;
+    width: 100%;
+    max-width: 480px;
     border: 3px solid #d4af37;
+    text-align: center;
 }
+
 .modal img {
     width: 100%;
     border-radius: 10px;
+    margin-bottom: 12px;
 }
-.modal h2, .modal p, .modal h3 {
-    color: #fff;
+
+/* BOTÓN VOLVER */
+#btn-volver {
+    background: #d4af37;
+    color: #111;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    font-weight: 600;
+    margin-top: 15px;
+    font-size: 18px;
 }
+
+/* BOTÓN CERRAR (X) */
 .close {
+    font-size: 30px;
     position: absolute;
-    top: 8px;
-    right: 15px;
-    font-size: 28px;
-    cursor: pointer;
+    top: 10px;
+    right: 20px;
     color: #d4af37;
+    cursor: pointer;
+}
+
+/* ================== RESPONSIVE ================== */
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 15px;
+    }
+    .card img {
+        height: 170px;
+    }
 }
 </style>
 </head>
@@ -128,7 +156,7 @@ header {
 
 <div class="container" id="contenedor-list"></div>
 
-<!-- MODAL -->
+<!-- ===================== MODAL ===================== -->
 <div class="modal" id="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
@@ -136,7 +164,8 @@ header {
         <h2 id="modal-title"></h2>
         <p id="modal-details"></p>
         <h3 id="modal-price"></h3>
-        <a id="modal-whatsapp" class="buy-btn" target="_blank">Contactar por WhatsApp</a>
+        <a id="modal-whatsapp" class="buy-btn" target="_blank">Comprar por WhatsApp</a>
+        <a id="btn-volver" onclick="closeModal()">Volver</a>
     </div>
 </div>
 
@@ -153,9 +182,9 @@ const contenedores = [
     {id:8, nombre:"Contenedor de Yogurt 40ft", detalles:"Contenedor de 40 pies con 3762 cajas de yogurt de 12 packs de 4 unidades.Cantidad de unidades: 45 144 packs de 4 unidades (180 576 unidades de 125g cada uno).", precio:"32 600 USD", img:"images/contenedor8.jpg"},
     {id:9, nombre:"Contenedor de Arroz 40ft", detalles:"Contenedor de 40 pies con 510 sacos de 50kg.", precio:"19 380 000 USD", img:"images/contenedor9.jpg"},
     {id:10, nombre:"Contenedor de Espaguetis 40ft", detalles:"Contenedor con 2730 cajas de 20 unidades de 500gm.", precio:"15 872 USD", img:"images/contenedor10.jpg"}
-];
+];  
 
-// RENDER
+// ===================== RENDER =====================
 const list = document.getElementById("contenedor-list");
 
 contenedores.forEach(item => {
@@ -174,7 +203,7 @@ contenedores.forEach(item => {
     list.appendChild(card);
 });
 
-// MODAL
+// ===================== MODAL FUNCIONES =====================
 function openModal(item) {
     document.getElementById("modal-img").src = item.img;
     document.getElementById("modal-title").textContent = item.nombre;
@@ -182,6 +211,7 @@ function openModal(item) {
     document.getElementById("modal-price").textContent = item.precio;
     document.getElementById("modal-whatsapp").href =
         `https://wa.me/14473095580?text=Hola,%20quiero%20información%20sobre:%20${encodeURIComponent(item.nombre)}`;
+
     document.getElementById("modal").style.display = "flex";
 }
 
